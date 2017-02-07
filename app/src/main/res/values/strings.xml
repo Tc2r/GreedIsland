@@ -1,0 +1,97 @@
+<resources>
+    <string name="app_name">Greed Island</string>
+
+    <string-array name="locations">
+        <item>Starting Point</item>
+        <item>Masadora</item>
+        <item>Soufrabi</item>
+        <item>Aiai</item>
+        <item>Antokiba</item>
+        <item>Rubicuta</item>
+        <item>Dorias</item>
+        <item>Limeiro</item>
+    </string-array>
+
+    <string-array name="loc_title">
+        <item>Greed Island Entrance </item>
+        <item>Magic City of</item>
+        <item>Port City</item>
+        <item>The City of Love</item>
+        <item>City of Prizes</item>
+        <item>Start City</item>
+        <item>Gambling City</item>
+        <item>Capital City</item>
+    </string-array>
+    <array
+        name="loc_image">
+        <item>@drawable/town_start</item>
+        <item>@drawable/town_masadora</item>
+        <item>@drawable/town_soufrabi</item>
+        <item>@drawable/town_aiai</item>
+        <item>@drawable/town_antokiba</item>
+        <item>@drawable/town_rubicuta</item>
+        <item>@drawable/town_dorias</item>
+        <item>@drawable/town_limeiro</item>
+
+    </array>
+    <string-array name="loc_desc">
+        <item>This is where all players are brought when they enter the game.
+
+            \n\nSay Hi to Eeta!</item>
+
+        <item>Known as the \"Magic City\", Masadora has a fantasy-themed appearance. \n\n Spell cards are only sold at the item shop in this town. \n\n With 10,000 Jenny, one can buy 3 random spell cards in the spell card shop. Many players who have given up on the game come to this city to look for a way out.</item>
+
+        <item>Soufrabi is a city with a beautiful line of cliffs. \n\n Here players can find a method to leave Greed Island and return to the real world. \n\n It can be attained by somehow getting past the Harbour Master. \n\n
+        The people of Soufarabi whisper of vicious pirates who have recently Pirates have taken over the city. The base of the bloodthirsty pirates is hidden. \n\n Legend has it that an underwater cave near the costline holds a vast treasure.</item>
+
+
+        <item>The atmosphere on the streets of this city feels like it is based upon romantic simulation games. \n\n No one agrees on exactly how The \"City of Love\" got it\'s namesake. \n\n Some believe it is due to very aura of warmth that lingers in the air within the town walls. \n\n Listing Its sights, and popularity as a honeymoon destination, they claim this to be the obvious reason. They travel to Aiai to visit its well known River walkways, sidewalk cafes and lovely hotels.\n\n
+Others attest that Aiai\'s moniker comes from a pink heart-shaped object floating in the sky is its symbol. Its\' beauty is a fav amongst couples at night. Any player who wants to enjoy the pleasure of a heterosexual encounter needs to come here. In this city there are all kinds of clichéd situations and events that can lead to love.
+\n\n Hisoka considers it a nice place to spend time.</item>
+
+
+        <item>Closest to the center of the island, Antokiba is one of the two starting cities. \n\n
+            Antokiba\'s walls are covered with many reward posters! Players looking for quest and treasures are the most often visitors.  \n\n On the 15th of every month, a major contest is held here in which the winner is rewarded with a specified slot card. \n\n Many players go straight to Antokiba when beginning the game so a lot of basic information about beginners can be gathered in this city. </item>
+
+
+        <item>Due to it\'s short distance from the island\'s main entrance, Rubicuta city is the second starting city of Greed Island. \n\n Elegant and colorful, it is said to most resemble cities in the real world.</item>
+
+
+        <item>The casino is the staple of this city. One is not required to wear formal clothes to enter it, and even children are allowed. \n\n The Risky Dice can be very useful while in Dorias . </item>
+
+        <item>The capital of Greed Island. \n\n Limeiro can only be accessed by those who have completed the Specified Slot Cards.  \n\nNot only the castle, even the streets of the city are full of energy. The last event of the game is held here. \n\n
+        The huge castle is the symbol of this city. Royalty rarely steps out except to create laws which are absolutely followed.\n\n Some believe Gamemasters live within the castle.</item>
+    </string-array>
+
+    <string name="title_activity_book">BOOK</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="credits_text">
+        We want to thank all those who \n
+        helped us create this app: \n\n
+
+        Mishi - Thanks for Theorycraft! \n\n
+
+        Daedalus/Elij - Information from Wikia!\n\n
+        http://hunterxhunter.wikia.com/wiki/User_talk:Daedalus_net \n\n
+
+        Highway3 - Masadora Header\n
+        http://highway3.deviantart.com/ \n\n
+
+
+
+
+
+
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- TODO: TODO LIST OMG-->
+
+
+    <!-- Strings related to Settings -->
+
+</resources>

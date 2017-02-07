@@ -1,0 +1,53 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+    <string name="pref_title_hunter_name">Hunter Name?</string>
+    <string name="pref_default_hunter_name">Chrollo Lucilfer</string>
+    <string name="pref_first_time_tutorial">First Time Tutorial</string>
+    <string name="pref_theme_color">Theme Color</string>
+    <string-array name="pref_theme_choice_entries">
+        <item>Red Wedding</item>
+        <item>Bouquets</item>
+        <item>Sunlight</item>
+        <item>Royal Flush</item>
+        <item>Birds n Berries</item>
+        <item>"Blue Berry"</item>
+        <item>Cinnamon</item>
+        <item>Day n Night</item>
+        <item>Earthly</item>
+        <item>Forest</item>
+        <item>Fresh Greens</item>
+        <item>Fresh n Energetic</item>
+        <item>Icy Blue</item>
+        <item>Ocean</item>
+        <item>Play Green/blues</item>
+        <item>Primary</item>
+        <item>Rain</item>
+        <item>Tropical</item>
+    </string-array>
+    <string-array name="pref_theme_choice_entry_values">
+        <item>Red Wedding</item>
+        <item>Bouquets</item>
+        <item>Sunlight</item>
+        <item>Royal Flush</item>
+        <item>Birds n Berries</item>
+        <item>Blue Berry</item>
+        <item>Cinnamon</item>
+        <item>Day n Night</item>
+        <item>Earthly</item>
+        <item>Forest</item>
+        <item>Fresh Greens</item>
+        <item>Fresh n Energetic</item>
+        <item>Icy Blue</item>
+        <item>Ocean</item>
+        <item>Play Green/blues</item>
+        <item>Primary</item>
+        <item>Rain</item>
+        <item>Tropical </item>
+    </string-array>
+
+</resources>

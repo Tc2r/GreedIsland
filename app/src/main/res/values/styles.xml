@@ -1,0 +1,593 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/MyTextViewStyle</item>
+        <item name="android:buttonStyle">@style/MyButtonStyle</item>
+    </style>
+    <style name="MyTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">roboto</item>
+
+    </style>
+
+    <style name="MyButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">roboto</item>
+    </style>
+
+    <style name="boldText" parent="AppTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+    <style name="SettingsTheme" parent="AppTheme.Cinnamon">
+        <item name="android:windowBackground">@drawable/settingsbg</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textColorSecondary">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+    <!--Theme Managers-->
+    <style name="AppTheme.Earth" parent="EarthThemePri">
+        <item name="backgroundPri">@style/EarthThemePri</item>
+        <item name="backgroundSec">@style/EarthThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Ocean" parent="OceanThemePri">
+        <item name="backgroundPri">@style/OceanThemePri</item>
+        <item name="backgroundSec">@style/OceanThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Forest" parent="ForestThemePri">
+        <item name="backgroundPri">@style/ForestThemePri</item>
+        <item name="backgroundSec">@style/ForestThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Rain" parent="RainThemePri">
+        <item name="backgroundPri">@style/RainThemePri</item>
+        <item name="backgroundSec">@style/RainThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Prime" parent="PrimeThemePri">
+        <item name="backgroundPri">@style/PrimeThemePri</item>
+        <item name="backgroundSec">@style/PrimeThemeSec</item>
+    </style>
+
+    <style name="AppTheme.GrnBlu" parent="GrnBluThemePri">
+        <item name="backgroundPri">@style/GrnBluThemePri</item>
+        <item name="backgroundSec">@style/GrnBluThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Icy" parent="IcyThemePri">
+        <item name="backgroundPri">@style/IcyThemePri</item>
+        <item name="backgroundSec">@style/IcyThemeSec</item>
+    </style>
+
+    <style name="AppTheme.BirdBerries" parent="BirdBerriesThemePri">
+        <item name="backgroundPri">@style/BirdBerriesThemePri</item>
+        <item name="backgroundSec">@style/BirdBerriesThemeSec</item>
+    </style>
+    <style name="AppTheme.BlueBerry" parent="BluBerryThemePri">
+        <item name="backgroundPri">@style/BluBerryThemePri</item>
+        <item name="backgroundSec">@style/BluBerryThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Tropical" parent="TropThemePri">
+        <item name="backgroundPri">@style/TropThemePri</item>
+        <item name="backgroundSec">@style/TropThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Cinnamon" parent="CinnamonThemePri">
+        <item name="backgroundPri">@style/CinnamonThemePri</item>
+        <item name="backgroundSec">@style/CinnamonThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Fresh" parent="FreshThemePri">
+        <item name="backgroundPri">@style/FreshThemePri</item>
+        <item name="backgroundSec">@style/FreshThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Night" parent="NightThemePri">
+        <item name="backgroundPri">@style/NightThemePri</item>
+        <item name="backgroundSec">@style/NightThemeSec</item>
+    </style>
+
+    <style name="AppTheme.Greens" parent="GreensThemePri">
+        <item name="backgroundPri">@style/GreensThemePri</item>
+        <item name="backgroundSec">@style/GreensThemeSec</item>
+    </style>
+    <style name="AppTheme.RoyalF" parent="RoyalFThemePri">
+        <item name="backgroundPri">@style/RoyalFThemePri</item>
+        <item name="backgroundSec">@style/RoyalFThemeSec</item>
+    </style>
+    <style name="AppTheme.Bouquets" parent="BouquetsThemePri">
+        <item name="backgroundPri">@style/BouquetsThemePri</item>
+        <item name="backgroundSec">@style/BouquetsThemeSec</item>
+    </style>
+    <style name="AppTheme.RedWedding" parent="RedWedThemePri">
+        <item name="backgroundPri">@style/RedWedThemePri</item>
+        <item name="backgroundSec">@style/RedWedThemeSec</item>
+    </style>
+    <style name="AppTheme.Sunlight" parent="SunlightThemePri">
+        <item name="backgroundPri">@style/SunlightThemePri</item>
+        <item name="backgroundSec">@style/SunlightThemeSec</item>
+    </style>
+
+    <!--Theme Managers-->
+
+
+
+
+
+     <!--CUSTOMIZABLE THEMES-->
+    <style name="EarthThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeEarthPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeEarthDark</item>
+        <item name="colorAccent">@color/colorThemeEarthAccent</item>
+        <item name="android:windowBackground">@color/colorThemeEarthDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeEarthDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeEarthTextPri</item>
+        <item name="android:textColor">@color/colorThemeEarthTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeEarthDarkTrans</item>
+    </style>
+    <style name="EarthThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeEarthPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeEarthDark</item>
+        <item name="colorAccent">@color/colorThemeEarthAccent</item>
+        <item name="android:windowBackground">@color/colorThemeEarthPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeEarthPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeEarthTextPri</item>
+        <item name="android:textColor">@color/colorThemeEarthTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeEarthPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="OceanThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeOceanPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeOceanDark</item>
+        <item name="colorAccent">@color/colorThemeOceanAccent</item>
+        <item name="android:windowBackground">@color/colorThemeOceanDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeOceanDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeOceanTextPri</item>
+        <item name="android:textColor">@color/colorThemeOceanTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeOceanDarkTrans</item>
+    </style>
+    <style name="OceanThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeOceanPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeOceanDark</item>
+        <item name="colorAccent">@color/colorThemeOceanAccent</item>
+        <item name="android:windowBackground">@color/colorThemeOceanPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeOceanPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeOceanTextPri</item>
+        <item name="android:textColor">@color/colorThemeOceanTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeOceanPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="ForestThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeForestPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeForestDark</item>
+        <item name="colorAccent">@color/colorThemeForestAccent</item>
+        <item name="android:windowBackground">@color/colorThemeForestDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeForestDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeForestTextPri</item>
+        <item name="android:textColor">@color/colorThemeForestTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeForestDarkTrans</item>
+    </style>
+    <style name="ForestThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeForestPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeForestDark</item>
+        <item name="colorAccent">@color/colorThemeForestAccent</item>
+        <item name="android:windowBackground">@color/colorThemeForestPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeForestPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeForestTextPri</item>
+        <item name="android:textColor">@color/colorThemeForestTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeForestPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <style name="RainThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRainPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRainDark</item>
+        <item name="colorAccent">@color/colorThemeRainAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRainPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRainPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRainTextPri</item>
+        <item name="android:textColor">@color/colorThemeRainTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRainDarkTrans</item>
+    </style>
+    <style name="RainThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRainPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRainDark</item>
+        <item name="colorAccent">@color/colorThemeRainAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRainPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRainPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRainTextPri</item>
+        <item name="android:textColor">@color/colorThemeRainTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRainPriTrans</item>
+    </style>
+
+
+    <!--theme-->
+    <style name="PrimeThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemePrimePrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemePrimeDark</item>
+        <item name="colorAccent">@color/colorThemePrimeAccent</item>
+        <item name="android:windowBackground">@color/colorThemePrimeDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemePrimeDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemePrimeTextPri</item>
+        <item name="android:textColor">@color/colorThemePrimeTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemePrimeDarkTrans</item>
+    </style>
+    <style name="PrimeThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemePrimePrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemePrimeDark</item>
+        <item name="colorAccent">@color/colorThemePrimeAccent</item>
+        <item name="android:windowBackground">@color/colorThemePrimePriTrans</item>
+        <item name="android:colorBackground">@color/colorThemePrimePriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemePrimeTextPri</item>
+        <item name="android:textColor">@color/colorThemePrimeTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemePrimePriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="BluBerryThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBluBerryPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBluBerryDark</item>
+        <item name="colorAccent">@color/colorThemeBluBerryAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBluBerryDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBluBerryDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBluBerryTextPri</item>
+        <item name="android:textColor">@color/colorThemeBluBerryTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBluBerryDarkTrans</item>
+    </style>
+    <style name="BluBerryThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBluBerryPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBluBerryDark</item>
+        <item name="colorAccent">@color/colorThemeBluBerryAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBluBerryPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBluBerryPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBluBerryTextPri</item>
+        <item name="android:textColor">@color/colorThemeBluBerryTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBluBerryPriTrans</item>
+    </style>
+    <!--theme-->
+
+    <!--theme-->
+    <style name="GrnBluThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeGrnBluPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeGrnBluDark</item>
+        <item name="colorAccent">@color/colorThemeGrnBluAccent</item>
+        <item name="android:windowBackground">@color/colorThemeGrnBluDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeGrnBluDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeGrnBluTextPri</item>
+        <item name="android:textColor">@color/colorThemeGrnBluTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeGrnBluDarkTrans</item>
+    </style>
+    <style name="GrnBluThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeGrnBluPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeGrnBluDark</item>
+        <item name="colorAccent">@color/colorThemeGrnBluAccent</item>
+        <item name="android:windowBackground">@color/colorThemeGrnBluPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeGrnBluPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeGrnBluTextPri</item>
+        <item name="android:textColor">@color/colorThemeGrnBluTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeGrnBluPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="IcyThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeIcyPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeIcyDark</item>
+        <item name="colorAccent">@color/colorThemeIcyAccent</item>
+        <item name="android:windowBackground">@color/colorThemeIcyDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeIcyDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeIcyTextPri</item>
+        <item name="android:textColor">@color/colorThemeIcyTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeIcyDarkTrans</item>
+    </style>
+    <style name="IcyThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeIcyPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeIcyDark</item>
+        <item name="colorAccent">@color/colorThemeIcyAccent</item>
+        <item name="android:windowBackground">@color/colorThemeIcyPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeIcyPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeIcyTextPri</item>
+        <item name="android:textColor">@color/colorThemeIcyTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeIcyPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="BirdBerriesThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBirdBerriesPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBirdBerriesDark</item>
+        <item name="colorAccent">@color/colorThemeBirdBerriesAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBirdBerriesDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBirdBerriesDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBirdBerriesTextPri</item>
+        <item name="android:textColor">@color/colorThemeBirdBerriesTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBirdBerriesDarkTrans</item>
+    </style>
+    <style name="BirdBerriesThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBirdBerriesPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBirdBerriesDark</item>
+        <item name="colorAccent">@color/colorThemeBirdBerriesAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBirdBerriesPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBirdBerriesPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBirdBerriesTextPri</item>
+        <item name="android:textColor">@color/colorThemeBirdBerriesTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBirdBerriesPriTrans</item>
+    </style>
+    <!--theme-->
+    <style name="TropThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeTropPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeTropDark</item>
+        <item name="colorAccent">@color/colorThemeTropAccent</item>
+        <item name="android:windowBackground">@color/colorThemeTropDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeTropDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeTropTextPri</item>
+        <item name="android:textColor">@color/colorThemeTropTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeTropDarkTrans</item>
+    </style>
+    <style name="TropThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeTropPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeTropDark</item>
+        <item name="colorAccent">@color/colorThemeTropAccent</item>
+        <item name="android:windowBackground">@color/colorThemeTropPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeTropPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeTropTextPri</item>
+
+        <item name="android:textColor">@color/colorThemeTropTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeTropPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="CinnamonThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeCinnamonPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeCinnamonDark</item>
+        <item name="colorAccent">@color/colorThemeCinnamonAccent</item>
+        <item name="android:windowBackground">@color/colorThemeCinnamonDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeCinnamonDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeCinnamonTextPri</item>
+        <item name="android:textColor">@color/colorThemeCinnamonTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeCinnamonDarkTrans</item>
+    </style>
+    <style name="CinnamonThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeCinnamonPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeCinnamonDark</item>
+        <item name="colorAccent">@color/colorThemeCinnamonAccent</item>
+        <item name="android:windowBackground">@color/colorThemeCinnamonPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeCinnamonPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeCinnamonTextPri</item>
+        <item name="android:textColor">@color/colorThemeCinnamonTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeCinnamonPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <style name="NightThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeNightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeNightDark</item>
+        <item name="colorAccent">@color/colorThemeNightAccent</item>
+        <item name="android:windowBackground">@color/colorThemeNightDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeNightDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeNightTextPri</item>
+        <item name="android:textColor">@color/colorThemeNightTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeNightDarkTrans</item>
+    </style>
+    <style name="NightThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeNightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeNightDark</item>
+        <item name="colorAccent">@color/colorThemeNightAccent</item>
+        <item name="android:windowBackground">@color/colorThemeNightPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeNightPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeNightTextPri</item>
+        <item name="android:textColor">@color/colorThemeNightTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeNightPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="FreshThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeFreshPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeFreshDark</item>
+        <item name="colorAccent">@color/colorThemeFreshAccent</item>
+        <item name="android:windowBackground">@color/colorThemeFreshDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeFreshDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeFreshTextPri</item>
+        <item name="android:textColor">@color/colorThemeFreshTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeFreshDarkTrans</item>
+    </style>
+    <style name="FreshThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeFreshPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeFreshDark</item>
+        <item name="colorAccent">@color/colorThemeFreshAccent</item>
+        <item name="android:windowBackground">@color/colorThemeFreshPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeFreshPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeFreshTextPri</item>
+        <item name="android:textColor">@color/colorThemeFreshTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeFreshPriTrans</item>
+    </style>
+
+    <!--theme-->
+    <style name="GreensThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeGreensPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeGreensDark</item>
+        <item name="colorAccent">@color/colorThemeGreensAccent</item>
+        <item name="android:windowBackground">@color/colorThemeGreensDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeGreensDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeGreensTextPri</item>
+        <item name="android:textColor">@color/colorThemeGreensTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeGreensDarkTrans</item>
+    </style>
+    <style name="GreensThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeGreensPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeGreensDark</item>
+        <item name="colorAccent">@color/colorThemeGreensAccent</item>
+        <item name="android:windowBackground">@color/colorThemeGreensPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeGreensPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeGreensTextPri</item>
+        <item name="android:textColor">@color/colorThemeGreensTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeGreensPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <!--theme-->
+    <style name="RoyalFThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRoyalFPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRoyalFDark</item>
+        <item name="colorAccent">@color/colorThemeRoyalFAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRoyalFDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRoyalFDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRoyalFTextPri</item>
+        <item name="android:textColor">@color/colorThemeRoyalFTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRoyalFDarkTrans</item>
+    </style>
+    <style name="RoyalFThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRoyalFPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRoyalFDark</item>
+        <item name="colorAccent">@color/colorThemeRoyalFAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRoyalFPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRoyalFPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRoyalFTextPri</item>
+        <item name="android:textColor">@color/colorThemeRoyalFTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRoyalFPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <!--theme-->
+    <style name="BouquetsThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBouquetsPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBouquetsDark</item>
+        <item name="colorAccent">@color/colorThemeBouquetsAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBouquetsDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBouquetsDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBouquetsTextPri</item>
+        <item name="android:textColor">@color/colorThemeBouquetsTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBouquetsDarkTrans</item>
+    </style>
+    <style name="BouquetsThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeBouquetsPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeBouquetsDark</item>
+        <item name="colorAccent">@color/colorThemeBouquetsAccent</item>
+        <item name="android:windowBackground">@color/colorThemeBouquetsPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeBouquetsPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeBouquetsTextPri</item>
+        <item name="android:textColor">@color/colorThemeBouquetsTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeBouquetsPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <!--theme-->
+    <style name="RedWedThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRedWedPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRedWedDark</item>
+        <item name="colorAccent">@color/colorThemeRedWedAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRedWedDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRedWedDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRedWedTextPri</item>
+        <item name="android:textColor">@color/colorThemeRedWedTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRedWedDarkTrans</item>
+    </style>
+    <style name="RedWedThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeRedWedPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeRedWedDark</item>
+        <item name="colorAccent">@color/colorThemeRedWedAccent</item>
+        <item name="android:windowBackground">@color/colorThemeRedWedPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeRedWedPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeRedWedTextPri</item>
+        <item name="android:textColor">@color/colorThemeRedWedTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeRedWedPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+    <!--theme-->
+    <style name="SunlightThemePri" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeSunlightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeSunlightDark</item>
+        <item name="colorAccent">@color/colorThemeSunlightAccent</item>
+        <item name="android:windowBackground">@color/colorThemeSunlightDarkTrans</item>
+        <item name="android:colorBackground">@color/colorThemeSunlightDarkTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeSunlightTextPri</item>
+        <item name="android:textColor">@color/colorThemeSunlightTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeSunlightDarkTrans</item>
+    </style>
+    <style name="SunlightThemeSec" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorThemeSunlightPrimary</item>
+        <item name="colorPrimaryDark">@color/colorThemeSunlightDark</item>
+        <item name="colorAccent">@color/colorThemeSunlightAccent</item>
+        <item name="android:windowBackground">@color/colorThemeSunlightPriTrans</item>
+        <item name="android:colorBackground">@color/colorThemeSunlightPriTrans</item>
+        <item name="android:textColorPrimary">@color/colorThemeSunlightTextPri</item>
+        <item name="android:textColor">@color/colorThemeSunlightTextPri</item>
+        <item name="cardBackgroundColor">@color/colorThemeSunlightPriTrans</item>
+    </style>
+
+    <!--theme-->
+
+
+
+
+
+
+
+
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.NoActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.Light"/>
+
+</resources>

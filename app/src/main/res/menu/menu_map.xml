@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:contentScrim="?colorPrimary"
+    tools:context=".map.MapActivity">
+    <item
+        android:id="@+id/action_book"
+        android:icon="@drawable/ic_action_book"
+        android:orderInCategory="100"
+        android:title="Book"
+        app:showAsAction="ifRoom"
+    />
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share"
+        android:orderInCategory="200"
+        android:title="Share"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="400"
+        android:title="About"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="300"
+        android:title="Settings"
+        app:showAsAction="never"/>
+</menu>

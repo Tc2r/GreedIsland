@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPriTemp">#a80a5bdd</color>
+    <color name="colorSecTemp">#6b06cdf0</color>
+    <color name="colorBlack">#000000</color>
+
+    <!--Themes!-->
+
+    <!--Earthy!-->
+    <color name="colorThemeEarthDarkTrans">#9b45201a</color>
+    <color name="colorThemeEarthDark">#45201a</color>
+    <color name="colorThemeEarthAccent">#00f9f9</color>
+    <color name="colorThemeEarthPriTrans">#6bA43820</color>
+    <color name="colorThemeEarthPrimary">#bA5536</color>
+    <color name="colorThemeEarthTextPri">#ffffff</color>
+    <!--Earthy!-->
+
+    <!--Ocean!-->
+    <color name="colorThemeOceanDarkTrans">#9b07575B</color>
+    <color name="colorThemeOceanDark">#003B46</color>
+    <color name="colorThemeOceanAccent">#32cd32</color>
+    <color name="colorThemeOceanPriTrans">#6b66A5AD</color>
+    <color name="colorThemeOceanPrimary">#66A5AD</color>
+    <color name="colorThemeOceanTextPri">#C4DFE6</color>
+
+    <!--Ocean!-->
+
+
+    <!--Forest!-->
+    <color name="colorThemeForestDark">#2e4600</color>
+    <color name="colorThemeForestDarkTrans">#9b3e7319</color>
+    <color name="colorThemeForestPrimary">#486B00</color>
+    <color name="colorThemeForestPriTrans">#9b6dbb30</color>
+    <color name="colorThemeForestAccent">#23a2c5</color>
+
+    <color name="colorThemeForestTextPri">#a5f531</color>
+
+    <!--Forest!-->
+
+    <!--Rain!-->
+    <color name="colorThemeRainDark">#021C1E</color>
+    <color name="colorThemeRainDarkTrans">#9b021C1E</color>
+    <color name="colorThemeRainPrimary">#004445</color>
+    <color name="colorThemeRainPriTrans">#6b2C7873</color>
+    <color name="colorThemeRainAccent">#23a2c5</color>
+    <color name="colorThemeRainTextPri">#cfe5ef</color>
+    <!--Rain!-->
+
+    <!--Primary!-->
+    <color name="colorThemePrimeDark">#375E97</color>
+    <color name="colorThemePrimeDarkTrans">#9b375E97</color>
+    <color name="colorThemePrimePrimary">#fb6542</color>
+    <color name="colorThemePrimePriTrans">#aeffcc00</color>
+
+    <color name="colorThemePrimeAccent">#42FB65</color>
+    <color name="colorThemePrimeTextPri">#42FB65</color>
+    <!--Primary!-->
+
+
+    <!--PlayG&B!-->
+    <color name="colorThemeGrnBluDark">#324851</color>
+    <color name="colorThemeGrnBluDarkTrans">#9b324851</color>
+    <color name="colorThemeGrnBluPrimary">#14bd4a</color>
+    <color name="colorThemeGrnBluPriTrans">#9b7DA3A1</color>
+
+    <color name="colorThemeGrnBluAccent">#1995d9</color>
+    <color name="colorThemeGrnBluTextPri">#ffffff</color>
+    <!--PlayG&B!-->
+
+    <!--IcyBlue!-->
+    <color name="colorThemeIcyDark">#f1f1f2</color>
+    <color name="colorThemeIcyDarkTrans">#9b5dabc8</color>
+    <color name="colorThemeIcyPrimary">#A1D6E2</color>
+    <color name="colorThemeIcyPriTrans">#6b1995AD</color>
+
+    <color name="colorThemeIcyAccent">#e2a1d6</color>
+    <color name="colorThemeIcyTextPri">#fde3ab</color>
+    <!--IcyBlue!-->
+
+
+    <!--Birds & Berries!-->
+    <color name="colorThemeBirdBerriesDark">#5D535E</color>
+    <color name="colorThemeBirdBerriesDarkTrans">#9bEc96A4</color>
+    <color name="colorThemeBirdBerriesPrimary">#9A9EAB</color>
+    <color name="colorThemeBirdBerriesPriTrans">#adDFE166</color>
+
+    <color name="colorThemeBirdBerriesAccent">#e2a1d6</color>
+    <color name="colorThemeBirdBerriesTextPri">#FDFFFF</color>
+    <!--Birds & Berries!-->
+
+    <!--Tropical!-->
+    <color name="colorThemeTropDark">#F52549</color>
+    <color name="colorThemeTropDarkTrans">#9bF52549</color>
+    <color name="colorThemeTropPrimary">#FA6775</color>
+    <color name="colorThemeTropPriTrans">#aeFA6775</color>
+
+    <color name="colorThemeTropAccent">#c1effd</color>
+    <color name="colorThemeTropTextPri">#f8ef51</color>
+    <!--Tropical!-->
+
+    <!--Blue Berry!-->
+    <color name="colorThemeBluBerryDark">#1E1F26</color>
+    <color name="colorThemeBluBerryDarkTrans">#9b4D648D</color>
+    <color name="colorThemeBluBerryPrimary">#283655</color>
+    <color name="colorThemeBluBerryPriTrans">#9bd0e1f9</color>
+
+    <color name="colorThemeBluBerryAccent">#648d4d</color>
+    <color name="colorThemeBluBerryTextPri">#FDFFFF</color>
+    <!--Blue Berry!-->
+
+    <!--Cinnamon!-->
+    <color name="colorThemeCinnamonDark">#AF4425</color>
+    <color name="colorThemeCinnamonDarkTrans">#9bAF4425</color>
+    <color name="colorThemeCinnamonPrimary">#662E1C</color>
+    <color name="colorThemeCinnamonPriTrans">#6bFBCB7B</color>
+
+    <color name="colorThemeCinnamonAccent">#1c662e</color>
+    <color name="colorThemeCinnamonTextPri">#e1e7dd</color>
+    <!--Cinnamon!-->
+
+    <!--Day&Night!-->
+    <color name="colorThemeNightDark">#011A27</color>
+    <color name="colorThemeNightDarkTrans">#9bF0810F</color>
+    <color name="colorThemeNightPrimary">#0d3460</color>
+    <color name="colorThemeNightPriTrans">#9bE6Df44</color>
+
+    <color name="colorThemeNightAccent">#f9fba5</color>
+    <color name="colorThemeNightTextPri">#fdfad0</color>
+    <!--Day&Night!-->
+
+    <!--Fresh & Energetic!-->
+    <color name="colorThemeFreshDark">#34675C</color>
+    <color name="colorThemeFreshDarkTrans">#9b4CB5F5</color>
+    <color name="colorThemeFreshPrimary">#B7B8B6</color>
+    <color name="colorThemeFreshPriTrans">#9ba0eb0a</color>
+
+    <color name="colorThemeFreshAccent">#b5f54c</color>
+    <color name="colorThemeFreshTextPri">#FbFFFF</color>
+    <!--Fresh & Energetic!-->
+
+
+    <!--Fresh Greens!-->
+    <color name="colorThemeGreensDark">#264301</color>
+    <color name="colorThemeGreensDarkTrans">#9bb9ec11</color>
+    <color name="colorThemeGreensPrimary">#68A225</color>
+    <color name="colorThemeGreensPriTrans">#9b5c8a03</color>
+
+    <color name="colorThemeGreensAccent">#ECFB75</color>
+    <color name="colorThemeGreensTextPri">#fafaea</color>
+    <!--Fresh Greens!-->
+
+    <!--Royal Flush!-->
+    <color name="colorThemeRoyalFDark">#1b0c43</color>
+    <color name="colorThemeRoyalFDarkTrans">#9b8f2ff9</color>
+    <color name="colorThemeRoyalFPrimary">#391e61</color>
+    <color name="colorThemeRoyalFPriTrans">#9bcd69fd</color>
+
+    <color name="colorThemeRoyalFAccent">#fcfdfd</color>
+    <color name="colorThemeRoyalFTextPri">#fdebfd</color>
+    <!--Royal Flush!-->
+
+    <!--Bouquets!-->
+    <color name="colorThemeBouquetsDark">#910666</color>
+    <color name="colorThemeBouquetsDarkTrans">#9bd36bea</color>
+    <color name="colorThemeBouquetsPrimary">#b920bf</color>
+    <color name="colorThemeBouquetsPriTrans">#9bfabef8</color>
+
+    <color name="colorThemeBouquetsAccent">#314f13</color>
+    <color name="colorThemeBouquetsTextPri">#e3e4e8</color>
+    <!--Royal Flush!-->
+
+    <!--Red Wedding!-->
+    <color name="colorThemeRedWedDark">#600001</color>
+    <color name="colorThemeRedWedDarkTrans">#9bf61820</color>
+    <color name="colorThemeRedWedPrimary">#dc1712</color>
+    <color name="colorThemeRedWedPriTrans">#9bd35c62</color>
+
+    <color name="colorThemeRedWedAccent">#815b3a</color>
+    <color name="colorThemeRedWedTextPri">#e3e4e8</color>
+    <!--Red Wedding!-->
+
+    <!--Sunlight!-->
+    <color name="colorThemeSunlightDark">#d7a50f</color>
+    <color name="colorThemeSunlightDarkTrans">#9beabd13</color>
+    <color name="colorThemeSunlightPrimary">#fcfa1b</color>
+    <color name="colorThemeSunlightPriTrans">#9bfdfd3d</color>
+
+    <color name="colorThemeSunlightAccent">#4b69c8</color>
+    <color name="colorThemeSunlightTextPri">#000207</color>
+    <!--Red Wedding!-->
+
+
+
+
+</resources>
+
