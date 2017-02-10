@@ -33,7 +33,7 @@ public class AboutMuniabFragment extends Fragment {
 
 
 		// YOUR POSITION TITLE IN THE PROJECT.
-		yourTitle.setText("Graphic Designer");
+		yourTitle.setText(R.string.Team_Munaib_Title);
 
 
 		// YOUR CARD NUMBER (FAVORITE NUMBER)
@@ -44,7 +44,7 @@ public class AboutMuniabFragment extends Fragment {
 		yourRank.setText("X");
 
 		// YOUR DESCRIPTION
-		yourDescription.setText("Look at what my cat just done! \n *cough* \n I\'m a web developer with a passion for design! \n Have an idea or want something designed? Contact me (@munaibh)!");
+		yourDescription.setText(R.string.Team_Munaib_Desc);
 
 
 		// YOUR IMAGE (PLEASE SEND ME A 664X374 IMAGE TO USE FOR YOUR CARD

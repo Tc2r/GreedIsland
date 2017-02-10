@@ -33,7 +33,7 @@ public class AboutDanielFragment extends Fragment {
 
 
 		// YOUR POSITION TITLE IN THE PROJECT.
-		yourTitle.setText("Junior\n Graphic Designer");
+		yourTitle.setText(R.string.Team_Daniel_Title);
 
 
 		// YOUR CARD NUMBER (FAVORITE NUMBER)
@@ -44,7 +44,7 @@ public class AboutDanielFragment extends Fragment {
 		yourRank.setText("2Star\n Hunter");
 
 		// YOUR DESCRIPTION
-		yourDescription.setText("Youngest In The Group, And I Love Killua");
+		yourDescription.setText(R.string.Team_Daniel_Desc);
 
 
 		// YOUR IMAGE (PLEASE SEND ME A 664X374 IMAGE TO USE FOR YOUR CARD

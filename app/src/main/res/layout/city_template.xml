@@ -4,57 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.tc2r.greedisland.map.StartingPoint"
-    android:layout_marginTop="30dp">
-
-
+    android:layout_marginTop="30dp"
+    tools:context="com.tc2r.greedisland.map.Start">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_gravity="center_horizontal">
+        android:padding="10dp">
 
 
         <android.support.v7.widget.CardView
+            style="?backgroundPri"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?backgroundPri"
 
-            app:cardCornerRadius="10dp"
-            app:cardElevation="6dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="6dp"
             >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tv_Home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:text="SET HOMETOWN "
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:clickable="true"
-                    android:visibility="gone"
-                    />
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_loc_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:text="The Windy City of"
+                    android:text="@string/maps_City_Title"
                     android:textAlignment="center"
-                    android:textSize="28dp"
+                    android:textSize="28sp"
                     android:textStyle="italic"
                     />
 
@@ -63,6 +48,7 @@
                 android:layout_width="300dp"
                 android:layout_height="250dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/default_Content_Description"
                 android:scaleType="centerCrop"/>
 
 
@@ -71,42 +57,125 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:text="Chicago"
+                    android:text="@string/maps_City_Name"
                     android:textAlignment="center"
-                    android:textSize="36dp"
+                    android:textSize="36sp"
                     android:textStyle="bold"
                     />
+            </LinearLayout>
 
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            style="?backgroundSec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="6dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_Home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:lines="1"
+                    android:text="@string/maps_Set_Base_Button"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    />
 
                 <TextView
                     android:id="@+id/tv_TRAVEL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:text="TRAVEL"
-                    android:textAlignment="center"
-                    android:textSize="36dp"
-                    android:textStyle="bold"
                     android:clickable="true"
+                    android:lines="1"
+                    android:text="@string/maps_Set_Travel_Button"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/currentHomeView"
+            style="?backgroundSec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="visible"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="6dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/listTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:clickable="true"
+                    android:lines="1"
+                    android:text="@string/Map_Locals_Title"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
                     />
 
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/listTitle"
+                    android:layout_centerHorizontal="true"/>
 
-            </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/localsView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@id/listTitle"
+                    android:layout_below="@id/listTitle"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
 
         <android.support.v7.widget.CardView
-            android:layout_marginTop="30dp"
+            style="?backgroundSec"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="?backgroundSec"
+            android:layout_marginTop="30dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
             app:contentPadding="10dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             >
 
             <TextView
@@ -114,17 +183,16 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_location"
-                android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
 
                 android:ems="10"
 
                 android:maxLines="30"
-                android:singleLine="false"
-                android:text="The windy city is a city of wind. Made famous by the fact that it is a city of wind may the winds never stop winning wind wind blah blah blah."
+                android:text="@string/maps_City_Description_Default"
                 android:textAlignment="center"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:textStyle="bold"/>
         </android.support.v7.widget.CardView>
 

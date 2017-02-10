@@ -45,29 +45,27 @@
                 android:id="@+id/card_designation"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:text="1"
-                android:textColor="@android:color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 />
 
             <TextView
                 android:id="@+id/card_title"
                 android:layout_width="150dp"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
+                android:gravity="center_vertical"
+                android:lines="2"
+                android:maxLines="2"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
-                android:maxLines="2"
-                android:lines="2"
-                android:text="1 1 1 1 1 1 1 1 1 1 1 1 1"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:textStyle="bold"
 
                 />
@@ -79,8 +77,7 @@
                 android:gravity="center_vertical"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
-                android:text="SS-3"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 />
                 </LinearLayout>
@@ -91,18 +88,18 @@
             android:layout_height="187dp"
             android:layout_marginBottom="16dp"
             android:background="#c8c9b3"
-            android:padding="5dp"
             android:gravity="center"
+            android:padding="5dp"
             >
 
             <ImageView
                 android:id="@+id/card_image"
                 android:layout_width="322dp"
                 android:layout_height="181dp"
-                android:background="#fdec00"
-                android:src="@drawable/img_placeholder"
                 android:layout_gravity="center"
+                android:background="#fdec00"
                 android:foregroundGravity="center"
+                android:src="@drawable/placeholder"
 
                 />
 
@@ -121,9 +118,9 @@
             >
 
             <LinearLayout
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:background="#000000"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -135,10 +132,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#d0d5d4"
-                    android:textAlignment="center"
                     android:padding="15dp"
+                    android:textAlignment="center"
                     android:textColor="@android:color/black"
-                    android:text="This is where the description of the card goes."
                     android:textSize="18sp"
                     />
             </LinearLayout>

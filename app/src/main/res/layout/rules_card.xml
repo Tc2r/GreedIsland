@@ -2,35 +2,36 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="?backgroundSec"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="?backgroundSec"
     android:layout_marginTop="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="10dp"
     app:cardElevation="8dp"
     app:contentPadding="4dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="horizontal"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/rule_image"
             android:layout_width="130dp"
             android:layout_height="130dp"
+            android:contentDescription="@string/default_Content_Description"
             />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:background="@android:color/transparent"
-            android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -38,9 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="WELCOME TO GREED ISLAND"
-                android:textAppearance="?android:textAppearanceLarge"
                 android:background="@android:color/transparent"
+                android:text="@string/book_Rules_title"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:textStyle="bold"
 
                 />
@@ -49,9 +50,9 @@
                 android:id="@+id/rule_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
                 android:layout_marginTop="2dp"
-                android:text="The goal of the game is to complete the book."
+                android:background="@android:color/transparent"
+                android:text="@string/book_Rules_Text"
                 android:textAppearance="?android:textAppearanceSmall"/>
 
         </LinearLayout>

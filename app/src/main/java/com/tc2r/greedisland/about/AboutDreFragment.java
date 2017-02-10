@@ -33,7 +33,7 @@ public class AboutDreFragment extends Fragment {
 
 
 		// YOUR POSITION TITLE IN THE PROJECT.
-		yourTitle.setText("Android Developer");
+		yourTitle.setText(R.string.Team_Dre_Title);
 
 
 		// YOUR CARD NUMBER (FAVORITE NUMBER)
@@ -44,8 +44,7 @@ public class AboutDreFragment extends Fragment {
 		yourRank.setText("SSJ");
 
 		// YOUR DESCRIPTION
-		yourDescription.setText("Nudennie White \n" +
-						"Got an Ideal? Hit me up!");
+		yourDescription.setText(R.string.Team_Dre_Desc);
 
 
 		// YOUR IMAGE (PLEASE SEND ME A 664X374 IMAGE TO USE FOR YOUR CARD

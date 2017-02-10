@@ -25,62 +25,13 @@ import java.util.Random;
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.BaseHolder> {
 
 
+	boolean init = false;
 	private Context context;
 	private List<GreedCard> cardList;
 	private boolean[] revealed;
 	private boolean local;
 	private int count = 0;
-	boolean init = false;
 	private String hidCardNum;
-
-	public class ViewHolder0 extends BaseHolder {
-		ImageView card_image;
-		TextView hiddenCardNum;
-
-		public ViewHolder0(View itemView) {
-			super(itemView);
-			hiddenCardNum = (TextView) itemView.findViewById(R.id.hidden_card_number);
-
-		}
-	}
-
-	public class ViewHolder1 extends BaseHolder {
-		ImageView card_image;
-		TextView card_title, card_description, card_thumbnail, card_designation, card_ranklimit;
-		int card_limit, card_number;
-		LinearLayout cardBorder;
-
-		public ViewHolder1(View itemView) {
-			super(itemView);
-			card_title = (TextView) itemView.findViewById(R.id.card_title);
-			card_description = (TextView) itemView.findViewById(R.id.card_description);
-			card_image = (ImageView) itemView.findViewById(R.id.card_image);
-			card_designation = (TextView) itemView.findViewById(R.id.card_designation);
-			card_ranklimit = (TextView) itemView.findViewById(R.id.card_ranklimit);
-			cardBorder = (LinearLayout) itemView.findViewById(R.id.text_border_layout);
-
-
-		}
-	}
-
-	@Override
-	public int getItemViewType(int position) {
-
-			if (revealed.length > cardList.get(position).getId() && revealed[cardList.get(position).getId()]) {
-				return 1;
-			} else {
-				return 0;
-			}
-	}
-	public class BaseHolder extends RecyclerView.ViewHolder {
-		ImageView card_image;
-		TextView card_title, card_description, card_thumbnail, card_designation, card_ranklimit;
-		int card_limit, card_number;
-
-		public BaseHolder(View itemView) {
-			super(itemView);
-		}
-	}
 
 	public CardAdapter(Context context, List<GreedCard> cardList, boolean local, boolean[] cardCheck) {
 		this.context = context;
@@ -120,7 +71,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.BaseHolder> {
 					viewHolder1.card_ranklimit.setText(ranklimit);
 					// Loading images with glide library
 					Glide.with(context).load(cardList.get(position).getImageItem())
-									.placeholder(R.drawable.img_placeholder)
+									.placeholder(R.drawable.placeholder)
 									.centerCrop()
 									.into(viewHolder1.card_image);
 				} else {
@@ -155,7 +106,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.BaseHolder> {
 
 					final String newUrl = "http://res.cloudinary.com/munaibh/image/upload/v1485443356/HxH/" + (cardList.get(position).getId()) + ".png";
 					Glide.with(context).load(newUrl)
-									.placeholder(R.drawable.img_placeholder)
+									.placeholder(R.drawable.placeholder)
 									.centerCrop()
 									.crossFade()
 									.into(viewHolder1.card_image);
@@ -197,8 +148,58 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.BaseHolder> {
 	}
 
 	@Override
+	public int getItemViewType(int position) {
+
+		if (revealed.length > cardList.get(position).getId() && revealed[cardList.get(position).getId()]) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	@Override
 	public int getItemCount() {
 		return cardList.size();
+	}
+
+	public class ViewHolder0 extends BaseHolder {
+		ImageView card_image;
+		TextView hiddenCardNum;
+
+		public ViewHolder0(View itemView) {
+			super(itemView);
+			hiddenCardNum = (TextView) itemView.findViewById(R.id.hidden_card_number);
+
+		}
+	}
+
+	private class ViewHolder1 extends BaseHolder {
+		ImageView card_image;
+		TextView card_title, card_description, card_thumbnail, card_designation, card_ranklimit;
+		int card_limit, card_number;
+		LinearLayout cardBorder;
+
+		public ViewHolder1(View itemView) {
+			super(itemView);
+			card_title = (TextView) itemView.findViewById(R.id.card_title);
+			card_description = (TextView) itemView.findViewById(R.id.card_description);
+			card_image = (ImageView) itemView.findViewById(R.id.card_image);
+			card_designation = (TextView) itemView.findViewById(R.id.card_designation);
+			card_ranklimit = (TextView) itemView.findViewById(R.id.card_ranklimit);
+			cardBorder = (LinearLayout) itemView.findViewById(R.id.text_border_layout);
+
+
+		}
+	}
+
+	public class BaseHolder extends RecyclerView.ViewHolder {
+		ImageView card_image;
+		TextView card_title, card_description, card_thumbnail, card_designation, card_ranklimit;
+		int card_limit, card_number;
+
+		public BaseHolder(View itemView) {
+			super(itemView);
+		}
 	}
 
 

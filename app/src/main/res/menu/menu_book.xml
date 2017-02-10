@@ -3,24 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".book.BookActivity"
+    app:contentScrim="?colorPrimary"
 
-    app:contentScrim="?colorPrimary">
+    tools:context=".book.BookActivity">
 
     <item android:id="@+id/action_share"
-          android:title="Share"
           android:icon="@drawable/ic_share"
           android:orderInCategory="200"
+          android:title="@string/menu_Share_Title"
           app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_settings"
-          android:title="Settings"
           android:orderInCategory="300"
+          android:title="@string/menu_Settings_Title"
           app:showAsAction="never"/>
 
     <item android:id="@+id/action_about"
-          android:title="About"
           android:orderInCategory="400"
+          android:title="@string/menu_About_Title"
           app:showAsAction="never"/>
 
     <!--<item-->

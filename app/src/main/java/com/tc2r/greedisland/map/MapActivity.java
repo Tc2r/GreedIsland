@@ -1,5 +1,6 @@
 package com.tc2r.greedisland.map;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,7 +15,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,7 +41,8 @@ public class MapActivity extends AppCompatActivity {
 	private RelativeLayout tutorial;
 	private int tutorialCounter = 4;
 	private TextView tutText;
-	private boolean tutorialPreference;
+	private boolean tutorialPreference, mapTut;
+	private int position = 4;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,10 +50,16 @@ public class MapActivity extends AppCompatActivity {
 		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
 		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
 		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
-		String hunterName = setting.getString("Hunter_Name_Pref", "john");
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
+		String hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
+		mapTut = setting.getBoolean("MapTut", true);
 		CheckTheme();
 		SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
+
+		// Auto Set Viewpager Screen
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			position = extras.getInt("viewpager_position");
+		}
 
 
 		/// ~~~ DRAW TO SCREEN
@@ -71,7 +78,7 @@ public class MapActivity extends AppCompatActivity {
 		// Show Tutorial Only In Some Conditions
 		tutorial = (RelativeLayout) findViewById(R.id.map_tutorial);
 		tutText = (TextView) findViewById(R.id.tutorial_text);
-		tutText.setText("Welcome to the Island!");
+		tutText.setText(R.string.Tutorial_Map_Text_1);
 		tutorialCounter = 0;
 		tutorial.setEnabled(false);
 		tutorial.setOnClickListener(new View.OnClickListener() {
@@ -81,28 +88,32 @@ public class MapActivity extends AppCompatActivity {
 				switch (tutorialCounter) {
 					case 0:
 						// Second Message
-						tutText.setText("You are free to travel to different locations, but remember most trips will take a day at least. \n\n");
+						tutText.setText(R.string.Tutorial_Map_Text_2);
 						tutorialCounter++;
 						break;
 					case 1:
 						// Second Message
-						tutText.setText("Some cards are unique to different locations. You'll have to set up base in those locations in order to recieve them.");
+						tutText.setText(R.string.Tutorial_Map_Text_3);
 						tutorialCounter++;
 						break;
 					case 2:
 						// Second Message
-						tutText.setText("(Coming Soon) You may use spell cards on any location you travel to, they will effect players with bases in that location.");
+						tutText.setText(R.string.Tutorial_Map_Text_4);
 						tutorialCounter++;
 						break;
 					case 3:
 						// Second Message
-						tutText.setText("But Beware! Players visiting your base location can steal from you!");
+						tutText.setText(R.string.Tutorial_Map_Text_5);
 						tutorialCounter++;
 						break;
 					case 4:
 						// Second Message
 						tutorial.setVisibility(View.GONE);
 						tutorial.setEnabled(false);
+						SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putBoolean("MapTut", false);
+						editor.apply();
 						break;
 				}
 			}
@@ -114,7 +125,7 @@ public class MapActivity extends AppCompatActivity {
 			tutorial.setEnabled(true);
 			firstTimeEditor.putBoolean("first_Pref", false);
 			firstTimeEditor.commit();
-		}else if(tutorialPreference){
+		} else if (tutorialPreference && mapTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
@@ -137,11 +148,6 @@ public class MapActivity extends AppCompatActivity {
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
 			}
-			@Override
-			public void onPageScrollStateChanged(int state) {
-				Log.wtf("This", "OnPageStateChanged");
-
-			}
 
 			@Override
 			public void onPageSelected(int position) {
@@ -157,53 +163,58 @@ public class MapActivity extends AppCompatActivity {
 				switch(position){
 					case 0:
 						//Log.wtf("This", "STARTING TOWN!");
-						collapsingToolbarLayout.setTitle("Starting Point");
-						headerImage.setImageResource(R.drawable.startzone_header);
+						collapsingToolbarLayout.setTitle("Masadora");
+						headerImage.setImageResource(R.drawable.header_masadora);
 
 						break;
 					case 1:
 						//Log.wtf("This", "STARTING TOWN!");
-						collapsingToolbarLayout.setTitle("Masadora");
-						headerImage.setImageResource(R.drawable.masadora_header);
+						collapsingToolbarLayout.setTitle("Soufrabi");
+						headerImage.setImageResource(R.drawable.header_soufrabi);
 
 						break;
 					case 2:
 						//Log.wtf("This", "STARTING TOWN!");
-						collapsingToolbarLayout.setTitle("Soufrabi");
-						headerImage.setImageResource(R.drawable.soufrabi_header);
+						collapsingToolbarLayout.setTitle("Aiai");
+						headerImage.setImageResource(R.drawable.header_hisoka);
 
 						break;
 					case 3:
-						//Log.wtf("This", "STARTING TOWN!");
-						collapsingToolbarLayout.setTitle("Aiai");
-						headerImage.setImageResource(R.drawable.hisoka_header);
+						//Log.wtf("This", "Antokiba!");
+						collapsingToolbarLayout.setTitle("Antokiba");
+						headerImage.setImageResource(R.drawable.header_antokiba);
 
 						break;
 					case 4:
-						//Log.wtf("This", "Antokiba!");
-						collapsingToolbarLayout.setTitle("Antokiba");
-						headerImage.setImageResource(R.drawable.antokiba_header);
+						//Log.wtf("This", "STARTING TOWN!");
+						collapsingToolbarLayout.setTitle("Starting Point");
+						headerImage.setImageResource(R.drawable.header_startzone);
 
 						break;
 					case 5:
 						//Log.wtf("This", "Rubicuta!");
 						collapsingToolbarLayout.setTitle("Rubicuta");
-						headerImage.setImageResource(R.drawable.rubicuta_header);
+						headerImage.setImageResource(R.drawable.header_rubicuta);
 
 						break;
 					case 6:
 						//Log.wtf("This", "Dorias!");
 						collapsingToolbarLayout.setTitle("Dorias");
-						headerImage.setImageResource(R.drawable.dorias_header);
+						headerImage.setImageResource(R.drawable.header_dorias);
 
 						break;
 					case 7:
 						//Log.wtf("This", "Limeiro!");
 						collapsingToolbarLayout.setTitle("Limeiro");
-						headerImage.setImageResource(R.drawable.limeiro_header);
+						headerImage.setImageResource(R.drawable.header_limeiro);
 
 						break;
 				}
+
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
 
 			}
 
@@ -215,76 +226,17 @@ public class MapActivity extends AppCompatActivity {
 	// Adds fragments to Tabs
 	private void SetupViewPager(ViewPager viewPager) {
 		Adapter adapter = new Adapter(getSupportFragmentManager(), this);
-		adapter.addFragment(new StartingPoint(), "Start Zone");
+
 		adapter.addFragment(new Masadora(), "Masadora");
 		adapter.addFragment(new Soufrabi(), "Soufrabi");
 		adapter.addFragment(new Aiai(), "Aiai");
 		adapter.addFragment(new Antokiba(), "Antokiba");
+		adapter.addFragment(new Start(), "Start");
 		adapter.addFragment(new Rubicuta(), "Rubicuta");
 		adapter.addFragment(new Dorias(), "Dorias");
 		adapter.addFragment(new Limeiro(), "Limeiro");
 		viewPager.setAdapter(adapter);
-	}
-
-	private static class Adapter extends FragmentPagerAdapter {
-		private Map<Integer, String> mFragmentTags;
-		private FragmentManager mFragmentManager;
-		private Context mContext;
-		private final List<Fragment> mFragmentList = new ArrayList<>();
-		private final List<String> mFragmentTitleList = new ArrayList<>();
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return mFragmentTitleList.get(position);
-		}
-
-		Adapter(FragmentManager fm, Context context) {
-			super(fm);
-			mFragmentManager = fm;
-			mFragmentTags = new HashMap<Integer, String>();
-			mContext = context;
-		}
-
-
-		// Override InstantiateItem to save the tag of the fragment into a hashmap
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			Object obj = super.instantiateItem(container, position);
-
-			if(obj instanceof Fragment){
-				// record the fragment tag here.
-
-				Fragment f = (Fragment) obj;
-				String tag = f.getTag();
-				mFragmentTags.put(position, tag);
-			}
-			return  obj;
-
-		}
-
-		// Create a method to return tag of a previously created fragment.
-		public Fragment getFragment(int position) {
-			String tag = mFragmentTags.get(position);
-			if (tag == null)
-				return null;
-			return mFragmentManager.findFragmentByTag(tag);
-		}
-
-		void addFragment(Fragment fragment, String title) {
-			mFragmentList.add(fragment);
-			mFragmentTitleList.add(title);
-
-		}
-
-		@Override
-		public Fragment getItem(int position) {
-			return mFragmentList.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return mFragmentList.size();
-		}
+		viewPager.setCurrentItem(position);
 	}
 
 	@Override
@@ -302,29 +254,37 @@ public class MapActivity extends AppCompatActivity {
 				NavUtils.navigateUpFromSameTask(this);
 				return true;
 			case R.id.action_settings:
-				Toast.makeText(MapActivity.this, "Settings", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MapActivity.this, R.string.menu_Settings_Title, Toast.LENGTH_SHORT).show();
 				intent = new Intent(MapActivity.this, SettingsActivity.class);
 				this.startActivity(intent);
 				return true;
 			case R.id.action_share:
-				Toast.makeText(MapActivity.this, "Share", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MapActivity.this, R.string.menu_Share_Title, Toast.LENGTH_SHORT).show();
 				return true;
 			case R.id.action_about:
-				Toast.makeText(MapActivity.this, "About", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MapActivity.this, R.string.menu_About_Title, Toast.LENGTH_SHORT).show();
 				return true;
 			case R.id.action_book:
-				Toast.makeText(MapActivity.this, "Book", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MapActivity.this, R.string.menu_Book_Title, Toast.LENGTH_SHORT).show();
 				intent = new Intent(MapActivity.this, BookActivity.class);
 				this.startActivity(intent);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		CheckTheme();
+		if (setting.getBoolean("CanTravel", true)) {
+			// Clear Notifications
+			NotificationManager notificationManager =
+							(NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(002);
+		}
 	}
+
 	private void CheckTheme(){
 		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
 		switch (customTheme) {
@@ -402,5 +362,65 @@ public class MapActivity extends AppCompatActivity {
 				break;
 		}
 
+	}
+
+	private static class Adapter extends FragmentPagerAdapter {
+		private final List<Fragment> mFragmentList = new ArrayList<>();
+		private final List<String> mFragmentTitleList = new ArrayList<>();
+		private Map<Integer, String> mFragmentTags;
+		private FragmentManager mFragmentManager;
+		private Context mContext;
+
+		Adapter(FragmentManager fm, Context context) {
+			super(fm);
+			mFragmentManager = fm;
+			mFragmentTags = new HashMap<Integer, String>();
+			mContext = context;
+		}
+
+		// Create a method to return tag of a previously created fragment.
+		public Fragment getFragment(int position) {
+			String tag = mFragmentTags.get(position);
+			if (tag == null)
+				return null;
+			return mFragmentManager.findFragmentByTag(tag);
+		}
+
+		void addFragment(Fragment fragment, String title) {
+			mFragmentList.add(fragment);
+			mFragmentTitleList.add(title);
+
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return mFragmentList.get(position);
+		}
+
+		// Override InstantiateItem to save the tag of the fragment into a hashmap
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			Object obj = super.instantiateItem(container, position);
+
+			if (obj instanceof Fragment) {
+				// record the fragment tag here.
+
+				Fragment f = (Fragment) obj;
+				String tag = f.getTag();
+				mFragmentTags.put(position, tag);
+			}
+			return obj;
+
+		}
+
+		@Override
+		public int getCount() {
+			return mFragmentList.size();
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return mFragmentTitleList.get(position);
+		}
 	}
 }

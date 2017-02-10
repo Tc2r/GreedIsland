@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.tc2r.greedisland.FrontFragment">
 
@@ -19,12 +18,100 @@
         >
 
         <android.support.v7.widget.CardView
+            android:id="@+id/status_card"
+            style="?backgroundPri"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="130dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            app:contentPadding="6dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/default_Content_Description"
+                    android:src="@drawable/leetahead"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingTop="10dp"
+                        android:text="@string/Main_Welcome_Message"
+                        android:textAppearance="@android:style/TextAppearance.Medium"/>
+
+                    <TextView
+                        android:id="@+id/statusHuntName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/Main_Hunter_Title"
+                        android:textAppearance="@android:style/TextAppearance.Small"/>
+
+                    <TextView
+                        android:id="@+id/statusLangName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="2"
+                        android:text="@string/Main_Hunter_Lang"
+                        android:textAppearance="@android:style/TextAppearance.Small"/>
+
+                    <TextView
+                        android:id="@+id/statusIdNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/Main_Hunter_Num"
+                        android:textAppearance="@android:style/TextAppearance.Small"/>
+
+                    <TextView
+                        android:id="@+id/statusBaseTown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/Main_Hunter_Base"
+                        android:textAppearance="@android:style/TextAppearance.Small"/>
+
+                    <TextView
+                        android:id="@+id/statusLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/Main_Hunter_Location"
+                        android:textAppearance="@android:style/TextAppearance.Small"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:id="@+id/lay_options"
             style="?backgroundPri"
             android:layout_width="300dp"
             android:layout_height="300dp"
+            android:layout_below="@id/status_card"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+
             android:layout_marginTop="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
@@ -55,10 +142,8 @@
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
                             android:layout_gravity="top"
-                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="2dp"
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="2dp"
@@ -72,8 +157,8 @@
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
                                 android:background="@drawable/logo_red_long"
-                                android:gravity="left|bottom"
-                                android:text="GREED ISLAND"
+                                android:gravity="start|bottom"
+                                android:text="@string/Main_Greedisland_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>
                         </android.support.v7.widget.CardView>
@@ -84,6 +169,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="#80741507"
+                            android:contentDescription="@string/default_Content_Description"
                             android:src="@drawable/logo_red"/>
 
                     </LinearLayout>
@@ -101,14 +187,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="#80113884"
+                            android:contentDescription="@string/default_Content_Description"
                             android:src="@drawable/logo_blue"/>
 
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginStart="2dp"
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="2dp"
@@ -121,9 +206,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
-                                android:background="@drawable/logo_blue_long2"
-                                android:gravity="right|bottom"
-                                android:text="BOOK  "
+                                android:background="@drawable/logo_blue_long"
+                                android:gravity="end|bottom"
+                                android:text="@string/Main_Book_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>
 
@@ -141,9 +226,8 @@
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="2dp"
+
+                            android:layout_marginEnd="2dp"
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="1dp"
@@ -156,8 +240,8 @@
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
                                 android:background="@drawable/logo_green_long"
-                                android:gravity="left|bottom"
-                                android:text="SETTINGS"
+                                android:gravity="start|bottom"
+                                android:text="@string/Main_Settings_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>
                         </android.support.v7.widget.CardView>
@@ -168,91 +252,13 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="#8006450e"
+                            android:contentDescription="@string/default_Content_Description"
                             android:src="@drawable/logo_green"/>
 
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
         </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/lay_options"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="140dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            app:contentPadding="6dp"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <ImageView
-                style="?backgroundPri"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/finaleeta"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:text="Welcome Hunter!"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:paddingTop="10dp"
-                        android:textAppearance="@android:style/TextAppearance.Medium" />
-
-                    <TextView
-                        android:text="Hunter: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/statusHuntName"
-                        android:layout_weight="1"
-                        android:textAppearance="@android:style/TextAppearance.Small"/>
-                    <TextView
-                        android:text="Hunter: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/statusLangName"
-                        android:layout_weight="1"
-                        android:textAppearance="@android:style/TextAppearance.Small"/>
-                    <TextView
-                        android:text="ID Number: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/statusIdNumber"
-                        android:layout_weight="1"
-                        android:textAppearance="@android:style/TextAppearance.Small"/>
-                    <TextView
-                        android:text="HomeTown: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/statusBaseTown"
-                        android:layout_weight="1"
-                        android:textAppearance="@android:style/TextAppearance.Small"/>
-                    <TextView
-                        android:text="Location: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/statusLocation"
-                        android:layout_weight="1"
-                        android:textAppearance="@android:style/TextAppearance.Small"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
     </RelativeLayout>
 
 

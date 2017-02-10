@@ -9,23 +9,23 @@
         android:id="@+id/action_book"
         android:icon="@drawable/ic_action_book"
         android:orderInCategory="100"
-        android:title="Book"
+        android:title="@string/menu_Book_Title"
         app:showAsAction="ifRoom"
     />
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:orderInCategory="200"
-        android:title="Share"
+        android:title="@string/menu_Share_Title"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_about"
         android:orderInCategory="400"
-        android:title="About"
+        android:title="@string/menu_About_Title"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="300"
-        android:title="Settings"
+        android:title="@string/menu_Settings_Title"
         app:showAsAction="never"/>
 </menu>

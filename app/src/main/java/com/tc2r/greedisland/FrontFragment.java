@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tc2r.greedisland.book.BookActivity;
-import com.tc2r.greedisland.map.MapActivity;
+import com.tc2r.greedisland.utils.TravelHelper;
 
 
 /**
@@ -39,7 +39,7 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 													 Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View view = (View) inflater.inflate(R.layout.fragment_front, container, false);
+		View view = inflater.inflate(R.layout.fragment_front, container, false);
 		tvSettings = (TextView) view.findViewById(R.id.tv_settings);
 		tvBook = (TextView) view.findViewById(R.id.tv_book);
 		tvGreed = (TextView) view.findViewById(R.id.tv_map);
@@ -63,18 +63,24 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 
 
 		SharedPreferences status = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		String hunterName = status.getString("Hunter_Name_Pref", "Pizza");
+		String hunterName = status.getString("Hunter_Name_Pref", status.getString("TempName", "Chrollo"));
 		String hunterIdNum = String.valueOf(status.getInt("HUNT_ID", 0));
 		String homeTown = status.getString("CurrentHome", "Start");
 		String location = status.getString("CurrentLocation", "Start");
 
-		statusHunter.setText("Hunter: "+ hunterName);
+		String huntTitle = getString(R.string.Main_Hunter_Title) + hunterName;
+		String hunttLang = hunterName;
+		String hunttId = getString(R.string.Main_Hunter_Num) + hunterIdNum;
+		String huntCurrent = getString(R.string.Main_Hunter_Location) + location;
+		String huntHome = getString(R.string.Main_Hunter_Base) + homeTown;
+
+		statusHunter.setText(huntTitle);
 		Typeface hunterFont = Typeface.createFromAsset(getActivity().getAssets(), "hunterxhunter.ttf");
 		statusLang.setTypeface(hunterFont);
-		statusLang.setText(hunterName);
-		statusID.setText("ID NUM: "+ hunterIdNum);
-		statusBase.setText("Base: "+ homeTown);
-		statusLocation.setText("Location: "+ location);
+		statusLang.setText(hunttLang);
+		statusID.setText(hunttId);
+		statusBase.setText(huntHome);
+		statusLocation.setText(huntCurrent);
 
 		return view;
 }
@@ -94,13 +100,13 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 				//Log.wtf("CLICKED", "BOOK");
 				//Toast.makeText(this, "CLICKED BOOK", Toast.LENGTH_LONG).show();
 				intent = new Intent(getContext(), BookActivity.class);
+
 				startActivity(intent);
 				break;
 			case (R.id.tv_map):
 			case (R.id.image_map):
 				//Toast.makeText(this, "CLICKED MAP", Toast.LENGTH_LONG).show();
-				intent = new Intent(getContext(), MapActivity.class);
-				startActivity(intent);
+				TravelHelper.ViewTown(getContext(), 1);
 				break;
 			default:
 				break;

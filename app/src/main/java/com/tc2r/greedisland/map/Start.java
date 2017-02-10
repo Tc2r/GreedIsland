@@ -44,8 +44,10 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 
-
-public class Masadora extends Fragment implements View.OnClickListener {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class Start extends Fragment implements View.OnClickListener {
 
 
 	// Server Request Stuff
@@ -56,7 +58,7 @@ public class Masadora extends Fragment implements View.OnClickListener {
 	TextView tvTravel, tvHomeSet;
 	StringRequest stringRequest;
 	SharedPreferences userMap;
-	private int id = 0;
+	private int id = 4;
 	// Tracks Current Set Location
 	private String currentLocation;
 	// Tracks Current Set Home
@@ -79,7 +81,7 @@ public class Masadora extends Fragment implements View.OnClickListener {
 	private ProgressBar progressBar;
 	private CardView currentHomeView;
 
-	public Masadora() {
+	public Start() {
 		// Required empty public constructor
 	}
 
@@ -236,11 +238,11 @@ public class Masadora extends Fragment implements View.OnClickListener {
 				editor.putString("CurrentHome", thisTown);
 				editor.putString("LastLocation", lastBase);
 				editor.apply();
-				RegisterBase();
 				tvHomeSet.setVisibility(View.GONE);
 				Log.wtf("id:", String.valueOf(id));
-
+				RegisterBase();
 				Intent baseIntent = new Intent(getContext(), MapActivity.class);
+
 				baseIntent.putExtra("viewpager_position", id);
 				this.startActivity(baseIntent);
 				break;
@@ -287,13 +289,13 @@ public class Masadora extends Fragment implements View.OnClickListener {
 		stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Toast.makeText(getActivity().getApplicationContext(), response, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity().getApplicationContext().getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
 				//Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
 
 			}

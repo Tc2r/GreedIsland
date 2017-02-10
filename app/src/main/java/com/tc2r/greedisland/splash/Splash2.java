@@ -20,37 +20,10 @@ import java.util.Random;
 
 public class Splash2 extends AppCompatActivity {
 
-	private final int SPLASH_DISPLAY_LENGTH = 2000;
+	private final int SPLASH_DISPLAY_LENGTH = 1500;
 	private Handler handler = new Handler();
 
 	// 1. Create a static nested class that extends Runnable to start the main Activity
-
-	public static class StartSplashRunnable implements Runnable {
-		private WeakReference<Activity> mActivity;
-
-
-		public StartSplashRunnable(Activity mActivity) {
-			this.mActivity = new WeakReference<Activity>(mActivity);
-
-
-
-		}
-
-		@Override
-		public void run() {
-
-			// check that the reference is valid and execute the code
-			if (mActivity.get() != null) {
-				Activity activity = mActivity.get();
-				Intent intent = new Intent(activity, MainActivity.class);
-				activity.startActivity(intent);
-				activity.finish();
-				activity = null;
-				intent = null;
-
-			}
-		}
-	}
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +34,9 @@ public class Splash2 extends AppCompatActivity {
 		ImageView splash = (ImageView) findViewById(R.id.splashScreen);
 		Random rand = new Random();
 		int showSplash = rand.nextInt(5)+1;
-		showSplash = 5;
 		switch (showSplash){
 			case 1:
-				splash.setImageResource(R.drawable.splash);
+				splash.setImageResource(R.drawable.splash1);
 				break;
 			case 2:
 				splash.setImageResource(R.drawable.splash2);
@@ -172,5 +144,31 @@ public class Splash2 extends AppCompatActivity {
 				break;
 		}
 
+	}
+
+	public static class StartSplashRunnable implements Runnable {
+		private WeakReference<Activity> mActivity;
+
+
+		public StartSplashRunnable(Activity mActivity) {
+			this.mActivity = new WeakReference<Activity>(mActivity);
+
+
+		}
+
+		@Override
+		public void run() {
+
+			// check that the reference is valid and execute the code
+			if (mActivity.get() != null) {
+				Activity activity = mActivity.get();
+				Intent intent = new Intent(activity, MainActivity.class);
+				activity.startActivity(intent);
+				activity.finish();
+				activity = null;
+				intent = null;
+
+			}
+		}
 	}
 }

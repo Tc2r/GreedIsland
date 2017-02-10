@@ -11,15 +11,17 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class AppRater {
-    private final static String APP_TITLE = "Greed Island";// App Name
-    private final static String APP_PNAME = "com.tc2r.greedisland";// Package Name
+import com.tc2r.greedisland.R;
 
+public class AppRater {
+    private final static String APP_PNAME = "com.tc2r.greedisland";// Package Name
     private final static int DAYS_UNTIL_PROMPT = 2;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 4;//Min number of launches
+    private static String APP_TITLE;// App Name
 
     public static void app_launched(Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("apprater", 0);
+        APP_TITLE = mContext.getString(R.string.app_name);
         if (prefs.getBoolean("dontshowagain", false)) { return ; }
 
         SharedPreferences.Editor editor = prefs.edit();
@@ -47,19 +49,20 @@ public class AppRater {
 
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
         final Dialog dialog = new Dialog(mContext);
-        dialog.setTitle("Rate " + APP_TITLE);
+        APP_TITLE = mContext.getString(R.string.app_name);
+        dialog.setTitle(mContext.getString(R.string.Rate_Title) + APP_TITLE);
 
         LinearLayout ll = new LinearLayout(mContext);
         ll.setOrientation(LinearLayout.VERTICAL);
 
         TextView tv = new TextView(mContext);
-        tv.setText("If you enjoy using " + APP_TITLE + ", please take a moment to rate it. Thanks for your support!");
+        tv.setText(mContext.getString(R.string.Rate_Pre_Text) + APP_TITLE + mContext.getString(R.string.Rate_After_Text));
         tv.setWidth(240);
         tv.setPadding(4, 0, 4, 10);
         ll.addView(tv);
 
         Button b1 = new Button(mContext);
-        b1.setText("Rate " + APP_TITLE);
+        b1.setText(mContext.getString(R.string.Rate_Title) + APP_TITLE);
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
@@ -69,7 +72,7 @@ public class AppRater {
         ll.addView(b1);
 
         Button b2 = new Button(mContext);
-        b2.setText("Remind me later");
+        b2.setText(R.string.Rate_Later);
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
@@ -78,7 +81,7 @@ public class AppRater {
         ll.addView(b2);
 
         Button b3 = new Button(mContext);
-        b3.setText("No, thanks");
+        b3.setText(R.string.Rate_No);
         b3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (editor != null) {

@@ -1,39 +1,130 @@
 <resources>
     <string name="app_name">Greed Island</string>
+    <string name="title_activity_book">BOOK</string>
+    <string name="Activity_Credits_Name">Credits</string>
 
+    <!--Personal Card Details-->
+    <string name="Team_Courtney_Title">Graphic Designer</string>
+    <string name="Team_Courtney_Desc">"My Waifu is better then yours, also I draw some stuff "</string>
+    <string name="Team_Daniel_Title">Junior\n Graphic Designer</string>
+    <string name="Team_Daniel_Desc">Youngest In The Group, And I Love Killua</string>
+    <string name="Team_Dre_Title">Android Developer</string>
+    <string name="Team_Dre_Desc">Nudennie White \n\nGot an Ideal? Hit me up!</string>
+    <string name="Team_Munaib_Title">Graphic Designer</string>
+    <string name="Team_Munaib_Desc">Look at what my cat just done! \n *cough* \n I\'m a web developer with a passion for design! \n Have an idea or want something designed? Contact me (@munaibh)!</string>
+
+
+    <!--Card Details Page-->
+    <string name="card_ID_title">ID: </string>
+    <string name="card_ID_text">99</string>
+    <string name="card_Rank_Title">RANK: </string>
+    <string name="card_Rank_Text">SS</string>
+    <string name="card_Limit_Title">LIMIT</string>
+    <string name="card_Limit_Text">3</string>
+    <string name="card_Title_Title">Title: </string>
+    <string name="card_Title_Text">Name Of The Card</string>
+    <string name="card_Description_Text">What the card does</string>
+    <string name="share_Info">Greed Island App - www.google.com</string>
+    <string name="successful_Registration">New Player Registered</string>
+
+
+    <!--Header Toolbars-->
+    <string name="toolbar_Header_Main_Collasped">HUNTER ID</string>
+    <string name="toolbar_Header_Main_Expanded">Greed Island</string>
+    <string name="toolbar_Header_Credits_Collasped">We Appreciate You!</string>
+    <string name="toolbar_Header_Credits_Expanded">Thank You!</string>
+
+
+    <!--Rules Scroll List -->
+    <string-array name="ruleTitles">
+        <item>WELCOME TO GREED ISLAND</item>
+        <item>Rule 1:</item>
+        <item>BOOK:</item>
+        <item>Free slots: 45</item>
+        <item>GOOOOON~</item>
+        <item>Items Become Cards:</item>
+        <item>Gain:</item>
+        <item>Transformation:</item>
+        <item>Store in Book:</item>
+        <item>How To Win:</item>
+        <item>How To Lose:</item>
+        <item>How To Play:</item>
+    </string-array>
+
+    <string-array name="ruleDescs">
+        <item>The goal of the game is to complete the book.</item>
+        <item>In this game, whoever has the ring can use two spells "Book" and "Gain".</item>
+        <item>Imposed slots: 100 (numbered 000 - 099)
+Each slot has a number. Each slot only accepts the card with the right number.</item>
+        <item>Any cards can be slotted into free slots.</item>
+        <item> </item>
+        <item>All the items you find in the game can be converted into cards.
+ Book is used to store the cards.</item>
+        <item>When you acquire an item, it immediately turns into a card. (Eg: Finding and taking a sword will automatically turn it into a card). \n\n Cards slotted into the book can no longer be used unless the player uses \"gain\". However, a card transformed via \"gain\" can no longer be converted back into a card.\n
+            If you want to transform the sword into a card again, you must acquire the same sword again."</item>
+        <item>All the items in the island have a limited number of transformations.
+ Although there\'s more than 100 copies of each total, each card only has a limit of 3 that can be in card-state at a time.</item>
+        <item>All cards must be stored in the book, othewise the card will automatically turn back into an item within 1 minute. In that case, retransformation is no longer possible.</item>
+        <item>You must collect the numbered slots in order to complete the game.</item>
+        <item>If you were to die during the game, the book and the ring will be destroyed.</item>
+        <item>Have Fun!"</item>
+    </string-array>
+
+    <!--LOCAL CARDS LIST-->
+    <string-array name="cardTitle">
+        <item>"Ruler's Blessing"</item>
+        <item>Patch of Forest</item>
+        <item>Patch of Stone</item>
+        <item>Pitcher of Eternal Water</item>
+        <item>"Ruler's Blessing"</item>
+        <item>Patch of Forest</item>
+        <item>Patch of Stone</item>
+        <item>Pitcher of Eternal Water</item>
+    </string-array>
+    <string-array name="cardDesc">
+        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
+        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
+        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
+        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
+        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
+        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
+        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
+        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
+    </string-array>
+
+    <!--Locations Arrays-->
     <string-array name="locations">
-        <item>Starting Point</item>
         <item>Masadora</item>
         <item>Soufrabi</item>
         <item>Aiai</item>
         <item>Antokiba</item>
+        <item>Starting Point</item>
         <item>Rubicuta</item>
         <item>Dorias</item>
         <item>Limeiro</item>
     </string-array>
 
     <string-array name="loc_title">
-        <item>Greed Island Entrance </item>
         <item>Magic City of</item>
         <item>Port City</item>
         <item>The City of Love</item>
         <item>City of Prizes</item>
+        <item>Greed Island Entrance </item>
         <item>Start City</item>
         <item>Gambling City</item>
         <item>Capital City</item>
     </string-array>
-    <array
-        name="loc_image">
-        <item>@drawable/town_start</item>
+    <array name="loc_image">
         <item>@drawable/town_masadora</item>
         <item>@drawable/town_soufrabi</item>
         <item>@drawable/town_aiai</item>
         <item>@drawable/town_antokiba</item>
+        <item>@drawable/town_start</item>
         <item>@drawable/town_rubicuta</item>
         <item>@drawable/town_dorias</item>
         <item>@drawable/town_limeiro</item>
-
     </array>
+
     <string-array name="loc_desc">
         <item>This is where all players are brought when they enter the game.
 
@@ -41,7 +132,7 @@
 
         <item>Known as the \"Magic City\", Masadora has a fantasy-themed appearance. \n\n Spell cards are only sold at the item shop in this town. \n\n With 10,000 Jenny, one can buy 3 random spell cards in the spell card shop. Many players who have given up on the game come to this city to look for a way out.</item>
 
-        <item>Soufrabi is a city with a beautiful line of cliffs. \n\n Here players can find a method to leave Greed Island and return to the real world. \n\n It can be attained by somehow getting past the Harbour Master. \n\n
+        <item>Soufrabi is a city with a beautiful line of cliffs.\n\n Here players can find a method to leave Greed Island and return to the real world. \n\n It can be attained by somehow getting past the Harbour Master. \n\n
         The people of Soufarabi whisper of vicious pirates who have recently Pirates have taken over the city. The base of the bloodthirsty pirates is hidden. \n\n Legend has it that an underwater cave near the costline holds a vast treasure.</item>
 
 
@@ -63,9 +154,35 @@ Others attest that Aiai\'s moniker comes from a pink heart-shaped object floatin
         The huge castle is the symbol of this city. Royalty rarely steps out except to create laws which are absolutely followed.\n\n Some believe Gamemasters live within the castle.</item>
     </string-array>
 
-    <string name="title_activity_book">BOOK</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!--Strings related to Settings-->
+    <string name="menu_Share_Title">Share</string>
+    <string name="menu_Settings_Title">Settings</string>
+    <string name="menu_About_Title">About</string>
+    <string name="menu_Book_Title">Book</string>
+
+    <!--Default Strings-->
+    <string name="default_Hunter_ID">Chrollo Lucifer</string>
+    <string name="default_Content_Description">whatever</string>
+    <string name="default_Start_Town">Start</string>
+
+    <!--Book Activity Strings-->
+    <string name="reward_Cards_Header">Daily Cards</string>
+    <string name="reward_Cards_Text">You Received Card: #</string>
+    <string name="book_Header">Open Book</string>
+    <string name="book_Rules_title">WELCOME TO GREED ISLAND</string>
+    <string name="book_Rules_Text">The goal of the game is to complete the book.</string>
+
+    <!--Maps Activity Strings-->
+    <string name="maps_Set_Base_Button">SET HOMETOWN</string>
+    <string name="maps_City_Title">The Windy City of</string>
+    <string name="maps_City_Name">Chicago</string>
+    <string name="maps_Set_Travel_Button">TRAVEL</string>
+    <string name="maps_City_Description_Default">The windy city is a city of wind. Made famous by the fact that it is a city of wind may the winds never stop winning wind wind blah blah blah.</string>
+
+    <!--Credits Activity Strings-->
+
+    <string name="credits_Title">CREDITS AND SHOUT OUTS</string>
     <string name="credits_text">
         We want to thank all those who \n
         helped us create this app: \n\n
@@ -77,21 +194,52 @@ Others attest that Aiai\'s moniker comes from a pink heart-shaped object floatin
 
         Highway3 - Masadora Header\n
         http://highway3.deviantart.com/ \n\n
-
-
-
-
-
-
     </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Main Activity Strings-->
+    <string name="Main_Greedisland_Title">GREED ISLAND</string>
+    <string name="Main_Book_Title">BOOK</string>
+    <string name="Main_Settings_Title">SETTINGS</string>
+    <string name="Main_Welcome_Message">Welcome Hunter!</string>
+    <string name="Main_Hunter_Title">"Hunter: "</string>
+    <string name="Main_Hunter_Lang">"Hunter: "</string>
+    <string name="Main_Hunter_Num">"ID Number: "</string>
+    <string name="Main_Hunter_Base">"Base Town: "</string>
+    <string name="Main_Hunter_Location">"Loc.: "</string>
 
 
-    <!-- TODO: TODO LIST OMG-->
+    <!--Rate Strings-->
+    <string name="Rate_Title">"Rate "</string>
+    <string name="Rate_Pre_Text">"If you enjoy using "</string>
+    <string name="Rate_After_Text">, please take a moment to rate it. Thanks for your support!</string>
+    <string name="Rate_Later">Remind me later</string>
+    <string name="Rate_No">No, thanks</string>
+
+    <!--Tutorial Strings-->
+    <string name="Tutorial_Main_Text_1">Welcome To Greed Island\n click here!</string>
+    <string name="Tutorial_Main_Text_2">Your adventure begins here!\n The objective is to gather 100 Restricted\n  Slot Cards in order to beat the Game.</string>
+    <string name="Tutorial_Main_Text_3">You will receive three cards per day, \n this can be achieved from within \n the Book section.</string>
+    <string name="Tutorial_Main_Text_4">Cards are unique to some \n locations so don\'t forget \n to travel to different cities from \n the Greed Island section!</string>
+    <string name="Tutorial_Main_Text_5">Now you\'re ready to set off into \n the world of Greed Island! \n Customise your name from the \n settings menu and get collecting!</string>
 
 
-    <!-- Strings related to Settings -->
+    <string name="Tutorial_Book_Text_1">Welcome to the Book!</string>
+    <string name="Tutorial_Book_Text_2">You will receive 3 cards per day from \n  your chosen base location.</string>
+    <string name="Tutorial_Book_Text_3">To view your binder, press Open Book</string>
+    <string name="Tutorial_Book_Text_4">The Object of the game is to fill\n your book\'s Restricted Slots!</string>
+    <string name="Tutorial_Book_Text_5">(Coming Soon)\n Spell Cards are also important.\n Use them to give yourself an \n advantage vs other players!</string>
+
+    <string name="Tutorial_Map_Text_1">Welcome to the Island!</string>
+    <string name="Tutorial_Map_Text_2">You are free to travel to different locations, \n but remember most trips will take a day at least.</string>
+    <string name="Tutorial_Map_Text_3">Some cards are unique to different locations. \n You\'ll have to set up base in those \n locations in order to receive them.</string>
+    <string name="Tutorial_Map_Text_4">(Coming Soon)\n You may use spell cards on any \n location you travel to, they will\n effect players with bases in that location.</string>
+    <string name="Tutorial_Map_Text_5">But Beware! Players visiting your \n base location can steal from you!</string>
+
+    <!--Alarm Strings-->
+    <string name="new_Card_Notification">You Have 3 New Cards!</string>
+    <string name="new_Travel_Notification">Rested, You May Now Travel Again!</string>
+    <string name="Map_Locals_Title">Currently In:</string>
+
+
 
 </resources>

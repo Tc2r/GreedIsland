@@ -7,30 +7,22 @@
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-
-
-    <LinearLayout
-        android:id="@+id/layout_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="vertical"
-
-        tools:context="com.tc2r.greedisland.map.StartingPoint"
-        >
-
         <LinearLayout
+            android:id="@+id/layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="10dp"
+            tools:context="com.tc2r.greedisland.map.Start">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_weight="2"
                 android:layout_marginBottom="3dp"
+                android:layout_weight="2"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 >
 
@@ -38,7 +30,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_weight="4"
                     android:background="@android:color/transparent">
 
@@ -58,12 +50,12 @@
                             android:layout_gravity="center_horizontal"
                             android:orientation="vertical">
                             <TextView
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textStyle="bold"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Daily Cards"/>
+                                android:text="@string/reward_Cards_Header"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:textStyle="bold"/>
 
 
                             <ImageView
@@ -72,8 +64,10 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/empty_slot_small"
                                 android:clickable="true"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/empty_slot_small"
+                                android:visibility="gone"
 
                                 />
 
@@ -83,8 +77,10 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/empty_slot_small"
                                 android:clickable="true"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/empty_slot_small"
+                                android:visibility="gone"
                                 />
 
                             <ImageView
@@ -93,8 +89,10 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
-                                android:src="@drawable/empty_slot_small"
                                 android:clickable="true"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/empty_slot_small"
+                                android:visibility="gone"
                                 />
 
 
@@ -133,6 +131,7 @@
                                 android:id="@+id/iv_book"
                                 android:layout_width="match_parent"
                                 android:layout_height="300dp"
+                                android:contentDescription="@string/default_Content_Description"
                                 android:scaleType="centerInside"
                                 android:src="@drawable/card_deck"
                                 />
@@ -145,7 +144,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="Open Book"
+                                android:text="@string/book_Header"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textStyle="bold"
                                 />
@@ -179,5 +178,5 @@
 
 
         </LinearLayout>
-    </LinearLayout>
+
 </android.support.v4.widget.NestedScrollView>

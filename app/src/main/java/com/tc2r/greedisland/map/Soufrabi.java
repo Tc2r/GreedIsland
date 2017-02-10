@@ -1,17 +1,25 @@
 package com.tc2r.greedisland.map;
 
 
+import android.app.NotificationManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +30,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tc2r.greedisland.R;
+import com.tc2r.greedisland.utils.TravelHelper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,37 +50,36 @@ import java.util.Map;
 public class Soufrabi extends Fragment implements View.OnClickListener {
 
 
+	// Server Request Stuff
+	public static final String url = "https://tchost.000webhostapp.com/settravel.php";
+	public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
 	TextView locTitle, location, locDesc;
 	ImageView locImage;
-	private int id = 2;
 	TextView tvTravel, tvHomeSet;
 	StringRequest stringRequest;
-
-
+	SharedPreferences userMap;
+	private int id = 1;
 	// Tracks Current Set Location
 	private String currentLocation;
 	// Tracks Current Set Home
 	private String currentHome;
-
 	// Tracks Last Location before changing to new location.
-	private String lastLocation;
-
+	private String lastBase;
 	// Gets from Saved Shared Preference
 	private String hunterName;
 	private int hunterID;
 	private int actionToken;
 	// saves class name (town) to a variable
 	private String thisTown = this.getClass().getSimpleName();
-	SharedPreferences userMap;
-
-
-	// Server Request Stuff
-	public static final String url = "https://tchost.000webhostapp.com/settravel.php";
-	public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
 	private Map<String, String> params;
 
-
-
+	//Recycler View Local Hunters List
+	private RecyclerView recyclerView;
+	private List<localHunter> listLocalHunters;
+	private RecyclerView.Adapter adapter;
+	private RecyclerView.LayoutManager layoutManager;
+	private ProgressBar progressBar;
+	private CardView currentHomeView;
 
 	public Soufrabi() {
 		// Required empty public constructor
@@ -79,6 +96,8 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 		locImage = (ImageView) view.findViewById(R.id.iv_location);
 		tvTravel = (TextView) view.findViewById(R.id.tv_TRAVEL);
 		tvHomeSet = (TextView) view.findViewById(R.id.tv_Home);
+		currentHomeView = (CardView) view.findViewById(R.id.currentHomeView);
+
 
 		location.setText(view.getResources().getStringArray(R.array.locations)[id]);
 		locTitle.setText(view.getResources().getStringArray(R.array.loc_title)[id]);
@@ -93,23 +112,23 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 		images.recycle();
 
 		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		Log.wtf("MAP:", String.valueOf(userMap.getAll()));
 		currentLocation = userMap.getString("CurrentLocation", "FIRST RUN");
 		currentHome = userMap.getString("CurrentHome", "NEVER RAN");
-		lastLocation = currentLocation;
+		lastBase = userMap.getString("CurrentHome", "FIRST RUN");
+		Log.wtf("MAP:", String.valueOf(userMap.getAll()));
 		SharedPreferences.Editor editor = userMap.edit();
-		editor.putString("LastLocation", lastLocation);
+		editor.putString("LastLocation", lastBase);
 		editor.apply();
 
 
-		hunterName = userMap.getString("Hunter_Name_Pref", "john");
+		hunterName = userMap.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
 		hunterID = userMap.getInt("HUNT_ID", 0);
 
 
+		boolean canTravel = userMap.getBoolean("CanTravel", false);
 		if (currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
 			tvHomeSet.setVisibility(View.GONE);
 			tvTravel.setVisibility(View.GONE);
-
 
 
 		} else if (currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
@@ -119,67 +138,136 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 
 		} else if (!currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
 			tvHomeSet.setVisibility(View.GONE);
-			tvTravel.setVisibility(View.VISIBLE);
-
+			if (canTravel) {
+				tvTravel.setVisibility(View.VISIBLE);
+			}
 
 		} else if (!currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
 			tvHomeSet.setVisibility(View.GONE);
-			tvTravel.setVisibility(View.VISIBLE);
+			if (canTravel) {
+				tvTravel.setVisibility(View.VISIBLE);
+			}
+		}
+		currentHome = userMap.getString("CurrentHome", "NOTWORKING");
+		if (currentHome.equals(thisTown)) {
+			currentHomeView.setVisibility(View.VISIBLE);
+			// Initiate Views
+			recyclerView = (RecyclerView) view.findViewById(R.id.localsView);
+			recyclerView.setHasFixedSize(true);
+			layoutManager = new LinearLayoutManager(view.getContext());
+			recyclerView.setLayoutManager(layoutManager);
+			progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+
+			// Populate Locals List
+
+			listLocalHunters = new ArrayList<>();
+			prepareLocalHunters();
+			adapter = new localAdapter(view.getContext(), listLocalHunters);
+			recyclerView.setAdapter(adapter);
+		} else {
+			currentHomeView.setVisibility(View.GONE);
 
 		}
 
 		return view;
 	}
 
+	@Override
+	public void onResume() {
+		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		lastBase = userMap.getString("CurrentHome", "FIRST RUN");
+		currentLocation = userMap.getString("CurrentLocation", "NOTWORKING");
+		currentHome = userMap.getString("CurrentHome", "NOTWORKING");
+		boolean canTravel = userMap.getBoolean("CanTravel", false);
+		if (currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
+			tvHomeSet.setVisibility(View.GONE);
+			tvTravel.setVisibility(View.GONE);
 
+
+		} else if (currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
+			tvHomeSet.setVisibility(View.VISIBLE);
+			tvTravel.setVisibility(View.GONE);
+
+
+		} else if (!currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
+			tvHomeSet.setVisibility(View.GONE);
+			if (canTravel) {
+				tvTravel.setVisibility(View.VISIBLE);
+			}
+
+		} else if (!currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
+			tvHomeSet.setVisibility(View.GONE);
+			if (canTravel) {
+				tvTravel.setVisibility(View.VISIBLE);
+			}
+		}
+		if (userMap.getBoolean("CanTravel", true)) {
+			// Clear Notifications
+			NotificationManager notificationManager =
+							(NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+			notificationManager.cancel(002);
+			super.onResume();
+		}
+
+		super.onResume();
+	}
 
 	@Override
 	public void onClick(View v) {
-		SharedPreferences.Editor editor;
-
+		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		SharedPreferences.Editor editor = userMap.edit();
 
 		switch (v.getId()) {
 			case R.id.tv_TRAVEL:
-
-				userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				SharedPreferences.Editor editor2 = userMap.edit();
-				editor2.putString("CurrentLocation", thisTown);
-				editor2.apply();
-
+				// Switch Deny Travel On, Set Alarm.
+				editor.putBoolean("CanTravel", false);
+				editor.putString("CurrentLocation", thisTown);
+				//editor.putString("LastLocation", lastBase);
+				editor.apply();
+				Log.wtf("MAP:", String.valueOf(userMap.getAll()));
+				TravelHelper.SetAlarm(getContext());
 				tvHomeSet.setVisibility(View.VISIBLE);
 				tvTravel.setVisibility(View.GONE);
-				actionToken = 10;
-
-				registerLocation();
-
+				Intent travelIntent = new Intent(getContext(), MapActivity.class);
+				travelIntent.putExtra("viewpager_position", id);
+				this.startActivity(travelIntent);
 				break;
 			case R.id.tv_Home:
-
+				actionToken = 10;
 				editor = userMap.edit();
 				editor.putString("CurrentHome", thisTown);
-				editor.commit();
+				editor.putString("LastLocation", lastBase);
+				editor.apply();
 				tvHomeSet.setVisibility(View.GONE);
+				Log.wtf("id:", String.valueOf(id));
+				RegisterBase();
+				Intent baseIntent = new Intent(getContext(), MapActivity.class);
+
+				baseIntent.putExtra("viewpager_position", id);
+				this.startActivity(baseIntent);
 				break;
 
 
 		}
 	}
 
-	private void registerLocation(){
+	private void RegisterBase() {
 
 
-		// DELETES OLD LOCATION
+		// DELETES OLD BASE
 
+		//Log.wtf("Old Town =", lastBase);
 		stringRequest = new StringRequest(Request.Method.POST, deleteUrl, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+				if (response != null)
+					Toast.makeText(getActivity().getApplicationContext(), String.valueOf(response), Toast.LENGTH_LONG).show();
 
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
 				Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
 
 			}
@@ -188,7 +276,7 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 			@Override
 			protected Map<String, String> getParams() {
 				params = new HashMap<String, String>();
-				params.put("oldlocation", lastLocation);
+				params.put("oldlocation", lastBase);
 				params.put("hunterid", String.valueOf(hunterID));
 				return params;
 			}
@@ -197,11 +285,11 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 		requestQueue2.add(stringRequest);
 
 
-		// REGISTERS NEW LOCATION
+		// REGISTERS NEW BASE
 		stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity().getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
 			}
 		}, new Response.ErrorListener() {
@@ -216,7 +304,7 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 			@Override
 			protected Map<String, String> getParams() {
 				params = new HashMap<String, String>();
-				params.put("oldlocation", lastLocation);
+				params.put("oldlocation", lastBase);
 				params.put("travelto", thisTown);
 				params.put("hunterid", String.valueOf(hunterID));
 				params.put("huntername", hunterName);
@@ -229,34 +317,45 @@ public class Soufrabi extends Fragment implements View.OnClickListener {
 		requestQueue.add(stringRequest);
 	}
 
-	@Override
-	public void onResume() {
+	private void prepareLocalHunters() {
 
-		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		lastLocation = userMap.getString("CurrentLocation", "FIRST RUN");
-		currentLocation = userMap.getString("CurrentLocation", "NOTWORKING");
-		currentHome = userMap.getString("CurrentHome", "NOTWORKING");
+		// Displaying Progressbar
+		progressBar.setVisibility(View.VISIBLE);
+		getActivity().setProgressBarIndeterminate(true);
+		AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+			@Override
+			protected Void doInBackground(Integer... integers) {
+				OkHttpClient client = new OkHttpClient();
+				okhttp3.Request request = new okhttp3.Request.Builder()
+								.url("https://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown))
+								.build();
 
-		if (currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
-			tvHomeSet.setVisibility(View.GONE);
-			tvTravel.setVisibility(View.GONE);
+				try {
+					okhttp3.Response response = client.newCall(request).execute();
+					JSONArray array = new JSONArray(response.body().string());
+					for (int i = 0; i < array.length(); i++) {
+						JSONObject object = array.getJSONObject(i);
+						localHunter temp = new localHunter(object.getString("huntername"));
+						listLocalHunters.add(temp);
+						Log.wtf("Adding Hunter:", temp.getHunterName());
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
 
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				adapter.notifyDataSetChanged();
+				progressBar.setVisibility(View.GONE);
+				super.onPostExecute(aVoid);
+			}
+		};
+		task.execute();
 
-		} else if (currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
-			tvHomeSet.setVisibility(View.VISIBLE);
-			tvTravel.setVisibility(View.GONE);
-
-
-		} else if (!currentLocation.equals(thisTown) && !currentHome.equals(thisTown)) {
-			tvHomeSet.setVisibility(View.GONE);
-			tvTravel.setVisibility(View.VISIBLE);
-
-
-		} else if (!currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
-			tvHomeSet.setVisibility(View.GONE);
-			tvTravel.setVisibility(View.VISIBLE);
-
-		}
-		super.onResume();
 	}
+
 }

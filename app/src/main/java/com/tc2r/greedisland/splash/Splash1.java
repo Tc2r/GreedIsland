@@ -14,33 +14,8 @@ import java.lang.ref.WeakReference;
 import java.util.Random;
 
 public class Splash1 extends AppCompatActivity {
-	private final int SPLASH_DISPLAY_LENGTH = 2000;
+	private final int SPLASH_DISPLAY_LENGTH = 1500;
 	private Handler handler = new Handler();
-
-
-	public static class StartSplashRunnable implements Runnable{
-		private WeakReference<Activity> mActivity;
-
-		private StartSplashRunnable(Activity activity) {
-			mActivity = new WeakReference(activity);
-		}
-
-
-		@Override
-		public void run() {
-
-
-			if(mActivity.get() != null){
-				Activity activity = mActivity.get();
-				Intent intent = new Intent(activity, Splash2.class);
-				activity.startActivity(intent);
-				activity.finish();
-				activity = null;
-				intent =  null;
-
-			}
-		}
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +26,14 @@ public class Splash1 extends AppCompatActivity {
 
 		ImageView splash = (ImageView) findViewById(R.id.splashScreen);
 		Random rand = new Random();
-		int showSplash = rand.nextInt(2)+1;
+		int showSplash = rand.nextInt(3) + 1;
 		switch (showSplash) {
 			case 1:
-				splash.setImageResource(R.drawable.splash_joy);
+				splash.setImageResource(R.drawable.logo_joy);
 				break;
 			case 2:
-				splash.setImageResource(R.drawable.background2);
+			case 3:
+				splash.setImageResource(R.drawable.mysplash);
 				break;
 		}
 		handler.postDelayed(new StartSplashRunnable(this), SPLASH_DISPLAY_LENGTH);
@@ -69,5 +45,29 @@ public class Splash1 extends AppCompatActivity {
 		handler.removeCallbacksAndMessages(null);
 		handler = null;
 		super.onDestroy();
+	}
+
+	public static class StartSplashRunnable implements Runnable {
+		private WeakReference<Activity> mActivity;
+
+		private StartSplashRunnable(Activity activity) {
+			mActivity = new WeakReference(activity);
+		}
+
+
+		@Override
+		public void run() {
+
+
+			if (mActivity.get() != null) {
+				Activity activity = mActivity.get();
+				Intent intent = new Intent(activity, Splash2.class);
+				activity.startActivity(intent);
+				activity.finish();
+				activity = null;
+				intent = null;
+
+			}
+		}
 	}
 }

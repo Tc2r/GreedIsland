@@ -33,7 +33,7 @@ public class AboutCourtneyFragment extends Fragment {
 
 
 		// YOUR POSITION TITLE IN THE PROJECT.
-		yourTitle.setText("Graphic Designer");
+		yourTitle.setText(R.string.Team_Courtney_Title);
 
 
 		// YOUR CARD NUMBER (FAVORITE NUMBER)
@@ -44,7 +44,7 @@ public class AboutCourtneyFragment extends Fragment {
 		yourRank.setText("CB");
 
 		// YOUR DESCRIPTION
-		yourDescription.setText("My Waifu is better then yours, also I draw some stuff ");
+		yourDescription.setText(R.string.Team_Courtney_Desc);
 
 
 		// YOUR IMAGE (PLEASE SEND ME A 664X374 IMAGE TO USE FOR YOUR CARD

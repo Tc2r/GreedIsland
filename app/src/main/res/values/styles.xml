@@ -24,7 +24,7 @@
 
     </style>
     <style name="SettingsTheme" parent="AppTheme.Cinnamon">
-        <item name="android:windowBackground">@drawable/settingsbg</item>
+        <item name="android:windowBackground">@drawable/settings_bg</item>
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textColorSecondary">@color/colorBlack</item>
         <item name="android:textStyle">bold</item>

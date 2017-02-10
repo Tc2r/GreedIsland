@@ -9,7 +9,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.SettingsActivity;
 
@@ -31,7 +31,7 @@ public class BookActivity extends AppCompatActivity {
 	private RelativeLayout tutorial;
 	private int tutorialCounter = 4;
 	private TextView tutText;
-	private boolean tutorialPreference;
+	private boolean tutorialPreference, bookTut;
 
 
 	private SharedPreferences setting;
@@ -43,10 +43,9 @@ public class BookActivity extends AppCompatActivity {
 		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
 		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
 		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+		bookTut = setting.getBoolean("BookTut", true);
 
-
-		hunterName = setting.getString("Hunter_Name_Pref", "john");
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
+		hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
 		CheckTheme();
 		SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
 
@@ -61,7 +60,7 @@ public class BookActivity extends AppCompatActivity {
 		// Show Tutorial Only In Some Conditions
 		tutorial = (RelativeLayout) findViewById(R.id.book_tutorial);
 		tutText = (TextView) findViewById(R.id.tutorial_text);
-		tutText.setText("Welcome to the Book!");
+		tutText.setText(R.string.Tutorial_Book_Text_1);
 		tutorialCounter = 0;
 		tutorial.setEnabled(false);
 		tutorial.setOnClickListener(new View.OnClickListener() {
@@ -71,28 +70,33 @@ public class BookActivity extends AppCompatActivity {
 				switch (tutorialCounter) {
 					case 0:
 						// Second Message
-						tutText.setText("You will receive 3 cards per day from your chosen base location.");
+						tutText.setText(R.string.Tutorial_Book_Text_2);
 						tutorialCounter++;
 						break;
 					case 1:
-						// Second Message
-						tutText.setText("To view your binder, press Open Book");
+						// THIRD Message
+						tutText.setText(R.string.Tutorial_Book_Text_3);
 						tutorialCounter++;
 						break;
 					case 2:
-						// Second Message
-						tutText.setText("The Object of the game is to fill your book's Restricted Slots!");
+						// FOURTH Message
+						tutText.setText(R.string.Tutorial_Book_Text_4);
 						tutorialCounter++;
 						break;
 					case 3:
-						// Second Message
-						tutText.setText("(Coming Soon) Spell Cards are also important. \n\nUse them to give yourself an advantage vs other players!");
+						// FIFTH Message
+						tutText.setText(R.string.Tutorial_Book_Text_5);
 						tutorialCounter++;
 						break;
 					case 4:
-						// Second Message
+						// SIXTH Message
 						tutorial.setVisibility(View.GONE);
 						tutorial.setEnabled(false);
+						SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+						SharedPreferences.Editor editor = settings.edit();
+						editor.putBoolean("BookTut", false);
+						editor.apply();
+
 						break;
 				}
 			}
@@ -104,7 +108,7 @@ public class BookActivity extends AppCompatActivity {
 			tutorial.setEnabled(true);
 			firstTimeEditor.putBoolean("first_Pref", false);
 			firstTimeEditor.commit();
-		} else if (tutorialPreference) {
+		} else if (tutorialPreference && bookTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
@@ -144,62 +148,23 @@ public class BookActivity extends AppCompatActivity {
 		Intent intent;
 		switch (id) {
 			case R.id.home:
-				NavUtils.navigateUpFromSameTask(this);
+				intent = new Intent(context, MainActivity.class);
+				this.startActivity(intent);
 				return true;
 			case R.id.action_settings:
-				Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, getString(R.string.menu_Settings_Title), Toast.LENGTH_SHORT).show();
 				intent = new Intent(context, SettingsActivity.class);
 				this.startActivity(intent);
 				return true;
 			case R.id.action_share:
-				Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, getString(R.string.menu_Share_Title), Toast.LENGTH_SHORT).show();
 				return true;
 			case R.id.action_about:
-				Toast.makeText(context, "About", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, getString(R.string.menu_About_Title), Toast.LENGTH_SHORT).show();
 				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
-	}
-
-
-	private static class Adapter extends FragmentPagerAdapter {
-
-		private final List<Fragment> mFragmentList = new ArrayList<>();
-		private final List<String> mFragmentTitleList = new ArrayList<>();
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			return mFragmentTitleList.get(position);
-		}
-
-		public Adapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		public void addFragment(Fragment fragment, String title) {
-			mFragmentList.add(fragment);
-			mFragmentTitleList.add(title);
-
-
-		}
-
-
-		@Override
-		public Fragment getItem(int position) {
-			return mFragmentList.get(position);
-		}
-
-		@Override
-		public int getCount() {
-			return mFragmentList.size();
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		CheckTheme();
 	}
 
 	private void CheckTheme() {
@@ -281,5 +246,49 @@ public class BookActivity extends AppCompatActivity {
 
 	}
 
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent(this, MainActivity.class);
+		this.startActivity(intent);
+		super.onBackPressed();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		CheckTheme();
+	}
+
+	private static class Adapter extends FragmentPagerAdapter {
+
+		private final List<Fragment> mFragmentList = new ArrayList<>();
+		private final List<String> mFragmentTitleList = new ArrayList<>();
+
+		public Adapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		public void addFragment(Fragment fragment, String title) {
+			mFragmentList.add(fragment);
+			mFragmentTitleList.add(title);
+
+
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			return mFragmentList.get(position);
+		}
+
+		@Override
+		public int getCount() {
+			return mFragmentList.size();
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return mFragmentTitleList.get(position);
+		}
+	}
 
 }

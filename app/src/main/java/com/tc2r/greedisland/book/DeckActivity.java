@@ -38,38 +38,11 @@ public class DeckActivity extends AppCompatActivity {
 	boolean[] cardCheck;
 	boolean local = false;
 	Bundle bundle;
+	String cardTitle[];
+	String cardDesc[];
 
 
-
-	String cardTitle[] = {
-					"Ruler's Blessing",
-					"Patch of Forest",
-					"Patch of Stone",
-					"Pitcher of Eternal Water",
-					"Ruler's Blessing",
-					"Patch of Forest",
-					"Patch of Stone",
-					"Pitcher of Eternal Water",
-					"Ruler's Blessing",
-	};
-	String cardDesc[] = {
-					"A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.",
-					"The entrance to the giant forest called the \"Mountain God's Garden\" where many unique endemic species live. They are all tame and friendly. ",
-					"The entrance to a cave called \"Poseidon's Cavern.\" The cave changes its path at each visit, confusing intruders.",
-					"A jar from which pure, clean water (1440 L per day) continually flows. ",
-					"A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.",
-					"The entrance to the giant forest called the \"Mountain God's Garden\" where many unique endemic species live. They are all tame and friendly. ",
-					"The entrance to a cave called \"Poseidon's Cavern.\" The cave changes its path at each visit, confusing intruders.",
-					"A jar from which pure, clean water (1440 L per day) continually flows. ",
-					"A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.",
-
-	};
-
-	int cardImage[] = {
-					R.drawable.img_placeholder,
-
-
-	};
+	int cardImage[] = {R.drawable.placeholder};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +51,10 @@ public class DeckActivity extends AppCompatActivity {
 		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
 		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
-		String hunterName = setting.getString("Hunter_Name_Pref", "john");
+		String hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
 		CheckTheme();
-		SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
+		cardTitle = getResources().getStringArray(R.array.cardTitle);
+		cardDesc = getResources().getStringArray(R.array.cardDesc);
 		setContentView(R.layout.deck_main);
 
 		deck = new ArrayList<>();
@@ -155,13 +129,9 @@ public class DeckActivity extends AppCompatActivity {
 							GreedCard temp = new GreedCard((object.getInt("id") -1), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
 							deck.add(temp);
 						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
+					} catch (JSONException | IOException e) {
 						e.printStackTrace();
 					}
-
-
 					return null;
 				}
 
@@ -175,41 +145,6 @@ public class DeckActivity extends AppCompatActivity {
 
 	}
 
-
-	private class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-		private int spanCount;
-		private int spacing;
-		private boolean includeEdge;
-
-		public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-			this.spanCount = spanCount;
-			this.spacing = spacing;
-			this.includeEdge = includeEdge;
-		}
-
-		@Override
-		public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-			int position = parent.getChildAdapterPosition(view);
-			int column = position % spanCount;
-			if (includeEdge) {
-				outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-				outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-				if (position < spanCount) { // top edge
-					outRect.top = spacing;
-				}
-				outRect.bottom = spacing; // item bottom
-			} else {
-				outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-				outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-				if (position >= spanCount) {
-					outRect.top = spacing; // item top
-				}
-
-			}
-		}
-	}
-
 	/**
 	 * Converting dp to pixel
 	 */
@@ -218,13 +153,11 @@ public class DeckActivity extends AppCompatActivity {
 		return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
 	}
 
-
 	@Override
 	protected void onResume() {
 		super.onResume();
 		CheckTheme();
 	}
-
 
 	private void CheckTheme() {
 		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
@@ -305,5 +238,39 @@ public class DeckActivity extends AppCompatActivity {
 				break;
 		}
 
+	}
+
+	private class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+		private int spanCount;
+		private int spacing;
+		private boolean includeEdge;
+
+		public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+			this.spanCount = spanCount;
+			this.spacing = spacing;
+			this.includeEdge = includeEdge;
+		}
+
+		@Override
+		public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+			int position = parent.getChildAdapterPosition(view);
+			int column = position % spanCount;
+			if (includeEdge) {
+				outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+				outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+				if (position < spanCount) { // top edge
+					outRect.top = spacing;
+				}
+				outRect.bottom = spacing; // item bottom
+			} else {
+				outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+				outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+				if (position >= spanCount) {
+					outRect.top = spacing; // item top
+				}
+
+			}
+		}
 	}
 }
