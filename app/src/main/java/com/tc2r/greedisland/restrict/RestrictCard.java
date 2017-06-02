@@ -1,4 +1,4 @@
-package com.tc2r.greedisland.book;
+package com.tc2r.greedisland.restrict;
 
 /**
  * Created by Tc2r on 1/22/2017.
@@ -6,22 +6,24 @@ package com.tc2r.greedisland.book;
  * Description:
  */
 
-public class GreedCard {
-	int imageItem;
-	String thumbnail;
-	String title, description, imageUrl;
+public class RestrictCard {
+	private int imageItem;
+	private String thumbnail;
+	private String title;
+	public String description;
+	private String imageUrl;
 
-	int id, limit, type;
-	String rank;
+	private int id, limit, type;
+	private String rank;
 
-	public GreedCard(String title, String description, int imageItem) {
+	public RestrictCard(String title, String description, int imageItem) {
 		this.title = title;
 		this.description = description;
 		this.imageItem = imageItem;
 	}
 
 	// for servers
-	public GreedCard(int id, String title, String rank, int limit, String description, String imageurl, int type) {
+	public RestrictCard(int id, String title, String rank, int limit, String description, String imageurl, int type) {
 		this.title = title;
 		this.description = description;
 		this.imageUrl = imageurl;

@@ -8,29 +8,41 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
 import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
+import com.tc2r.greedisland.utils.Globals;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
 
 
-public class Splash2 extends AppCompatActivity {
+public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-	private final int SPLASH_DISPLAY_LENGTH = 1500;
+	// Declare final variables
+	private static final int SPLASH_DISPLAY_LENGTH = 1500;
+
+	// Declare variables
 	private Handler handler = new Handler();
+	private SharedPreferences setting;
+
 
 	// 1. Create a static nested class that extends Runnable to start the main Activity
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		CheckTheme();
+		setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Theme_Preference");
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash2);
+
 		ImageView splash = (ImageView) findViewById(R.id.splashScreen);
 		Random rand = new Random();
 		int showSplash = rand.nextInt(5)+1;
@@ -59,91 +71,46 @@ public class Splash2 extends AppCompatActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		handler.removeCallbacksAndMessages(null);
-		handler = null;
-		Runtime.getRuntime().gc();
+	protected void onStop() {
+		if (handler != null) {
+			handler.removeCallbacksAndMessages(null);
+			handler = null;
+		}
+		View root = findViewById(R.id.activity_splash2);
+		setContentView(new View(this));
+		unbindDrawables(root);
+		System.gc();
+		super.onStop();
+	}
+
+	@Override
+	public void onDestroy() {
+
+		if (handler != null) {
+			handler.removeCallbacksAndMessages(null);
+			handler = null;
+		}
 		super.onDestroy();
 	}
 
-	private void CheckTheme() {
-		SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(getApplication());
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
-		switch (customTheme) {
-			case "Sunlight":
-				setTheme(R.style.AppTheme_Sunlight);
-				break;
-			case "Bouquets":
-				setTheme(R.style.AppTheme_Bouquets);
-				break;
-			case "Red Wedding":
-				setTheme(R.style.AppTheme_RedWedding);
-				break;
-			case "Royal Flush":
-				setTheme(R.style.AppTheme_RoyalF);
-				break;
-			case "Birds n Berries":
-				//Log.wtf("Test", "Birds n Berries");
-				setTheme(R.style.AppTheme_BirdBerries);
-				break;
-			case "Blue Berry":
-				//Log.wtf("Test", "Blue Berry!");
-				setTheme(R.style.AppTheme_BlueBerry);
-				break;
-			case "Cinnamon":
-				//Log.wtf("Test", "Cinnamon!");
-				setTheme(R.style.AppTheme_Cinnamon);
-				break;
-			case "Day n Night":
-				//Log.wtf("Test", "Day n Night");
-				setTheme(R.style.AppTheme_Night);
-				break;
-			case "Earthly":
-				//Log.wtf("Test", "Earthly!");
-				setTheme(R.style.AppTheme_Earth);
-				break;
-			case "Forest":
-				//Log.wtf("Test", "Forest!");
-				setTheme(R.style.AppTheme_Forest);
-				break;
-			case "Fresh Greens":
-				//Log.wtf("Test", "GREENS!");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-			case "Fresh n Energetic":
-				//Log.wtf("Test", "Fresh n Energetic");
-				setTheme(R.style.AppTheme_Fresh);
-				break;
-			case "Icy Blue":
-				//Log.wtf("Test", "Icy!");
-				setTheme(R.style.AppTheme_Icy);
-				break;
-			case "Ocean":
-				//Log.wtf("Test", "Ocean");
-				setTheme(R.style.AppTheme_Ocean);
-				break;
-			case "Play Green/blues":
-				//Log.wtf("Test", "Play Green/blues");
-				setTheme(R.style.AppTheme_GrnBlu);
-				break;
-			case "Primary":
-				//Log.wtf("Test", "Primary");
-				setTheme(R.style.AppTheme_Prime);
-				break;
-			case "Rain":
-				//Log.wtf("Test", "Rain!");
-				setTheme(R.style.AppTheme_Rain);
-				break;
-			case "Tropical":
-				//Log.wtf("Test", "Tropical");
-				setTheme(R.style.AppTheme_Tropical);
-				break;
-			default:
-				//Log.wtf("Test", "Default");
-				setTheme(R.style.AppTheme_Greens);
-				break;
+	private void unbindDrawables(View view) {
+		if (view.getBackground() != null) {
+			view.getBackground().setCallback(null);
 		}
+		if (view instanceof ViewGroup) {
+			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+				unbindDrawables(((ViewGroup) view).getChildAt(i));
+			}
+			((ViewGroup) view).removeAllViews();
+		}
+	}
 
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+		if (key.equals("Theme_Preference")) {
+			Globals.ChangeTheme(this);
+		}
 	}
 
 	public static class StartSplashRunnable implements Runnable {
@@ -163,10 +130,12 @@ public class Splash2 extends AppCompatActivity {
 			if (mActivity.get() != null) {
 				Activity activity = mActivity.get();
 				Intent intent = new Intent(activity, MainActivity.class);
+				intent.putExtra("init", true);
 				activity.startActivity(intent);
 				activity.finish();
-				activity = null;
+				activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				intent = null;
+				activity = null;
 
 			}
 		}

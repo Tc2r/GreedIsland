@@ -157,7 +157,7 @@
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
                                 android:background="@drawable/logo_red_long"
-                                android:gravity="start|bottom"
+                                android:gravity="start|top"
                                 android:text="@string/Main_Greedisland_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>
@@ -181,19 +181,11 @@
                         android:layout_weight="1"
                         >
 
-                        <ImageView
-                            android:id="@+id/image_book"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="#80113884"
-                            android:contentDescription="@string/default_Content_Description"
-                            android:src="@drawable/logo_blue"/>
-
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="2dp"
+                            android:layout_gravity="top"
+                            android:layout_marginEnd="2dp"
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="2dp"
@@ -207,12 +199,22 @@
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
                                 android:background="@drawable/logo_blue_long"
-                                android:gravity="end|bottom"
+                                android:gravity="start|top"
                                 android:text="@string/Main_Book_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>
-
                         </android.support.v7.widget.CardView>
+
+                        <ImageView
+                            android:id="@+id/image_book"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#80113884"
+                            android:contentDescription="@string/default_Content_Description"
+                            android:src="@drawable/logo_blue"/>
+
+
                     </LinearLayout>
 
 
@@ -240,7 +242,7 @@
                                 android:layout_height="match_parent"
                                 android:alpha=".8"
                                 android:background="@drawable/logo_green_long"
-                                android:gravity="start|bottom"
+                                android:gravity="start|top"
                                 android:text="@string/Main_Settings_Title"
                                 android:textAppearance="?android:attr/textAppearanceLarge"
                                 android:textColor="@android:color/white"/>

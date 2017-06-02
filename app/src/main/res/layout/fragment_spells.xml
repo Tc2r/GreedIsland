@@ -1,0 +1,92 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?colorPrimary"
+    android:fitsSystemWindows="true"
+    tools:context="com.tc2r.greedisland.spells.SpellsFragment">
+
+    <RelativeLayout
+        style="?backgroundSec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorPrimary"
+        android:fitsSystemWindows="true">
+
+        <HorizontalScrollView
+            style="?backgroundSec"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?colorPrimary"
+            android:fitsSystemWindows="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SORT BY:"/>
+
+                    <Button
+                        android:id="@+id/btn_sort_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/xml_btn_custom"
+                        android:text="NUM"/>
+
+                    <Button
+                        android:id="@+id/btn_sort_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/xml_btn_custom"
+                        android:text="NAME"/>
+
+                    <Button
+                        android:id="@+id/btn_sort_rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/xml_btn_custom"
+                        android:text="RANK"/>
+
+                    <Button
+                        android:id="@+id/btn_sort_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/xml_btn_custom"
+                        android:text="LIMIT"/>
+
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </RelativeLayout>
+
+</FrameLayout>
+

@@ -2,13 +2,15 @@ package com.tc2r.greedisland.utils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.map.MapActivity;
 
 import java.util.GregorianCalendar;
@@ -22,30 +24,68 @@ import java.util.GregorianCalendar;
 public class TravelHelper {
 
 
+	private static int delay = 24 * 60 * 60 * 1000;
+
 	// Reset Alarm When Phone Is Rebooted
 	public static void BootAlarm(Context cnxt) {
 		Context context = cnxt;
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		long currentTime = new GregorianCalendar().getTimeInMillis();
 		long travelTime = settings.getLong("TravelTime", currentTime);
-		Log.wtf("Travel TIME ", String.valueOf(travelTime) + "   " + String.valueOf(currentTime));
+		//Log.d("Travel TIME ", String.valueOf(travelTime) + "   " + String.valueOf(currentTime));
 		Intent intentAlarm = new Intent(context, TravelServiceReceiver.class);
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, travelTime, PendingIntent.getBroadcast(context, 2, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+
+		if (settings.getBoolean("EventSwitch", false)) {
+			long eventMax = (travelTime - (travelTime / 5));
+			long eventMin = currentTime + 60 * 1000;
+			long eventTime = eventMin + (long) (Math.random() * (eventMax - eventMin));
+			Intent eventAlarm = new Intent(context, EventServiceReceiver.class);
+			AlarmManager alarmManager1 = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+			alarmManager1.set(AlarmManager.RTC_WAKEUP, eventTime, PendingIntent.getBroadcast(context, 2, eventAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putBoolean("EventSwitch", false);
+			editor.apply();
+		}
+
+
 	}
 
 	// Set Alarm When Cards are all gone
 	public static void SetAlarm(Context cnxt) {
 		Context context = cnxt;
-		Long time = new GregorianCalendar().getTimeInMillis() + 20 * 1000;
+
+		// Alarm Time = Current time + Delay in Millis
+		// Current time 24000000 + 170000 hmmm
+		// event min should be 2400000 + a fraction of delay
+		Long time = new GregorianCalendar().getTimeInMillis() + delay;
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putLong("TravelTime", time);
+		editor.putBoolean("EventSwitch", true);
 		editor.apply();
 		Intent travelAlarm = new Intent(context, TravelServiceReceiver.class);
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, travelAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-		Toast.makeText(context, "TESTING Travel Reset In 2 minutes!", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, R.string.Daily_Travel_Text, Toast.LENGTH_LONG).show();
+
+		// Latest time event happen is 90% of travel alarm
+		long eventMax = time - delay * (100 / 90);
+
+		// Earliest is 10% of travel alarm.
+		long eventMin = time + delay / 9;
+
+		long eventTime = eventMin + (long) (Math.random() * (eventMax - eventMin));
+
+		// Hardcoded 2 minutes past travel button being pressed
+		//long eventTime =  currentTime + delay/3;
+
+		//Log.wtf("Time:", String.valueOf(time) +" vs "+String.valueOf(eventTime));
+		Intent eventAlarm = new Intent(context, EventServiceReceiver.class);
+		AlarmManager alarmManager1 = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		alarmManager1.set(AlarmManager.RTC_WAKEUP, eventTime, PendingIntent.getBroadcast(context, 3, eventAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+
 	}
 
 	public static void ViewTown(Context context, int mode) {
@@ -185,5 +225,12 @@ public class TravelHelper {
 				break;
 		}
 		return baseID;
+	}
+
+	public static void EnableBroadcast(Context context) {
+		PackageManager pm = context.getPackageManager();
+		ComponentName compName = new ComponentName(context.getApplicationContext(), OnBootRewardReceiver.class);
+		pm.setComponentEnabledSetting(compName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
 	}
 }

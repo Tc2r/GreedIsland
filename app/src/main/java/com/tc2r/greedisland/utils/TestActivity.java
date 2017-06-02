@@ -41,7 +41,7 @@ public class TestActivity extends AppCompatActivity {
 //		for(int j =0; j < 3 ; j++) {
 //			int newNum = random.nextInt(notFlipped.size() - 1);
 //			cardCheck[notFlipped.get(newNum)] = true;
-//			//Log.wtf("SET TO TRUE ", String.valueOf(notFlipped.get(newNum)));
+//			////Log.d("SET TO TRUE ", String.valueOf(notFlipped.get(newNum)));
 //			notFlipped.remove(newNum);
 //		}
 
@@ -67,10 +67,10 @@ public class TestActivity extends AppCompatActivity {
 //
 //			if (cardCheck[rand] == true) {
 //				i-=1;
-//				Log.wtf("REPEAT", String.valueOf(rand));
+//				//Log.d("REPEAT", String.valueOf(rand));
 //			} else {
 //				cardCheck[rand] = true;
-//				Log.wtf("SET TO TRUE ", String.valueOf(rand));
+//				//Log.d("SET TO TRUE ", String.valueOf(rand));
 //			}
 //		}
 //
@@ -84,11 +84,11 @@ public class TestActivity extends AppCompatActivity {
 //		int k = 1;
 //		for (int j = 0; j < cardCheck.length; j++) {
 //			if (cardCheck[j]) {
-//				//Log.wtf("booleans: ", j + " is true");
+//				////Log.d("booleans: ", j + " is true");
 //				k++;
 //			}
 //		}
-//		Log.wtf("TOTAL TRUE BOOLEANS: ", String.valueOf(k));
+//		//Log.d("TOTAL TRUE BOOLEANS: ", String.valueOf(k));
 //
 //
 

@@ -3,6 +3,7 @@
           package="com.tc2r.greedisland">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -12,19 +13,26 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".splash.Splash1">
+
+
+        <activity
+            android:name=".splash.Splash1"
+            android:theme="@style/SplashScreenTheme">
             <meta-data
+
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tc2r.greedisland.MainActivity"/>
-
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
 
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+
+
         <activity android:name=".splash.Splash2">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -33,26 +41,33 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
         </activity>
         <activity android:name=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tc2r.greedisland.MainActivity"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+
         </activity>
+
         <activity android:name=".book.DeckActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.tc2r.greedisland.MainActivity"/>
+                android:value="com.tc2r.greedisland.book.BookActivity"/>
 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".map.MapActivity"
-            android:label="@string/title_activity_book"
+            android:label="@string/title_activity_map"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -62,6 +77,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".book.BookActivity"
             android:label="@string/title_activity_book"
@@ -70,45 +86,88 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tc2r.greedisland.MainActivity"/>
+
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
             android:theme="@style/SettingsTheme">
-        </activity>
-        <activity android:name=".AboutActivity">
-        </activity>
-        <activity android:name=".book.CardDetail">
-        </activity>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tc2r.greedisland.MainActivity"/>
 
-        <receiver
-            android:name="com.tc2r.greedisland.utils.RewardsServiceReceiver"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTask"
-            android:taskAffinity="">
-        </receiver>
-        <receiver android:name="com.tc2r.greedisland.utils.OnBootRewardReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
-        </receiver>
+        </activity>
+
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/SettingsTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tc2r.greedisland.MainActivity"/>
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".book.CardDetail"
+            android:label="@string/title_activity_book"
+            android:parentActivityName=".book.DeckActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tc2r.greedisland.book.DeckActivity"/>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".utils.TestActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
+
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
+
         <receiver
-            android:name="com.tc2r.greedisland.utils.TravelServiceReceiver"
+            android:name=".utils.TravelServiceReceiver"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
             android:taskAffinity="">
         </receiver>
+        <receiver
+            android:name=".utils.EventServiceReceiver"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="">
+        </receiver>
+        <receiver
+            android:name=".utils.RewardsServiceReceiver"
+            android:enabled="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="">
+        </receiver>
+        <receiver
+            android:name=".utils.OnBootRewardReceiver"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
+        <activity android:name=".utils.eventtest">
+        </activity>
     </application>
+
 </manifest>

@@ -5,6 +5,8 @@
     android:id="@+id/activity_splash1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/tc2r_splash"
     tools:context="com.tc2r.greedisland.splash.Splash1">
 
     <ImageView

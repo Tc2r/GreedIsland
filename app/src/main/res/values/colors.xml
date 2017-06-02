@@ -50,13 +50,13 @@
     <!--Rain!-->
 
     <!--Primary!-->
-    <color name="colorThemePrimeDark">#375E97</color>
-    <color name="colorThemePrimeDarkTrans">#9b375E97</color>
-    <color name="colorThemePrimePrimary">#fb6542</color>
-    <color name="colorThemePrimePriTrans">#aeffcc00</color>
+    <color name="colorThemePrimeDark">#6500cc</color>
+    <color name="colorThemePrimeDarkTrans">#9b0000ff</color>
+    <color name="colorThemePrimePrimary">#ff0000</color>
+    <color name="colorThemePrimePriTrans">#9bffff00</color>
 
-    <color name="colorThemePrimeAccent">#42FB65</color>
-    <color name="colorThemePrimeTextPri">#42FB65</color>
+    <color name="colorThemePrimeAccent">#19e019</color>
+    <color name="colorThemePrimeTextPri">#fdfdfd</color>
     <!--Primary!-->
 
 

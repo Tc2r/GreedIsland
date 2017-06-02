@@ -17,6 +17,7 @@
         android:icon="@drawable/ic_share"
         android:orderInCategory="200"
         android:title="@string/menu_Share_Title"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_about"

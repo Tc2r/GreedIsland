@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Rules Scroll List -->
+    <string-array name="ruleTitles">
+        <item>WELCOME TO GREED ISLAND</item>
+        <item>RING:</item>
+        <item>BOOK:</item>
+        <item>Free slots: 45</item>
+        <item>GOOOOON~</item>
+        <item>Items Become Cards:</item>
+        <item>Gain:</item>
+        <item>Transformation:</item>
+        <item>Store in Book:</item>
+        <item>How To Win:</item>
+        <item>How To Lose:</item>
+        <item>How To Play:</item>
+    </string-array>
+
+    <string-array name="ruleDescs">
+        <item>The goal of the game is to complete the book.</item>
+        <item>In this game, whoever has the ring can use two spells "Book" and "Gain".</item>
+        <item>Imposed slots: 100 (numbered 000 - 099)
+Each slot has a number. Each slot only accepts the card with the right number.</item>
+        <item>Any cards can be slotted into free slots.</item>
+        <item> </item>
+        <item>All the items you find in the game can be converted into cards.
+ Book is used to store the cards.</item>
+        <item>When you acquire an item, it immediately turns into a card. (Eg: Finding and taking a sword will automatically turn it into a card). \n\n Cards slotted into the book can no longer be used unless the player uses \"gain\". However, a card transformed via \"gain\" can no longer be converted back into a card.\n
+            If you want to transform the sword into a card again, you must acquire the same sword again."</item>
+        <item>All the items in the island have a limited number of transformations.
+ Although there\'s more than 100 copies of each total, each card only has a limit of 3 that can be in card-state at a time.</item>
+        <item>All cards must be stored in the book, othewise the card will automatically turn back into an item within 1 minute. In that case, retransformation is no longer possible.</item>
+        <item>You must collect the numbered slots in order to complete the game.</item>
+        <item>If you were to die during the game, the book and the ring will be destroyed.</item>
+        <item>Have Fun!"</item>
+    </string-array>
+
+    <!--LOCAL CARDS LIST-->
+    <string-array name="cardTitle">
+        <item>"Ruler's Blessing"</item>
+        <item>Patch of Forest</item>
+        <item>Patch of Stone</item>
+        <item>Pitcher of Eternal Water</item>
+        <item>"Ruler's Blessing"</item>
+        <item>Patch of Forest</item>
+        <item>Patch of Stone</item>
+        <item>Pitcher of Eternal Water</item>
+    </string-array>
+    <string-array name="cardDesc">
+        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
+        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
+        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
+        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
+        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
+        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
+        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
+        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
+    </string-array>
+
+    <!--Locations Arrays-->
+    <string-array name="locations">
+        <item>Masadora</item>
+        <item>Soufrabi</item>
+        <item>Aiai</item>
+        <item>Antokiba</item>
+        <item>Starting Point</item>
+        <item>Rubicuta</item>
+        <item>Dorias</item>
+        <item>Limeiro</item>
+    </string-array>
+
+    <string-array name="loc_title">
+        <item>Magic City of</item>
+        <item>Port City</item>
+        <item>The City of Love</item>
+        <item>Start City of Prizes</item>
+        <item>Greed Island Entrance </item>
+        <item>Start City</item>
+        <item>Gambling City</item>
+        <item>Capital City</item>
+    </string-array>
+
+    <array name="loc_image">
+        <item>@drawable/town_masadora</item>
+        <item>@drawable/town_soufrabi</item>
+        <item>@drawable/town_aiai</item>
+        <item>@drawable/town_antokiba</item>
+        <item>@drawable/town_start</item>
+        <item>@drawable/town_rubicuta</item>
+        <item>@drawable/town_dorias</item>
+        <item>@drawable/town_limeiro</item>
+    </array>
+
+    <array name="loc_image2">
+        <item>@drawable/header_masadora</item>
+        <item>@drawable/header_soufrabi</item>
+        <item>@drawable/header_aiai</item>
+        <item>@drawable/header_antokiba</item>
+        <item>@drawable/header_startzone</item>
+        <item>@drawable/header_rubicuta</item>
+        <item>@drawable/header_dorias</item>
+        <item>@drawable/header_limeiro</item>
+    </array>
+
+    <string-array name="loc_desc">
+        <item>Known as the \"Magic City\", Masadora has a fantasy-themed appearance. \n\n Spell cards are only sold at the item shop in this town. \n\n With 10,000 Jenny, one can buy 3 random spell cards in the spell card shop. Many players who have given up on the game come to this city to look for a way out.</item>
+
+        <item>Soufrabi is a city with a beautiful line of cliffs.\n\n Here players can find a method to leave Greed Island and return to the real world. \n\n It can be attained by somehow getting past the Harbour Master. \n\n
+        The people of Soufarabi whisper of vicious pirates who have recently Pirates have taken over the city. The base of the bloodthirsty pirates is hidden. \n\n Legend has it that an underwater cave near the costline holds a vast treasure.</item>
+
+
+        <item>The atmosphere on the streets of this city feels like it is based upon romantic simulation games. \n\n No one agrees on exactly how The \"City of Love\" got it\'s namesake. \n\n Some believe it is due to very aura of warmth that lingers in the air within the town walls. \n\n Listing Its sights, and popularity as a honeymoon destination, they claim this to be the obvious reason. They travel to Aiai to visit its well known River walkways, sidewalk cafes and lovely hotels.\n\n
+Others attest that Aiai\'s moniker comes from a pink heart-shaped object floating in the sky is its symbol. Its\' beauty is a fav amongst couples at night. Any player who wants to enjoy the pleasure of a heterosexual encounter needs to come here. In this city there are all kinds of clichéd situations and events that can lead to love.
+\n\n Hisoka considers it a nice place to spend time.</item>
+
+
+        <item>Closest to the center of the island, Antokiba is one of the two starting cities. \n\n
+            Antokiba\'s walls are covered with many reward posters! Players looking for quest and treasures are the most often visitors.  \n\n On the 15th of every month, a major contest is held here in which the winner is rewarded with a specified slot card. \n\n Many players go straight to Antokiba when beginning the game so a lot of basic information about beginners can be gathered in this city. </item>
+
+        <item>This is where all players are brought when they enter the game.
+
+            \n\nSay Hi to Eeta!</item>
+
+        <item>Due to it\'s short distance from the island\'s main entrance, Rubicuta city is the second starting city of Greed Island. \n\n Elegant and colorful, it is said to most resemble cities in the real world.</item>
+
+
+        <item>The casino is the staple of this city. One is not required to wear formal clothes to enter it, and even children are allowed. \n\n The Risky Dice can be very useful while in Dorias . </item>
+
+        <item>The capital of Greed Island. \n\n Limeiro can only be accessed by those who have completed the Specified Slot Cards.  \n\nNot only the castle, even the streets of the city are full of energy. The last event of the game is held here. \n\n
+        The huge castle is the symbol of this city. Royalty rarely steps out except to create laws which are absolutely followed.\n\n Some believe Gamemasters live within the castle.</item>
+    </string-array>
+
+
+    <string-array name="random_names">
+        <item>Ailey</item>
+        <item>Dalla</item>
+        <item>Iarmair</item>
+        <item>Persa</item>
+        <item>Aleins</item>
+        <item>Delina</item>
+        <item>Irveloca</item>
+        <item>Porre</item>
+        <item>Alfoross</item>
+        <item>Deres</item>
+        <item>Isorry</item>
+        <item>Rigerone</item>
+        <item>Andarri</item>
+        <item>Doban</item>
+        <item>Ithoth</item>
+        <item>Rohann</item>
+        <item>Annogo</item>
+        <item>Dumner</item>
+        <item>Kjolfalach</item>
+        <item>Ruadal</item>
+        <item>Aranna</item>
+        <item>Dward</item>
+        <item>Kreeda</item>
+        <item>Shahpe</item>
+        <item>Arauk</item>
+        <item>Eburuk</item>
+        <item>Lalagoney</item>
+        <item>Sheemori</item>
+        <item>Ashwiseach</item>
+        <item>Eithappa</item>
+        <item>Launod</item>
+        <item>Siltius</item>
+        <item>Aswaldur</item>
+        <item>Elven</item>
+        <item>Leasar</item>
+        <item>Sipre</item>
+        <item>Aswine</item>
+        <item>Enoven</item>
+        <item>Lodian</item>
+        <item>Sissaid</item>
+        <item>Bavort</item>
+        <item>Forden</item>
+        <item>Londer</item>
+        <item>Skulio</item>
+        <item>Beliodha</item>
+        <item>Fufinn</item>
+        <item>Lucius</item>
+        <item>Soreth</item>
+        <item>Benna</item>
+        <item>Garis</item>
+        <item>Marind</item>
+        <item>Spant</item>
+        <item>Benzio</item>
+        <item>Gilos</item>
+        <item>Mealdur</item>
+        <item>Steina</item>
+        <item>Bogius</item>
+        <item>Gistiard</item>
+        <item>Melvin</item>
+        <item>Stris</item>
+        <item>Brith</item>
+        <item>Godelbach</item>
+        <item>Moirendall</item>
+        <item>Tarley</item>
+        <item>Brizelmide</item>
+        <item>Gouliad</item>
+        <item>Morcan</item>
+        <item>Taurhimes</item>
+        <item>Brohirni</item>
+        <item>Griff</item>
+        <item>Morix</item>
+        <item>Tavalen</item>
+        <item>Brycha</item>
+        <item>Gwendyn</item>
+        <item>Moruin</item>
+        <item>Treosink</item>
+        <item>Calengenth</item>
+        <item>Gwiel</item>
+        <item>Mremay</item>
+        <item>Uaithien</item>
+        <item>Calhstagni</item>
+        <item>Gwiss</item>
+        <item>Nadfachlad</item>
+        <item>Ulion</item>
+        <item>Calrikul</item>
+        <item>Gwys</item>
+        <item>Namidar</item>
+        <item>Voliath</item>
+        <item>Carauroke</item>
+        <item>Hebinin</item>
+        <item>Neldis</item>
+        <item>Wayne</item>
+        <item>Castonian</item>
+        <item>Huforley</item>
+        <item>Parin</item>
+        <item>Werbethean</item>
+        <item>Crocheda</item>
+        <item>Hyartola</item>
+        <item>Peron</item>
+        <item>Wilbery</item>
+        <item>Abengane</item>
+        <item>Amana</item>
+        <item>Arka</item>
+        <item>Assam</item>
+        <item>Asta</item>
+        <item>Bara</item>
+        <item>Barry</item>
+        <item>Binolt</item>
+        <item>Bonolenov</item>
+        <item>Cuzco</item>
+        <item>Degiro</item>
+        <item>Doster</item>
+        <item>Erbier Mano</item>
+        <item>Feitan</item>
+        <item>Franklin</item>
+        <item>Gashta Bellam</item>
+        <item>Genthru</item>
+        <item>Goreinu</item>
+        <item>Hagakushi</item>
+        <item>Hanse</item>
+        <item>Isaku</item>
+        <item>Ivona Kawski</item>
+        <item>Jeet</item>
+        <item>Jeitsari</item>
+        <item>Jikono</item>
+        <item>Jispa</item>
+        <item>Kazsule</item>
+        <item>Kess</item>
+        <item>Kortopi</item>
+        <item>Kosofftro</item>
+        <item>Latarza</item>
+        <item>Luciart</item>
+        <item>Machi</item>
+        <item>Manheim</item>
+        <item>Michirou</item>
+        <item>Mikli</item>
+        <item>Montreux</item>
+        <item>Motaricke</item>
+        <item>Mukanaki</item>
+        <item>Nick Cue</item>
+        <item>Nickes</item>
+        <item>Nobunaga Hazama</item>
+        <item>Nomdieu</item>
+        <item>Ogyu</item>
+        <item>Phinks</item>
+        <item>Pisac</item>
+        <item>Pongo</item>
+        <item>Puhat</item>
+        <item>Redwood</item>
+        <item>Richard Hackett</item>
+        <item>Rin</item>
+        <item>Rodriot</item>
+        <item>Sakisuke Njiji</item>
+        <item>Shalnark</item>
+        <item>Shihael</item>
+        <item>Shizuku</item>
+        <item>Souheil</item>
+        <item>Sub</item>
+        <item>Tokharone</item>
+        <item>Tsezguerra</item>
+        <item>Wong Ho</item>
+        <item>Wong Li</item>
+        <item>Yabibi</item>
+        <item>Zeho</item>
+        <item>Zenju</item>
+        <item>Zetsk Bellam</item>
+    </string-array>
+
+    <string-array name="token_messages">
+        <item>"A Hunter Used Thief Against You!"</item>
+        <item>"A Hunter Used Pick Pocket Against You!"</item>
+        <item>"Levy Was Used Near You!"</item>
+        <item>"A Hunter Used Thief Against You!"</item>
+        <item>"A Hunter Used Pick Pocket Against You!"</item>
+        <item>"Levy Was Used Near You!"</item>
+        <item>"A Hunter Used Thief Against You!"</item>
+        <item>"A Hunter Used Pick Pocket Against You!"</item>
+        <item>"Levy Was Used Near You!"</item>
+        <item>"A Hunter Used Rob to take your card!"</item>
+        <item>"Watch Out! Someone Used Stone Throw!"</item>
+        <item>"Watch Out! Someone Used Shot!"</item>
+    </string-array>
+
+    <!--Spell Cards -->
+    <array name="spell_cards">
+        <item>@drawable/spellcard_1001</item>
+        <item>@drawable/spellcard_1002</item>
+        <item>@drawable/spellcard_1003</item>
+        <item>@drawable/spellcard_1004</item>
+        <item>@drawable/spellcard_1005</item>
+        <item>@drawable/spellcard_1006</item>
+        <item>@drawable/spellcard_1007</item>
+        <item>@drawable/spellcard_1008</item>
+        <item>@drawable/spellcard_1009</item>
+        <item>@drawable/spellcard_1010</item>
+        <item>@drawable/spellcard_1011</item>
+        <item>@drawable/spellcard_1012</item>
+        <item>@drawable/spellcard_1013</item>
+        <item>@drawable/spellcard_1014</item>
+        <item>@drawable/spellcard_1015</item>
+        <item>@drawable/spellcard_1016</item>
+        <item>@drawable/spellcard_1017</item>
+        <item>@drawable/spellcard_1018</item>
+        <item>@drawable/spellcard_1019</item>
+        <item>@drawable/spellcard_1020</item>
+        <item>@drawable/spellcard_1021</item>
+        <item>@drawable/spellcard_1022</item>
+        <item>@drawable/spellcard_1023</item>
+        <item>@drawable/spellcard_1024</item>
+        <item>@drawable/spellcard_1025</item>
+        <item>@drawable/spellcard_1026</item>
+        <item>@drawable/spellcard_1027</item>
+        <item>@drawable/spellcard_1028</item>
+        <item>@drawable/spellcard_1029</item>
+        <item>@drawable/spellcard_1030</item>
+        <item>@drawable/spellcard_1031</item>
+        <item>@drawable/spellcard_1032</item>
+        <item>@drawable/spellcard_1033</item>
+        <item>@drawable/spellcard_1034</item>
+        <item>@drawable/spellcard_1034</item>
+        <item>@drawable/spellcard_1036</item>
+        <item>@drawable/spellcard_1037</item>
+        <item>@drawable/spellcard_1038</item>
+        <item>@drawable/spellcard_1039</item>
+        <item>@drawable/spellcard_1040</item>
+    </array>
+
+
+</resources>

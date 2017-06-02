@@ -1,0 +1,104 @@
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.tc2r.greedisland.Test">
+
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginTop="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/lay_options"
+            style="?backgroundPri"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp"
+            app:contentPadding="6dp">
+
+            <LinearLayout
+                style="?backgroundSec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="4dp"
+                >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Munaib Secret Test Page"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                <android.support.v7.widget.CardView
+                    style="?backgroundSec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="6dp"
+                    app:contentPadding="5dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+
+                            android:id="@+id/createButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Create Spell"/>
+
+                        <EditText
+                            android:id="@+id/spellId"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"/>
+
+                        <Button
+
+                            android:id="@+id/removeButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Remove Spell"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:orientation="horizontal">
+
+
+                        <Button
+                            android:id="@+id/removerndButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Remove Random"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
+

@@ -29,7 +29,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.tc2r.greedisland.R;
+import com.tc2r.greedisland.utils.Globals;
 import com.tc2r.greedisland.utils.TravelHelper;
 
 import org.json.JSONArray;
@@ -44,20 +48,22 @@ import java.util.Map;
 
 import okhttp3.OkHttpClient;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Start extends Fragment implements View.OnClickListener {
 
 
+
 	// Server Request Stuff
 	public static final String url = "https://tchost.000webhostapp.com/settravel.php";
 	public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
-	TextView locTitle, location, locDesc;
-	ImageView locImage;
 	TextView tvTravel, tvHomeSet;
 	StringRequest stringRequest;
 	SharedPreferences userMap;
+	private TextView locTitle, location, locDesc;
+	private ImageView locImage;
 	private int id = 4;
 	// Tracks Current Set Location
 	private String currentLocation;
@@ -80,6 +86,8 @@ public class Start extends Fragment implements View.OnClickListener {
 	private RecyclerView.LayoutManager layoutManager;
 	private ProgressBar progressBar;
 	private CardView currentHomeView;
+	private InterstitialAd mInterstitialAd;
+	private View view;
 
 	public Start() {
 		// Required empty public constructor
@@ -89,7 +97,7 @@ public class Start extends Fragment implements View.OnClickListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 													 Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.city_template, container, false);
+		view = inflater.inflate(R.layout.city_template, container, false);
 		location = (TextView) view.findViewById(R.id.tv_location);
 		locTitle = (TextView) view.findViewById(R.id.tv_loc_title);
 		locDesc = (TextView) view.findViewById(R.id.tv_location_desc);
@@ -98,6 +106,29 @@ public class Start extends Fragment implements View.OnClickListener {
 		tvHomeSet = (TextView) view.findViewById(R.id.tv_Home);
 		currentHomeView = (CardView) view.findViewById(R.id.currentHomeView);
 
+		// Adds
+		mInterstitialAd = new InterstitialAd(view.getContext());
+		mInterstitialAd.setAdUnitId("ca-app-pub-5213602039222610/6791146288");
+		mInterstitialAd.setAdListener(new AdListener() {
+			@Override
+			public void onAdClosed() {
+
+				// start downloading a new add
+				requestNewInterstitial();
+
+				// continue with the game
+				OnTravelClicked();
+				Intent travelIntent = new Intent(getContext(), MapActivity.class);
+				travelIntent.putExtra("viewpager_position", id);
+				startActivity(travelIntent);
+			}
+
+			@Override
+			public void onAdLoaded() {
+				super.onAdLoaded();
+			}
+		});
+		requestNewInterstitial();
 
 		location.setText(view.getResources().getStringArray(R.array.locations)[id]);
 		locTitle.setText(view.getResources().getStringArray(R.array.loc_title)[id]);
@@ -115,7 +146,7 @@ public class Start extends Fragment implements View.OnClickListener {
 		currentLocation = userMap.getString("CurrentLocation", "FIRST RUN");
 		currentHome = userMap.getString("CurrentHome", "NEVER RAN");
 		lastBase = userMap.getString("CurrentHome", "FIRST RUN");
-		Log.wtf("MAP:", String.valueOf(userMap.getAll()));
+		//Log.d("MAP:", String.valueOf(userMap.getAll()));
 		SharedPreferences.Editor editor = userMap.edit();
 		editor.putString("LastLocation", lastBase);
 		editor.apply();
@@ -148,22 +179,26 @@ public class Start extends Fragment implements View.OnClickListener {
 				tvTravel.setVisibility(View.VISIBLE);
 			}
 		}
-		currentHome = userMap.getString("CurrentHome", "NOTWORKING");
+		currentHome = userMap.getString("CurrentHome", "Start");
 		if (currentHome.equals(thisTown)) {
-			currentHomeView.setVisibility(View.VISIBLE);
-			// Initiate Views
-			recyclerView = (RecyclerView) view.findViewById(R.id.localsView);
-			recyclerView.setHasFixedSize(true);
-			layoutManager = new LinearLayoutManager(view.getContext());
-			recyclerView.setLayoutManager(layoutManager);
-			progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+			if (Globals.isNetworkAvailable(getActivity())) {
 
-			// Populate Locals List
+				currentHomeView.setVisibility(View.VISIBLE);
 
-			listLocalHunters = new ArrayList<>();
-			prepareLocalHunters();
-			adapter = new localAdapter(view.getContext(), listLocalHunters);
-			recyclerView.setAdapter(adapter);
+				// Initiate Views
+				recyclerView = (RecyclerView) view.findViewById(R.id.localsView);
+				recyclerView.setHasFixedSize(true);
+				layoutManager = new LinearLayoutManager(view.getContext());
+				recyclerView.setLayoutManager(layoutManager);
+				progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+				progressBar.setVisibility(View.VISIBLE);
+				// Populate Locals List
+
+				listLocalHunters = new ArrayList<>();
+				prepareLocalHunters();
+				adapter = new localAdapter(view.getContext(), listLocalHunters);
+				recyclerView.setAdapter(adapter);
+			}
 		} else {
 			currentHomeView.setVisibility(View.GONE);
 
@@ -206,49 +241,85 @@ public class Start extends Fragment implements View.OnClickListener {
 			NotificationManager notificationManager =
 							(NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 			notificationManager.cancel(002);
-			super.onResume();
+
 		}
 
 		super.onResume();
 	}
 
 	@Override
+	public void onDestroy() {
+		if (tvTravel != null) {
+			tvTravel.setOnClickListener(null);
+		}
+		if (tvHomeSet != null) {
+			tvHomeSet.setOnClickListener(null);
+		}
+		if (view != null) {
+			unbindDrawables(view);
+		}
+		System.gc();
+		Runtime.getRuntime().gc();
+		super.onDestroy();
+	}
+
+	@Override
 	public void onClick(View v) {
-		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		SharedPreferences.Editor editor = userMap.edit();
+
 
 		switch (v.getId()) {
 			case R.id.tv_TRAVEL:
-				// Switch Deny Travel On, Set Alarm.
-				editor.putBoolean("CanTravel", false);
-				editor.putString("CurrentLocation", thisTown);
-				//editor.putString("LastLocation", lastBase);
-				editor.apply();
-				Log.wtf("MAP:", String.valueOf(userMap.getAll()));
-				TravelHelper.SetAlarm(getContext());
-				tvHomeSet.setVisibility(View.VISIBLE);
-				tvTravel.setVisibility(View.GONE);
-				Intent travelIntent = new Intent(getContext(), MapActivity.class);
-				travelIntent.putExtra("viewpager_position", id);
-				this.startActivity(travelIntent);
+				if (mInterstitialAd.isLoaded()) {
+					mInterstitialAd.show();
+				} else {
+					OnTravelClicked();
+				}
+
 				break;
 			case R.id.tv_Home:
-				actionToken = 10;
-				editor = userMap.edit();
-				editor.putString("CurrentHome", thisTown);
-				editor.putString("LastLocation", lastBase);
-				editor.apply();
-				tvHomeSet.setVisibility(View.GONE);
-				Log.wtf("id:", String.valueOf(id));
-				RegisterBase();
-				Intent baseIntent = new Intent(getContext(), MapActivity.class);
-
-				baseIntent.putExtra("viewpager_position", id);
-				this.startActivity(baseIntent);
+				OnSetBaseClicked();
 				break;
 
 
 		}
+	}
+
+	private void OnTravelClicked() {
+		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		SharedPreferences.Editor editor = userMap.edit();
+		// Switch Deny Travel On, Set Alarm.
+		editor.putBoolean("CanTravel", false);
+		editor.putBoolean("AlarmTravelSet", true);
+		editor.putString("CurrentLocation", thisTown);
+		//editor.putString("LastLocation", lastBase);
+		editor.apply();
+		//Log.d("MAP:", String.valueOf(userMap.getAll()));
+		TravelHelper.SetAlarm(getContext());
+		TravelHelper.EnableBroadcast(getContext());
+		tvHomeSet.setVisibility(View.VISIBLE);
+		tvTravel.setVisibility(View.GONE);
+
+	}
+
+	private void OnSetBaseClicked() {
+		if (!Globals.isNetworkAvailable(getActivity())) {
+			Toast.makeText(getActivity(), "Must Have Internet Connection for this Action!", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		SharedPreferences.Editor editor = userMap.edit();
+		actionToken = userMap.getInt("ActionToken", 0);
+		editor = userMap.edit();
+		editor.putString("CurrentHome", thisTown);
+		editor.putString("LastLocation", lastBase);
+		editor.apply();
+		tvHomeSet.setVisibility(View.GONE);
+		//Log.d("id:", String.valueOf(id));
+		RegisterBase();
+		Intent baseIntent = new Intent(getContext(), MapActivity.class);
+		baseIntent.putExtra("viewpager_position", id);
+		this.startActivity(baseIntent);
 	}
 
 	private void RegisterBase() {
@@ -256,12 +327,14 @@ public class Start extends Fragment implements View.OnClickListener {
 
 		// DELETES OLD BASE
 
-		//Log.wtf("Old Town =", lastBase);
+		////Log.d("Old Town =", lastBase);
 		stringRequest = new StringRequest(Request.Method.POST, deleteUrl, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				if (response != null)
-					Toast.makeText(getActivity().getApplicationContext(), String.valueOf(response), Toast.LENGTH_LONG).show();
+
+				if (response != null && isAdded()) {
+				}
+
 
 			}
 		}, new Response.ErrorListener() {
@@ -289,13 +362,16 @@ public class Start extends Fragment implements View.OnClickListener {
 		stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				Toast.makeText(getActivity().getApplicationContext().getApplicationContext(), response, Toast.LENGTH_LONG).show();
+				if (response != null && isAdded()) {
+					//Log.d("Maps:", " Response: " + response);
+				}
+
 
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
-				Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
 				//Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
 
 			}
@@ -337,9 +413,11 @@ public class Start extends Fragment implements View.OnClickListener {
 						JSONObject object = array.getJSONObject(i);
 						localHunter temp = new localHunter(object.getString("huntername"));
 						listLocalHunters.add(temp);
-						Log.wtf("Adding Hunter:", temp.getHunterName());
+						//////Log.d("Adding Hunter:", temp.getHunterName());
 					}
-				} catch (JSONException | IOException e) {
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				return null;
@@ -353,7 +431,34 @@ public class Start extends Fragment implements View.OnClickListener {
 			}
 		};
 		task.execute();
+	}
 
+	private void requestNewInterstitial() {
+		AdRequest adRequest = new AdRequest.
+						Builder()
+						.addKeyword("Adventure")
+						.addKeyword("Fantasy")
+						.addKeyword("Manga")
+						.addKeyword("Romance")
+						.addKeyword("Action")
+						.addKeyword("Vacation")
+						.addKeyword("anime")
+						.addKeyword("games")
+						.build();
+		mInterstitialAd.loadAd(adRequest);
+
+	}
+
+	private void unbindDrawables(View view) {
+		if (view.getBackground() != null) {
+			view.getBackground().setCallback(null);
+		}
+		if (view instanceof ViewGroup) {
+			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+				unbindDrawables(((ViewGroup) view).getChildAt(i));
+			}
+			((ViewGroup) view).removeAllViews();
+		}
 	}
 
 }

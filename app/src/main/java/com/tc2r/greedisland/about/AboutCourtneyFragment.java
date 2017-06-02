@@ -51,10 +51,7 @@ public class AboutCourtneyFragment extends Fragment {
 		yourImage.setImageResource(R.drawable.cardimage_courtney);
 
 
-
-
-
-		yourBorder.setBackgroundResource(R.drawable.text_border_about);
+		yourBorder.setBackgroundResource(R.drawable.text_border_about1);
 
 
 

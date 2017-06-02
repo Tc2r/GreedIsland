@@ -9,8 +9,11 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,14 +22,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tc2r.greedisland.AboutActivity;
 import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.SettingsActivity;
+import com.tc2r.greedisland.utils.Globals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookActivity extends AppCompatActivity {
+public class BookActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	String hunterName;
 	private RelativeLayout tutorial;
 	private int tutorialCounter = 4;
@@ -35,6 +40,21 @@ public class BookActivity extends AppCompatActivity {
 
 
 	private SharedPreferences setting;
+	private ShareActionProvider mShareActionProvider;
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+		if (key.equals("Hunter_Name_Pref")) {
+
+			hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
+
+		} else if (key.equals("Theme_Preference")) {
+			Globals.ChangeTheme(this);
+
+		}
+
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +63,12 @@ public class BookActivity extends AppCompatActivity {
 		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
 		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
 		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
+		onSharedPreferenceChanged(setting, "Theme_Preference");
 		bookTut = setting.getBoolean("BookTut", true);
 
-		hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
-		CheckTheme();
-		SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
+
 
 		setContentView(R.layout.activity_book);
 
@@ -106,6 +127,7 @@ public class BookActivity extends AppCompatActivity {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
+			SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
 			firstTimeEditor.putBoolean("first_Pref", false);
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && bookTut) {
@@ -127,14 +149,29 @@ public class BookActivity extends AppCompatActivity {
 
 
 		CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
-		//collapsingToolbarLayout.setTitle("TEXT HERE?");
+
 
 	}
 
+	@Override
+	public boolean onSupportNavigateUp() {
+		Intent intent = new Intent(BookActivity.this, MainActivity.class);
+		this.startActivity(intent);
+		return true;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_book, menu);
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		String shareBody = getString(R.string.share_Info);
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+		MenuItem item = menu.findItem(R.id.action_share);
+		// Fetch and store ShareActionProvider
+		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+		mShareActionProvider.setShareIntent(sharingIntent);
 		return true;
 	}
 
@@ -147,103 +184,28 @@ public class BookActivity extends AppCompatActivity {
 		Context context = getApplicationContext();
 		Intent intent;
 		switch (id) {
-			case R.id.home:
-				intent = new Intent(context, MainActivity.class);
-				this.startActivity(intent);
+			case android.R.id.home:
+				NavUtils.navigateUpFromSameTask(this);
+				//intent = new Intent(context, MainActivity.class);
+				//this.startActivity(intent);
 				return true;
 			case R.id.action_settings:
-				Toast.makeText(context, getString(R.string.menu_Settings_Title), Toast.LENGTH_SHORT).show();
 				intent = new Intent(context, SettingsActivity.class);
 				this.startActivity(intent);
 				return true;
 			case R.id.action_share:
 				Toast.makeText(context, getString(R.string.menu_Share_Title), Toast.LENGTH_SHORT).show();
+				intent = new Intent(Intent.ACTION_SEND);
+				this.startActivity(intent);
 				return true;
 			case R.id.action_about:
 				Toast.makeText(context, getString(R.string.menu_About_Title), Toast.LENGTH_SHORT).show();
+				intent = new Intent(BookActivity.this, AboutActivity.class);
+				this.startActivity(intent);
 				return true;
 		}
-
+		intent = null;
 		return super.onOptionsItemSelected(item);
-	}
-
-	private void CheckTheme() {
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
-		switch (customTheme) {
-			case "Sunlight":
-				setTheme(R.style.AppTheme_Sunlight);
-				break;
-			case "Bouquets":
-				setTheme(R.style.AppTheme_Bouquets);
-				break;
-			case "Red Wedding":
-				setTheme(R.style.AppTheme_RedWedding);
-				break;
-			case "Royal Flush":
-				setTheme(R.style.AppTheme_RoyalF);
-				break;
-			case "Birds n Berries":
-				//Log.wtf("Test", "Birds n Berries");
-				setTheme(R.style.AppTheme_BirdBerries);
-				break;
-			case "Blue Berry":
-				//Log.wtf("Test", "Blue Berry!");
-				setTheme(R.style.AppTheme_BlueBerry);
-				break;
-			case "Cinnamon":
-				//Log.wtf("Test", "Cinnamon!");
-				setTheme(R.style.AppTheme_Cinnamon);
-				break;
-			case "Day n Night":
-				//Log.wtf("Test", "Day n Night");
-				setTheme(R.style.AppTheme_Night);
-				break;
-			case "Earthly":
-				//Log.wtf("Test", "Earthly!");
-				setTheme(R.style.AppTheme_Earth);
-				break;
-			case "Forest":
-				//Log.wtf("Test", "Forest!");
-				setTheme(R.style.AppTheme_Forest);
-				break;
-			case "Fresh Greens":
-				//Log.wtf("Test", "GREENS!");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-			case "Fresh n Energetic":
-				//Log.wtf("Test", "Fresh n Energetic");
-				setTheme(R.style.AppTheme_Fresh);
-				break;
-			case "Icy Blue":
-				//Log.wtf("Test", "Icy!");
-				setTheme(R.style.AppTheme_Icy);
-				break;
-			case "Ocean":
-				//Log.wtf("Test", "Ocean");
-				setTheme(R.style.AppTheme_Ocean);
-				break;
-			case "Play Green/blues":
-				//Log.wtf("Test", "Play Green/blues");
-				setTheme(R.style.AppTheme_GrnBlu);
-				break;
-			case "Primary":
-				//Log.wtf("Test", "Primary");
-				setTheme(R.style.AppTheme_Prime);
-				break;
-			case "Rain":
-				//Log.wtf("Test", "Rain!");
-				setTheme(R.style.AppTheme_Rain);
-				break;
-			case "Tropical":
-				//Log.wtf("Test", "Tropical");
-				setTheme(R.style.AppTheme_Tropical);
-				break;
-			default:
-				//Log.wtf("Test", "Default");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-		}
-
 	}
 
 	@Override
@@ -256,7 +218,10 @@ public class BookActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		CheckTheme();
+		setting = PreferenceManager.getDefaultSharedPreferences(this);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
+		onSharedPreferenceChanged(setting, "Theme_Preference");
 	}
 
 	private static class Adapter extends FragmentPagerAdapter {

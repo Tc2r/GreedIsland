@@ -18,19 +18,16 @@ import java.util.List;
 
 public class AboutActivity extends AppCompatActivity {
 
+	// Declare Layout Variables
 	ViewPager viewPager;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_about);
 
-
 		viewPager = (ViewPager) findViewById(R.id.viewpager);
-
 		SetupViewPager(viewPager);
-
-
-
 	}
 
 	private void SetupViewPager(ViewPager viewPager) {
@@ -40,10 +37,7 @@ public class AboutActivity extends AppCompatActivity {
 		adapter.addFragment(new AboutMuniabFragment(), "Munaib");
 		adapter.addFragment(new AboutCourtneyFragment(),"Courtney");
 		adapter.addFragment(new AboutDreFragment(), "Dre");
-
 		viewPager.setAdapter(adapter);
-
-
 	}
 
 	private static class Adapter extends FragmentPagerAdapter{

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/RootLayout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:animateLayoutChanges="true"
+             android:background="?colorPrimary"
+             tools:context="com.tc2r.greedisland.utils.eventtest"
+             tools:ignore="MergeRootFrame">
+
+
+    <LinearLayout
+        android:id="@+id/activity_eventtest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context="com.tc2r.greedisland.utils.eventtest">
+
+
+        <android.support.v7.widget.CardView
+            style="?backgroundPri"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="6dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/default_Content_Description"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/town_start"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#38343434"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_loc_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:clickable="true"
+
+                            android:text="EVENT ALERT!"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_loc_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+
+                            android:text="Something Has Happened!"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/currentHomeView"
+            style="?backgroundPri"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="2"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="visible"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="6dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_event"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/town_aiai"/>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="4dp"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#89000000"
+
+                        android:gravity="top|center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_details_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:clickable="true"
+                            android:text="EVENT ALERT!"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_details_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:text="You jump too high and sprain your ankle it will take a day to heal."
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rewardLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+</FrameLayout>
+

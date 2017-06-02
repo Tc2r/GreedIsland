@@ -27,5 +27,6 @@ public class ResizableImageView extends ImageView {
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+        d.setCallback(null);
     }
 }

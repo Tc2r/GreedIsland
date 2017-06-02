@@ -22,10 +22,11 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.tc2r.greedisland.R;
+import com.tc2r.greedisland.utils.Globals;
 
 import jp.wasabeef.glide.transformations.gpu.SketchFilterTransformation;
 
-public class CardDetail extends AppCompatActivity {
+public class CardDetail extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	LinearLayout activityCardDetail;
 	LinearLayout carddesc_image;
@@ -33,12 +34,27 @@ public class CardDetail extends AppCompatActivity {
 	private ImageView image;
 	private String sDesc, sRank, sTitle, sImage;
 	private int sId, sLimit, imageWidth, imageHeight;
+	private SharedPreferences setting;
+
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+		if (key.equals("Theme_Preference")) {
+			Globals.ChangeTheme(this);
+
+		}
+
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		CheckTheme();
+		setting = PreferenceManager.getDefaultSharedPreferences(this);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Theme_Preference");
 		setContentView(R.layout.activity_card_detail);
+
 
 		desc = (TextView) findViewById(R.id.desc_desc);
 		rank = (TextView) findViewById(R.id.desc_rank);
@@ -109,79 +125,10 @@ public class CardDetail extends AppCompatActivity {
 	}
 	@Override
 	protected void onResume() {
+		setting = PreferenceManager.getDefaultSharedPreferences(this);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Theme_Preference");
 		super.onResume();
-		CheckTheme();
-	}
-
-
-	private void CheckTheme() {
-		SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
-
-
-		switch (customTheme) {
-			case "Birds n Berries":
-				//Log.wtf("Test", "Birds n Berries");
-				setTheme(R.style.AppTheme_BirdBerries);
-				break;
-			case "Blue Berry":
-				//Log.wtf("Test", "Blue Berry!");
-				setTheme(R.style.AppTheme_BlueBerry);
-				break;
-			case "Cinnamon":
-				//Log.wtf("Test", "Cinnamon!");
-				setTheme(R.style.AppTheme_Cinnamon);
-				break;
-			case "Day n Night":
-				//Log.wtf("Test", "Day n Night");
-				setTheme(R.style.AppTheme_Night);
-				break;
-			case "Earthly":
-				//Log.wtf("Test", "Earthly!");
-				setTheme(R.style.AppTheme_Earth);
-				break;
-			case "Forest":
-				//Log.wtf("Test", "Forest!");
-				setTheme(R.style.AppTheme_Forest);
-				break;
-			case "Fresh Greens":
-				//Log.wtf("Test", "GREENS!");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-			case "Fresh n Energetic":
-				//Log.wtf("Test", "Fresh n Energetic");
-				setTheme(R.style.AppTheme_Fresh);
-				break;
-			case "Icy Blue":
-				//Log.wtf("Test", "Icy!");
-				setTheme(R.style.AppTheme_Icy);
-				break;
-			case "Ocean":
-				//Log.wtf("Test", "Ocean");
-				setTheme(R.style.AppTheme_Ocean);
-				break;
-			case "Play Green/blues":
-				//Log.wtf("Test", "Play Green/blues");
-				setTheme(R.style.AppTheme_GrnBlu);
-				break;
-			case "Primary":
-				//Log.wtf("Test", "Primary");
-				setTheme(R.style.AppTheme_Prime);
-				break;
-			case "Rain":
-				//Log.wtf("Test", "Rain!");
-				setTheme(R.style.AppTheme_Rain);
-				break;
-			case "Tropical":
-				//Log.wtf("Test", "Tropical");
-				setTheme(R.style.AppTheme_Tropical);
-				break;
-			default:
-				//Log.wtf("Test", "Default");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-		}
-
 	}
 
 	private class RotateTransformation extends BitmapTransformation {

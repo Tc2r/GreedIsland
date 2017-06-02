@@ -36,15 +36,15 @@ public class RewardsServiceReceiver extends BroadcastReceiver {
 
 		// Reset saved Variables to show new cards
 		editor.putBoolean("DailyCards", true);
+		editor.putBoolean("AlarmRewardSet", false);
 		editor.putInt("Rewards", 0);
 		editor.apply();
-
 		// Play Sound Effect
 		mp.start();
 
 		// Testing!
 		//Toast.makeText(context, String.valueOf(context.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
-		//Log.wtf("Alarm Worked", String.valueOf(settings.getAll()));
+		////Log.d("Alarm Worked", String.valueOf(settings.getAll()));
 
 		// Create notification and send it!
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -59,7 +59,7 @@ public class RewardsServiceReceiver extends BroadcastReceiver {
 		Notification.Builder builder = new Notification.Builder(context);
 		builder.setContentTitle(context.getString(R.string.app_name));
 		builder.setContentText(content);
-		builder.setSmallIcon(R.drawable.ic_launcher);
+		builder.setSmallIcon(R.drawable.ic_notification);
 
 		// Set up actions for Notification
 		Intent resultIntent = new Intent(context, BookActivity.class);

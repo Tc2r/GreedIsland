@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,8 +13,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +27,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.tc2r.greedisland.AboutActivity;
+import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.SettingsActivity;
 import com.tc2r.greedisland.book.BookActivity;
+import com.tc2r.greedisland.utils.Globals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,26 +42,34 @@ import java.util.List;
 import java.util.Map;
 
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	private ViewPager viewPager;
+	private String hunterName;
 	private SharedPreferences setting;
 	private RelativeLayout tutorial;
 	private int tutorialCounter = 4;
 	private TextView tutText;
 	private boolean tutorialPreference, mapTut;
 	private int position = 4;
+	private ShareActionProvider mShareActionProvider;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
+		onSharedPreferenceChanged(setting, "Theme_Preference");
 		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+		hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
+		mapTut = setting.getBoolean("MapTut", true);
+
+
 		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
 		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
-		String hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
-		mapTut = setting.getBoolean("MapTut", true);
-		CheckTheme();
-		SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
+
 
 		// Auto Set Viewpager Screen
 		Bundle extras = getIntent().getExtras();
@@ -73,12 +89,23 @@ public class MapActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+		// Check for Ads;
+
+		AdView adView = (AdView) findViewById(R.id.adView);
+		AdRequest adRequest = new AdRequest.Builder()
+						.addKeyword("Anime")
+						.addKeyword("Game")
+						.addKeyword("Manga")
+						.addKeyword("Social")
+						.build();
+		adView.loadAd(adRequest);
 
 
 		// Show Tutorial Only In Some Conditions
 		tutorial = (RelativeLayout) findViewById(R.id.map_tutorial);
 		tutText = (TextView) findViewById(R.id.tutorial_text);
 		tutText.setText(R.string.Tutorial_Map_Text_1);
+		tutorial.bringToFront();
 		tutorialCounter = 0;
 		tutorial.setEnabled(false);
 		tutorial.setOnClickListener(new View.OnClickListener() {
@@ -119,10 +146,11 @@ public class MapActivity extends AppCompatActivity {
 			}
 		});
 		// Check for Tutorial
-		if (firsttime){
+		if (firsttime) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
+			SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
 			firstTimeEditor.putBoolean("first_Pref", false);
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && mapTut) {
@@ -131,7 +159,7 @@ public class MapActivity extends AppCompatActivity {
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
 			tutorialPreference = setting.getBoolean("Tutor_Preference", false);
-		}else{
+		} else {
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
 		}
@@ -141,6 +169,7 @@ public class MapActivity extends AppCompatActivity {
 
 
 		final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.ctl_map);
+		collapsingToolbarLayout.setTitle("MAP");
 		tabs.setupWithViewPager(viewPager);
 
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -151,76 +180,71 @@ public class MapActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				//Log.wtf("This", "OnPageSelected");
-				//Log.wtf("Page: ", String.valueOf(position +" "+ viewPager.getCurrentItem()));
+				////Log.d("This", "OnPageSelected");
+				////Log.d("Page: ", String.valueOf(position +" "+ viewPager.getCurrentItem()));
 
-				Fragment fragment = ((Adapter)viewPager.getAdapter()).getFragment(position);
+				Fragment fragment = ((Adapter) viewPager.getAdapter()).getFragment(position);
 
-				if (fragment != null)
-				{
+				if (fragment != null) {
 					fragment.onResume();
 				}
-				switch(position){
+				//Log.wtf("Location", getResources().getStringArray(R.array.locations)[position]);
+				switch (position) {
 					case 0:
 						//Log.wtf("This", "STARTING TOWN!");
 						collapsingToolbarLayout.setTitle("Masadora");
 						headerImage.setImageResource(R.drawable.header_masadora);
-
 						break;
 					case 1:
-						//Log.wtf("This", "STARTING TOWN!");
+						////Log.d("This", "STARTING TOWN!");
 						collapsingToolbarLayout.setTitle("Soufrabi");
 						headerImage.setImageResource(R.drawable.header_soufrabi);
-
 						break;
 					case 2:
-						//Log.wtf("This", "STARTING TOWN!");
+						////Log.d("This", "STARTING TOWN!");
 						collapsingToolbarLayout.setTitle("Aiai");
-						headerImage.setImageResource(R.drawable.header_hisoka);
-
+						headerImage.setImageResource(R.drawable.header_aiai);
 						break;
 					case 3:
-						//Log.wtf("This", "Antokiba!");
+						////Log.d("This", "Antokiba!");
 						collapsingToolbarLayout.setTitle("Antokiba");
 						headerImage.setImageResource(R.drawable.header_antokiba);
-
 						break;
 					case 4:
-						//Log.wtf("This", "STARTING TOWN!");
+						////Log.d("This", "STARTING TOWN!");
 						collapsingToolbarLayout.setTitle("Starting Point");
 						headerImage.setImageResource(R.drawable.header_startzone);
-
 						break;
 					case 5:
-						//Log.wtf("This", "Rubicuta!");
+						////Log.d("This", "Rubicuta!");
 						collapsingToolbarLayout.setTitle("Rubicuta");
 						headerImage.setImageResource(R.drawable.header_rubicuta);
-
 						break;
 					case 6:
-						//Log.wtf("This", "Dorias!");
+						////Log.d("This", "Dorias!");
 						collapsingToolbarLayout.setTitle("Dorias");
 						headerImage.setImageResource(R.drawable.header_dorias);
-
 						break;
 					case 7:
-						//Log.wtf("This", "Limeiro!");
+						////Log.d("This", "Limeiro!");
 						collapsingToolbarLayout.setTitle("Limeiro");
 						headerImage.setImageResource(R.drawable.header_limeiro);
-
 						break;
 				}
-
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int state) {
-
 			}
-
-
 		});
 
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		Intent intent = new Intent(MapActivity.this, MainActivity.class);
+		this.startActivity(intent);
+		return true;
 	}
 
 	// Adds fragments to Tabs
@@ -236,12 +260,22 @@ public class MapActivity extends AppCompatActivity {
 		adapter.addFragment(new Dorias(), "Dorias");
 		adapter.addFragment(new Limeiro(), "Limeiro");
 		viewPager.setAdapter(adapter);
-		viewPager.setCurrentItem(position);
+		if (position >= 0)
+			viewPager.setCurrentItem(position);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_map, menu);
+		Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+		sharingIntent.setType("text/plain");
+		String shareBody = getString(R.string.share_Info);
+		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+		MenuItem item = menu.findItem(R.id.action_share);
+		// Fetch and store ShareActionProvider
+		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+		mShareActionProvider.setShareIntent(sharingIntent);
 		return true;
 	}
 
@@ -250,19 +284,24 @@ public class MapActivity extends AppCompatActivity {
 		int id = item.getItemId();
 		Intent intent;
 		switch (id) {
-			case R.id.home:
+			case android.R.id.home:
+				//intent = new Intent(MapActivity.this, MainActivity.class);
+				//this.startActivity(intent);
 				NavUtils.navigateUpFromSameTask(this);
+				onBackPressed();
 				return true;
 			case R.id.action_settings:
-				Toast.makeText(MapActivity.this, R.string.menu_Settings_Title, Toast.LENGTH_SHORT).show();
 				intent = new Intent(MapActivity.this, SettingsActivity.class);
 				this.startActivity(intent);
 				return true;
 			case R.id.action_share:
 				Toast.makeText(MapActivity.this, R.string.menu_Share_Title, Toast.LENGTH_SHORT).show();
+				intent = new Intent(Intent.ACTION_SEND);
+				this.startActivity(intent);
 				return true;
 			case R.id.action_about:
-				Toast.makeText(MapActivity.this, R.string.menu_About_Title, Toast.LENGTH_SHORT).show();
+				intent = new Intent(MapActivity.this, AboutActivity.class);
+				this.startActivity(intent);
 				return true;
 			case R.id.action_book:
 				Toast.makeText(MapActivity.this, R.string.menu_Book_Title, Toast.LENGTH_SHORT).show();
@@ -274,10 +313,21 @@ public class MapActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(MapActivity.this, MainActivity.class);
+		this.startActivity(intent);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
-		CheckTheme();
-		if (setting.getBoolean("CanTravel", true)) {
+		setting = PreferenceManager.getDefaultSharedPreferences(MapActivity.this);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
+		onSharedPreferenceChanged(setting, "Theme_Preference");
+
+		if (setting.getBoolean("CanTravel", false) == true) {
 			// Clear Notifications
 			NotificationManager notificationManager =
 							(NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -285,83 +335,15 @@ public class MapActivity extends AppCompatActivity {
 		}
 	}
 
-	private void CheckTheme(){
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
-		switch (customTheme) {
-			case "Sunlight":
-				setTheme(R.style.AppTheme_Sunlight);
-				break;
-			case "Bouquets":
-				setTheme(R.style.AppTheme_Bouquets);
-				break;
-			case "Red Wedding":
-				setTheme(R.style.AppTheme_RedWedding);
-				break;
-			case "Royal Flush":
-				setTheme(R.style.AppTheme_RoyalF);
-				break;
-			case "Birds n Berries":
-				//Log.wtf("Test", "Birds n Berries");
-				setTheme(R.style.AppTheme_BirdBerries);
-				break;
-			case "Blue Berry":
-				//Log.wtf("Test", "Blue Berry!");
-				setTheme(R.style.AppTheme_BlueBerry);
-				break;
-			case "Cinnamon":
-				//Log.wtf("Test", "Cinnamon!");
-				setTheme(R.style.AppTheme_Cinnamon);
-				break;
-			case "Day n Night":
-				//Log.wtf("Test", "Day n Night");
-				setTheme(R.style.AppTheme_Night);
-				break;
-			case "Earthly":
-				//Log.wtf("Test", "Earthly!");
-				setTheme(R.style.AppTheme_Earth);
-				break;
-			case "Forest":
-				//Log.wtf("Test", "Forest!");
-				setTheme(R.style.AppTheme_Forest);
-				break;
-			case "Fresh Greens":
-				//Log.wtf("Test", "GREENS!");
-				setTheme(R.style.AppTheme_Greens);
-				break;
-			case "Fresh n Energetic":
-				//Log.wtf("Test", "Fresh n Energetic");
-				setTheme(R.style.AppTheme_Fresh);
-				break;
-			case "Icy Blue":
-				//Log.wtf("Test", "Icy!");
-				setTheme(R.style.AppTheme_Icy);
-				break;
-			case "Ocean":
-				//Log.wtf("Test", "Ocean");
-				setTheme(R.style.AppTheme_Ocean);
-				break;
-			case "Play Green/blues":
-				//Log.wtf("Test", "Play Green/blues");
-				setTheme(R.style.AppTheme_GrnBlu);
-				break;
-			case "Primary":
-				//Log.wtf("Test", "Primary");
-				setTheme(R.style.AppTheme_Prime);
-				break;
-			case "Rain":
-				//Log.wtf("Test", "Rain!");
-				setTheme(R.style.AppTheme_Rain);
-				break;
-			case "Tropical":
-				//Log.wtf("Test", "Tropical");
-				setTheme(R.style.AppTheme_Tropical);
-				break;
-			default:
-				//Log.wtf("Test", "Default");
-				setTheme(R.style.AppTheme_Greens);
-				break;
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+		if (key.equals("Hunter_Name_Pref")) {
+			//Log.d("Change", "Name!");
+			hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
+		} else if (key.equals("Theme_Preference")) {
+			Globals.ChangeTheme(this);
 		}
-
 	}
 
 	private static class Adapter extends FragmentPagerAdapter {
@@ -378,7 +360,8 @@ public class MapActivity extends AppCompatActivity {
 			mContext = context;
 		}
 
-		// Create a method to return tag of a previously created fragment.
+
+		//Create a method to return tag of a previously created fragment.
 		public Fragment getFragment(int position) {
 			String tag = mFragmentTags.get(position);
 			if (tag == null)
@@ -389,7 +372,6 @@ public class MapActivity extends AppCompatActivity {
 		void addFragment(Fragment fragment, String title) {
 			mFragmentList.add(fragment);
 			mFragmentTitleList.add(title);
-
 		}
 
 		@Override
@@ -410,6 +392,16 @@ public class MapActivity extends AppCompatActivity {
 				mFragmentTags.put(position, tag);
 			}
 			return obj;
+		}
+
+		@Override
+		public Parcelable saveState() {
+			// Do Nothing
+			return null;
+		}
+
+		@Override
+		public void restoreState(Parcelable state, ClassLoader loader) {
 
 		}
 

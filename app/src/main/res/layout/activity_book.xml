@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/InitialActivity"
+             android:id="@+id/RootLayout"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:animateLayoutChanges="true"
@@ -58,8 +58,6 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-
             android:background="@drawable/book_cover"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
@@ -74,7 +72,6 @@
         android:layout_gravity="bottom"
         android:background="@drawable/logo_red_long"
         android:gravity="bottom">
-
         <com.tc2r.greedisland.utils.ResizableImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,9 +97,14 @@
                 android:minLines="2"
                 android:padding="4dp"
                 android:textAlignment="center"
-                android:textAppearance="@android:style/TextAppearance.Medium"
-
-                />
+                android:textAppearance="@android:style/TextAppearance.Medium"/>
         </android.support.v7.widget.CardView>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rewardLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
 </FrameLayout>

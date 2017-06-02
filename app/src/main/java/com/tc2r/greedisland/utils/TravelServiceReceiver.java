@@ -34,6 +34,7 @@ public class TravelServiceReceiver extends BroadcastReceiver {
 
 		// Reset saved Variables to allow user to Travel
 		editor.putBoolean("CanTravel", true);
+		editor.putBoolean("AlarmTravelSet", false);
 		editor.apply();
 
 		// Play Sound Effect
@@ -53,7 +54,7 @@ public class TravelServiceReceiver extends BroadcastReceiver {
 		Notification.Builder builder = new Notification.Builder(context);
 		builder.setContentTitle(context.getString(R.string.app_name));
 		builder.setContentText(content);
-		builder.setSmallIcon(R.drawable.ic_launcher);
+		builder.setSmallIcon(R.drawable.ic_notification);
 
 		// Set up actions for Notification
 		Intent resultIntent = new Intent(context, MapActivity.class);

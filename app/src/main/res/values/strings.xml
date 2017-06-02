@@ -1,159 +1,66 @@
 <resources>
     <string name="app_name">Greed Island</string>
     <string name="title_activity_book">BOOK</string>
-    <string name="Activity_Credits_Name">Credits</string>
+    <string name="title_activity_map">BOOK</string>
+    <string name="title_activity_about">ABOUT</string>
+    <string name="title_activity_credits">CREDITS</string>
 
     <!--Personal Card Details-->
     <string name="Team_Courtney_Title">Graphic Designer</string>
-    <string name="Team_Courtney_Desc">"My Waifu is better then yours, also I draw some stuff "</string>
-    <string name="Team_Daniel_Title">Junior\n Graphic Designer</string>
-    <string name="Team_Daniel_Desc">Youngest In The Group, And I Love Killua</string>
+    <string name="Team_Courtney_Desc">Courtney Boyer \n
+        "My Waifu is better then yours!" \n
+        Hi! Im currently a Graphic design \n
+        student with experience in \n
+        Photoshop and Illustrator.</string>
+
+
+    <string name="Team_Daniel_Title">Junior Graphic \nDesigner</string>
+    <string name="Team_Daniel_Desc">Daniel Ngabo \n
+
+        Youngest In The Group! \n
+         I love killua just as \n
+        much as this app.</string>
     <string name="Team_Dre_Title">Android Developer</string>
-    <string name="Team_Dre_Desc">Nudennie White \n\nGot an Ideal? Hit me up!</string>
+    <string name="Team_Dre_Desc">Nudennie White \n
+        I am the bone of my code \n
+        Java is my body and .xml is my blood. \n
+        I have created over a thousand logs \n
+        Unknown to Errors, \n
+        Nor known to Response. \n
+        Have withstood long hours \n
+        to create many programs \n
+        Yet, these hands will \n
+        never design anything \n
+        So as I pray, \n
+        Unlimited Project Works
+    </string>
     <string name="Team_Munaib_Title">Graphic Designer</string>
-    <string name="Team_Munaib_Desc">Look at what my cat just done! \n *cough* \n I\'m a web developer with a passion for design! \n Have an idea or want something designed? Contact me (@munaibh)!</string>
+    <string name="Team_Munaib_Desc">Munaib Hussain \n
+        I\'m a web developer with a \n
+        First Class Degree in \n
+        Computer Science and a passion \n
+        for design! Have an idea \n
+        or want something designed? Contact me!</string>
 
 
     <!--Card Details Page-->
-    <string name="card_ID_title">ID: </string>
+    <string name="card_ID_title">"ID: "</string>
     <string name="card_ID_text">99</string>
-    <string name="card_Rank_Title">RANK: </string>
+    <string name="card_Rank_Title">"RANK: "</string>
     <string name="card_Rank_Text">SS</string>
-    <string name="card_Limit_Title">LIMIT</string>
+    <string name="card_Limit_Title">"LIMIT: "</string>
     <string name="card_Limit_Text">3</string>
-    <string name="card_Title_Title">Title: </string>
+    <string name="card_Title_Title">"Title: "</string>
     <string name="card_Title_Text">Name Of The Card</string>
     <string name="card_Description_Text">What the card does</string>
-    <string name="share_Info">Greed Island App - www.google.com</string>
+    <string name="share_Info">"Greed Island App - http://play.google.com/store/search?q=pub:tc2r"</string>
     <string name="successful_Registration">New Player Registered</string>
-
 
     <!--Header Toolbars-->
     <string name="toolbar_Header_Main_Collasped">HUNTER ID</string>
     <string name="toolbar_Header_Main_Expanded">Greed Island</string>
     <string name="toolbar_Header_Credits_Collasped">We Appreciate You!</string>
     <string name="toolbar_Header_Credits_Expanded">Thank You!</string>
-
-
-    <!--Rules Scroll List -->
-    <string-array name="ruleTitles">
-        <item>WELCOME TO GREED ISLAND</item>
-        <item>Rule 1:</item>
-        <item>BOOK:</item>
-        <item>Free slots: 45</item>
-        <item>GOOOOON~</item>
-        <item>Items Become Cards:</item>
-        <item>Gain:</item>
-        <item>Transformation:</item>
-        <item>Store in Book:</item>
-        <item>How To Win:</item>
-        <item>How To Lose:</item>
-        <item>How To Play:</item>
-    </string-array>
-
-    <string-array name="ruleDescs">
-        <item>The goal of the game is to complete the book.</item>
-        <item>In this game, whoever has the ring can use two spells "Book" and "Gain".</item>
-        <item>Imposed slots: 100 (numbered 000 - 099)
-Each slot has a number. Each slot only accepts the card with the right number.</item>
-        <item>Any cards can be slotted into free slots.</item>
-        <item> </item>
-        <item>All the items you find in the game can be converted into cards.
- Book is used to store the cards.</item>
-        <item>When you acquire an item, it immediately turns into a card. (Eg: Finding and taking a sword will automatically turn it into a card). \n\n Cards slotted into the book can no longer be used unless the player uses \"gain\". However, a card transformed via \"gain\" can no longer be converted back into a card.\n
-            If you want to transform the sword into a card again, you must acquire the same sword again."</item>
-        <item>All the items in the island have a limited number of transformations.
- Although there\'s more than 100 copies of each total, each card only has a limit of 3 that can be in card-state at a time.</item>
-        <item>All cards must be stored in the book, othewise the card will automatically turn back into an item within 1 minute. In that case, retransformation is no longer possible.</item>
-        <item>You must collect the numbered slots in order to complete the game.</item>
-        <item>If you were to die during the game, the book and the ring will be destroyed.</item>
-        <item>Have Fun!"</item>
-    </string-array>
-
-    <!--LOCAL CARDS LIST-->
-    <string-array name="cardTitle">
-        <item>"Ruler's Blessing"</item>
-        <item>Patch of Forest</item>
-        <item>Patch of Stone</item>
-        <item>Pitcher of Eternal Water</item>
-        <item>"Ruler's Blessing"</item>
-        <item>Patch of Forest</item>
-        <item>Patch of Stone</item>
-        <item>Pitcher of Eternal Water</item>
-    </string-array>
-    <string-array name="cardDesc">
-        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
-        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
-        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
-        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
-        <item>A castle given as a prize for winning the contest, town with population 10,000 included. Its residents will live according to whatever laws and commands you issue.</item>
-        <item>The entrance to the giant forest called the "Mountain God's Garden" where many unique endemic species live. They are all tame and friendly.</item>
-        <item>The entrance to a cave called "Poseidon's Cavern." The cave changes its path at each visit, confusing intruders.</item>
-        <item>A jar from which pure, clean water (1440 L per day) continually flows.</item>
-    </string-array>
-
-    <!--Locations Arrays-->
-    <string-array name="locations">
-        <item>Masadora</item>
-        <item>Soufrabi</item>
-        <item>Aiai</item>
-        <item>Antokiba</item>
-        <item>Starting Point</item>
-        <item>Rubicuta</item>
-        <item>Dorias</item>
-        <item>Limeiro</item>
-    </string-array>
-
-    <string-array name="loc_title">
-        <item>Magic City of</item>
-        <item>Port City</item>
-        <item>The City of Love</item>
-        <item>City of Prizes</item>
-        <item>Greed Island Entrance </item>
-        <item>Start City</item>
-        <item>Gambling City</item>
-        <item>Capital City</item>
-    </string-array>
-    <array name="loc_image">
-        <item>@drawable/town_masadora</item>
-        <item>@drawable/town_soufrabi</item>
-        <item>@drawable/town_aiai</item>
-        <item>@drawable/town_antokiba</item>
-        <item>@drawable/town_start</item>
-        <item>@drawable/town_rubicuta</item>
-        <item>@drawable/town_dorias</item>
-        <item>@drawable/town_limeiro</item>
-    </array>
-
-    <string-array name="loc_desc">
-        <item>This is where all players are brought when they enter the game.
-
-            \n\nSay Hi to Eeta!</item>
-
-        <item>Known as the \"Magic City\", Masadora has a fantasy-themed appearance. \n\n Spell cards are only sold at the item shop in this town. \n\n With 10,000 Jenny, one can buy 3 random spell cards in the spell card shop. Many players who have given up on the game come to this city to look for a way out.</item>
-
-        <item>Soufrabi is a city with a beautiful line of cliffs.\n\n Here players can find a method to leave Greed Island and return to the real world. \n\n It can be attained by somehow getting past the Harbour Master. \n\n
-        The people of Soufarabi whisper of vicious pirates who have recently Pirates have taken over the city. The base of the bloodthirsty pirates is hidden. \n\n Legend has it that an underwater cave near the costline holds a vast treasure.</item>
-
-
-        <item>The atmosphere on the streets of this city feels like it is based upon romantic simulation games. \n\n No one agrees on exactly how The \"City of Love\" got it\'s namesake. \n\n Some believe it is due to very aura of warmth that lingers in the air within the town walls. \n\n Listing Its sights, and popularity as a honeymoon destination, they claim this to be the obvious reason. They travel to Aiai to visit its well known River walkways, sidewalk cafes and lovely hotels.\n\n
-Others attest that Aiai\'s moniker comes from a pink heart-shaped object floating in the sky is its symbol. Its\' beauty is a fav amongst couples at night. Any player who wants to enjoy the pleasure of a heterosexual encounter needs to come here. In this city there are all kinds of clichéd situations and events that can lead to love.
-\n\n Hisoka considers it a nice place to spend time.</item>
-
-
-        <item>Closest to the center of the island, Antokiba is one of the two starting cities. \n\n
-            Antokiba\'s walls are covered with many reward posters! Players looking for quest and treasures are the most often visitors.  \n\n On the 15th of every month, a major contest is held here in which the winner is rewarded with a specified slot card. \n\n Many players go straight to Antokiba when beginning the game so a lot of basic information about beginners can be gathered in this city. </item>
-
-
-        <item>Due to it\'s short distance from the island\'s main entrance, Rubicuta city is the second starting city of Greed Island. \n\n Elegant and colorful, it is said to most resemble cities in the real world.</item>
-
-
-        <item>The casino is the staple of this city. One is not required to wear formal clothes to enter it, and even children are allowed. \n\n The Risky Dice can be very useful while in Dorias . </item>
-
-        <item>The capital of Greed Island. \n\n Limeiro can only be accessed by those who have completed the Specified Slot Cards.  \n\nNot only the castle, even the streets of the city are full of energy. The last event of the game is held here. \n\n
-        The huge castle is the symbol of this city. Royalty rarely steps out except to create laws which are absolutely followed.\n\n Some believe Gamemasters live within the castle.</item>
-    </string-array>
-
 
     <!--Strings related to Settings-->
     <string name="menu_Share_Title">Share</string>
@@ -174,13 +81,17 @@ Others attest that Aiai\'s moniker comes from a pink heart-shaped object floatin
     <string name="book_Rules_Text">The goal of the game is to complete the book.</string>
 
     <!--Maps Activity Strings-->
-    <string name="maps_Set_Base_Button">SET HOMETOWN</string>
+    <string name="maps_Set_Base_Button">SET BASE</string>
     <string name="maps_City_Title">The Windy City of</string>
     <string name="maps_City_Name">Chicago</string>
-    <string name="maps_Set_Travel_Button">TRAVEL</string>
+    <string name="maps_Set_Travel_Button">TRAVEL HERE</string>
     <string name="maps_City_Description_Default">The windy city is a city of wind. Made famous by the fact that it is a city of wind may the winds never stop winning wind wind blah blah blah.</string>
+    <string name="card_Lost">You Lost Card: #</string>
+    <string name="card_Gained">You Received Card: #</string>
+    <string name="card_Stole">You Took Card: #</string>
 
-    <!--Credits Activity Strings-->
+
+    <!--CreditsFragment Activity Strings-->
 
     <string name="credits_Title">CREDITS AND SHOUT OUTS</string>
     <string name="credits_text">
@@ -238,8 +149,17 @@ Others attest that Aiai\'s moniker comes from a pink heart-shaped object floatin
     <!--Alarm Strings-->
     <string name="new_Card_Notification">You Have 3 New Cards!</string>
     <string name="new_Travel_Notification">Rested, You May Now Travel Again!</string>
-    <string name="Map_Locals_Title">Currently In:</string>
+    <string name="Map_Locals_Title">Currently Here:</string>
+    <string name="daily_cards_alert">New Cards In 24 Hours</string>
+    <string name="Daily_Travel_Text">Exhausted, you arrive at your destination.</string>
 
+
+    <!--Ads-->
+    <!--Gotta eat right?-->
+    <string name="main_banner_ad_unit_id">ca-app-pub-5213602039222610/5174812285</string>
+    <string name="travel_inter_ad_unit_id">ca-app-pub-5213602039222610/6791146288</string>
+    <string name="server_down_message">Spiders Attack! Server Temporally Unavailable.</string>
+    <string name="internet_down_message">Don\'t forget Hunter, this app requires an internet connection. Just Nen isn\'t enough!</string>
 
 
 </resources>

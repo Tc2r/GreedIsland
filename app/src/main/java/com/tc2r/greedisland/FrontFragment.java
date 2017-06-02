@@ -22,10 +22,9 @@ import com.tc2r.greedisland.utils.TravelHelper;
  */
 public class FrontFragment extends Fragment implements View.OnClickListener {
 
+	// Declare Layout Variables
+	TextView tvSettings, tvBook, tvGreed;
 	TextView statusHunter, statusLang, statusID, statusBase, statusLocation;
-	TextView tvSettings;
-	TextView tvBook;
-	TextView tvGreed;
 	Intent intent;
 
 
@@ -54,6 +53,7 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 		statusLocation= (TextView) view.findViewById(R.id.statusLocation);
 
 
+		// set listeners
 		tvGreed.setOnClickListener(this);
 		tvBook.setOnClickListener(this);
 		tvSettings.setOnClickListener(this);
@@ -62,22 +62,24 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 		imageSettings.setOnClickListener(this);
 
 
+		// get saved variables.
 		SharedPreferences status = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		String hunterName = status.getString("Hunter_Name_Pref", status.getString("TempName", "Chrollo"));
 		String hunterIdNum = String.valueOf(status.getInt("HUNT_ID", 0));
 		String homeTown = status.getString("CurrentHome", "Start");
 		String location = status.getString("CurrentLocation", "Start");
 
+		String huntLang = hunterName;
 		String huntTitle = getString(R.string.Main_Hunter_Title) + hunterName;
-		String hunttLang = hunterName;
 		String hunttId = getString(R.string.Main_Hunter_Num) + hunterIdNum;
 		String huntCurrent = getString(R.string.Main_Hunter_Location) + location;
 		String huntHome = getString(R.string.Main_Hunter_Base) + homeTown;
 
+		// Set TextViews.
 		statusHunter.setText(huntTitle);
 		Typeface hunterFont = Typeface.createFromAsset(getActivity().getAssets(), "hunterxhunter.ttf");
 		statusLang.setTypeface(hunterFont);
-		statusLang.setText(hunttLang);
+		statusLang.setText(huntLang);
 		statusID.setText(hunttId);
 		statusBase.setText(huntHome);
 		statusLocation.setText(huntCurrent);
@@ -90,22 +92,16 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 		switch (v.getId()) {
 			case (R.id.tv_settings):
 			case (R.id.image_settings):
-				//Log.wtf("CLICKED", "SETTINGS");
-				//Toast.makeText(this, "CLICKED SETTINGS", Toast.LENGTH_LONG).show();
 				intent = new Intent(getContext(), SettingsActivity.class);
 				startActivity(intent);
 				break;
 			case (R.id.tv_book):
 			case (R.id.image_book):
-				//Log.wtf("CLICKED", "BOOK");
-				//Toast.makeText(this, "CLICKED BOOK", Toast.LENGTH_LONG).show();
 				intent = new Intent(getContext(), BookActivity.class);
-
 				startActivity(intent);
 				break;
 			case (R.id.tv_map):
 			case (R.id.image_map):
-				//Toast.makeText(this, "CLICKED MAP", Toast.LENGTH_LONG).show();
 				TravelHelper.ViewTown(getContext(), 1);
 				break;
 			default:
