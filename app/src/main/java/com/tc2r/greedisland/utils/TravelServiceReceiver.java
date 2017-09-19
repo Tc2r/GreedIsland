@@ -33,7 +33,7 @@ public class TravelServiceReceiver extends BroadcastReceiver {
 		mp = MediaPlayer.create(context, R.raw.greed);
 
 		// Reset saved Variables to allow user to Travel
-		editor.putBoolean("CanTravel", true);
+		editor.putBoolean(context.getString(R.string.pref_can_travel_key), true);
 		editor.putBoolean("AlarmTravelSet", false);
 		editor.apply();
 

@@ -37,7 +37,7 @@ public class eventtest extends AppCompatActivity implements SharedPreferences.On
 
 		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 		setContentView(R.layout.activity_eventtest);
 		topImage = (ImageView) findViewById(R.id.iv_location);
 		botImage = (ImageView) findViewById(R.id.iv_event);
@@ -51,7 +51,7 @@ public class eventtest extends AppCompatActivity implements SharedPreferences.On
 		SharedPreferences location = PreferenceManager.getDefaultSharedPreferences(this);
 
 
-		String locTitle = location.getString("CurrentLocation", "Greed Island");
+		String locTitle = location.getString(getString(R.string.pref_current_location_key), "Greed Island");
 		topTitle.setText("CURRENT LOCATION: " + locTitle);
 
 		// set bg images:
@@ -112,8 +112,8 @@ public class eventtest extends AppCompatActivity implements SharedPreferences.On
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals("Theme_Preference")) {
-			String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
+		if (key.equals(getString(R.string.pref_theme_selection_key))) {
+			String customTheme = setting.getString(getString(R.string.pref_theme_selection_key), "Fresh Greens");
 			switch (customTheme) {
 				case "Sunlight":
 					setTheme(R.style.AppTheme_Sunlight);

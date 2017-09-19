@@ -64,10 +64,10 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 
 		// get saved variables.
 		SharedPreferences status = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		String hunterName = status.getString("Hunter_Name_Pref", status.getString("TempName", "Chrollo"));
-		String hunterIdNum = String.valueOf(status.getInt("HUNT_ID", 0));
-		String homeTown = status.getString("CurrentHome", "Start");
-		String location = status.getString("CurrentLocation", "Start");
+		String hunterName = status.getString(getString(R.string.pref_hunter_name_key), status.getString(getString(R.string.pref_hunter_temp_key), getString(R.string.pref_hunter_default_name)));
+		String hunterIdNum = String.valueOf(status.getInt(getString(R.string.pref_hunter_id_key), 0));
+		String homeTown = status.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
+		String location = status.getString(getString(R.string.pref_current_location_key), getString(R.string.pref_town_default));
 
 		String huntLang = hunterName;
 		String huntTitle = getString(R.string.Main_Hunter_Title) + hunterName;

@@ -60,15 +60,15 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 		super.onCreate(savedInstanceState);
 		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
-		onSharedPreferenceChanged(setting, "Theme_Preference");
-		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
-		hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+		hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
 		mapTut = setting.getBoolean("MapTut", true);
 
 
-		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
-		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
+		SharedPreferences firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
+		Boolean firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
 
 
 		// Auto Set Viewpager Screen
@@ -151,14 +151,14 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
 			SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
-			firstTimeEditor.putBoolean("first_Pref", false);
+			firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && mapTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+			tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
 		} else {
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
@@ -255,7 +255,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 		adapter.addFragment(new Soufrabi(), "Soufrabi");
 		adapter.addFragment(new Aiai(), "Aiai");
 		adapter.addFragment(new Antokiba(), "Antokiba");
-		adapter.addFragment(new Start(), "Start");
+		adapter.addFragment(new Start(), getString(R.string.pref_town_default));
 		adapter.addFragment(new Rubicuta(), "Rubicuta");
 		adapter.addFragment(new Dorias(), "Dorias");
 		adapter.addFragment(new Limeiro(), "Limeiro");
@@ -324,10 +324,10 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 		super.onResume();
 		setting = PreferenceManager.getDefaultSharedPreferences(MapActivity.this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 
-		if (setting.getBoolean("CanTravel", false) == true) {
+		if (setting.getBoolean(getString(R.string.pref_can_travel_key), false) == true) {
 			// Clear Notifications
 			NotificationManager notificationManager =
 							(NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -338,10 +338,10 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals("Hunter_Name_Pref")) {
+		if (key.equals(getString(R.string.pref_hunter_name_key))) {
 			//Log.d("Change", "Name!");
-			hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
-		} else if (key.equals("Theme_Preference")) {
+			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+		} else if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
 		}
 	}

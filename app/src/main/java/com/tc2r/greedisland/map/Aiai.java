@@ -57,12 +57,14 @@ public class Aiai extends Fragment implements View.OnClickListener {
 	// Server Request Stuff
 	public static final String url = "https://tchost.000webhostapp.com/settravel.php";
 	public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
+
 	TextView tvTravel, tvHomeSet;
 	StringRequest stringRequest;
 	SharedPreferences userMap;
 	private TextView locTitle, location, locDesc;
 	private ImageView locImage;
 	private int id = 2;
+
 	// Tracks Current Set Location
 	private String currentLocation;
 	// Tracks Current Set Home
@@ -103,7 +105,7 @@ public class Aiai extends Fragment implements View.OnClickListener {
 		tvHomeSet = (TextView) view.findViewById(R.id.tv_Home);
 		currentHomeView = (CardView) view.findViewById(R.id.currentHomeView);
 
-		// Adds
+		// Ads
 		mInterstitialAd = new InterstitialAd(view.getContext());
 		mInterstitialAd.setAdUnitId("ca-app-pub-5213602039222610/6791146288");
 		mInterstitialAd.setAdListener(new AdListener() {
@@ -141,20 +143,20 @@ public class Aiai extends Fragment implements View.OnClickListener {
 		images.recycle();
 
 		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		currentLocation = userMap.getString("CurrentLocation", "FIRST RUN");
-		currentHome = userMap.getString("CurrentHome", "NEVER RAN");
-		lastBase = userMap.getString("CurrentHome", "FIRST RUN");
+		currentLocation = userMap.getString(getString(R.string.pref_current_location_key), getString(R.string.pref_town_first));
+		currentHome = userMap.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_never));
+		lastBase = userMap.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_first));
 		//Log.d("MAP:", String.valueOf(userMap.getAll()));
 		SharedPreferences.Editor editor = userMap.edit();
-		editor.putString("LastLocation", lastBase);
+		editor.putString(getString(R.string.pref_lastlocation_key), lastBase);
 		editor.apply();
 
 
-		hunterName = userMap.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
-		hunterID = userMap.getInt("HUNT_ID", 0);
+		hunterName = userMap.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+		hunterID = userMap.getInt(getString(R.string.pref_hunter_id_key), 0);
 
 
-		boolean canTravel = userMap.getBoolean("CanTravel", false);
+		boolean canTravel = userMap.getBoolean(getString(R.string.pref_can_travel_key), false);
 		if (currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
 			tvHomeSet.setVisibility(View.GONE);
 			tvTravel.setVisibility(View.GONE);
@@ -177,7 +179,8 @@ public class Aiai extends Fragment implements View.OnClickListener {
 				tvTravel.setVisibility(View.VISIBLE);
 			}
 		}
-		currentHome = userMap.getString("CurrentHome", "Start");
+
+		currentHome = userMap.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
 		if (currentHome.equals(thisTown)) {
 			if (Globals.isNetworkAvailable(getActivity())) {
 
@@ -199,7 +202,6 @@ public class Aiai extends Fragment implements View.OnClickListener {
 			}
 		} else {
 			currentHomeView.setVisibility(View.GONE);
-
 		}
 
 		return view;
@@ -208,10 +210,10 @@ public class Aiai extends Fragment implements View.OnClickListener {
 	@Override
 	public void onResume() {
 		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		lastBase = userMap.getString("CurrentHome", "FIRST RUN");
-		currentLocation = userMap.getString("CurrentLocation", "NOTWORKING");
-		currentHome = userMap.getString("CurrentHome", "NOTWORKING");
-		boolean canTravel = userMap.getBoolean("CanTravel", false);
+		lastBase = userMap.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_first));
+		currentLocation = userMap.getString(getString(R.string.pref_current_location_key), "NOTWORKING");
+		currentHome = userMap.getString(getString(R.string.pref_current_home_key), "NOTWORKING");
+		boolean canTravel = userMap.getBoolean(getString(R.string.pref_can_travel_key), false);
 		if (currentLocation.equals(thisTown) && currentHome.equals(thisTown)) {
 			tvHomeSet.setVisibility(View.GONE);
 			tvTravel.setVisibility(View.GONE);
@@ -234,7 +236,7 @@ public class Aiai extends Fragment implements View.OnClickListener {
 				tvTravel.setVisibility(View.VISIBLE);
 			}
 		}
-		if (userMap.getBoolean("CanTravel", true)) {
+		if (userMap.getBoolean(getString(R.string.pref_can_travel_key), true)) {
 			// Clear Notifications
 			NotificationManager notificationManager =
 							(NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -286,10 +288,10 @@ public class Aiai extends Fragment implements View.OnClickListener {
 		userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		SharedPreferences.Editor editor = userMap.edit();
 		// Switch Deny Travel On, Set Alarm.
-		editor.putBoolean("CanTravel", false);
+		editor.putBoolean(getString(R.string.pref_can_travel_key), false);
 		editor.putBoolean("AlarmTravelSet", true);
-		editor.putString("CurrentLocation", thisTown);
-		//editor.putString("LastLocation", lastBase);
+		editor.putString(getString(R.string.pref_current_location_key), thisTown);
+		//editor.putString(getString(R.string.pref_lastlocation_key), lastBase);
 		editor.apply();
 		//Log.d("MAP:", String.valueOf(userMap.getAll()));
 		TravelHelper.SetAlarm(getContext());
@@ -308,8 +310,8 @@ public class Aiai extends Fragment implements View.OnClickListener {
 		SharedPreferences.Editor editor = userMap.edit();
 		actionToken = userMap.getInt("ActionToken", 0);
 		editor = userMap.edit();
-		editor.putString("CurrentHome", thisTown);
-		editor.putString("LastLocation", lastBase);
+		editor.putString(getString(R.string.pref_current_home_key), thisTown);
+		editor.putString(getString(R.string.pref_lastlocation_key), lastBase);
 		editor.apply();
 		tvHomeSet.setVisibility(View.GONE);
 		//Log.d("id:", String.valueOf(id));

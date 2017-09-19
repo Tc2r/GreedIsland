@@ -47,8 +47,12 @@ import java.util.Map;
 import java.util.Random;
 
 public class
-MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+MainActivity extends AppCompatActivity implements
+				SharedPreferences.OnSharedPreferenceChangeListener {
 
+	// statics.
+	private static final String HUNTER_FONT_NAME = "hunterxhunter.ttf";
+	private static final String CREDIT_FONT_NAME = "creditcard.ttf";
 
 	// Declare Layout Variables
 	private RelativeLayout tutorial;
@@ -76,10 +80,11 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		// When settings change, update name and them in layout.
-		if (key.equals("Hunter_Name_Pref")) {
+		if (key.equals(getString(R.string.pref_hunter_name_key))) {
 			//Log.d("Change", "Name!");
-			hunterName = setting.getString("Hunter_Name_Pref", tName);
-		} else if (key.equals("Theme_Preference")) {
+			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), tName);
+		}
+		if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
 		}
 	}
@@ -128,6 +133,8 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 		setToolbarandViewPager();
 
 	}
+
+
 
 	private void setToolbarandViewPager() {
 		// Set Title and Appearance for collapsing Toolbar Layout
@@ -196,8 +203,8 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 
 	private void updateHunterCard() {
 		// Get Fonts from Asset Folder
-		Typeface hunterFont = Typeface.createFromAsset(getAssets(), "hunterxhunter.ttf");
-		Typeface creditFont = Typeface.createFromAsset(getAssets(), "creditcard.ttf");
+		Typeface hunterFont = Typeface.createFromAsset(getAssets(), HUNTER_FONT_NAME);
+		Typeface creditFont = Typeface.createFromAsset(getAssets(), CREDIT_FONT_NAME);
 
 		// Format TextView and Strings
 		hunterName = hunterName.toUpperCase();
@@ -267,13 +274,13 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			firstTimeEditor.putBoolean("first_Pref", false);
+			firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && mainTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+			tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
 		} else {
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
@@ -285,18 +292,17 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 	 * Checks for and uses Saved Shared Preferences of settings.
 	 */
 	private void getSavedSettings() {
-		firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
-		firstTime = firstPrefer.getBoolean("first_Pref", true);
-		firstTimeEditor = firstPrefer.edit();
+		firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
+		firstTime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
+		setting = PreferenceManager.getDefaultSharedPreferences(this);
 
-		setting = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-		setting.registerOnSharedPreferenceChangeListener(this);
 
-		//Check for changed listener incase layout needs updating.
-		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
-		onSharedPreferenceChanged(setting, "Theme_Preference");
-		tutorialPreference = setting.getBoolean("Tutor_Preference", false);
+		//Check for changed listener in case layout needs updating.
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
 		SharedPreferences.Editor tempName = setting.edit();
+		setting.registerOnSharedPreferenceChangeListener(this);
 
 		// If first run, create random name and assign it to Hunter Name temporary.
 		Random rand = new Random();
@@ -305,7 +311,7 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 		tName = tempNames[n];
 		tempName.putString("TempName", tName);
 		tempName.commit();
-		hunterName = setting.getString("Hunter_Name_Pref", tName);
+		hunterName = setting.getString(getString(R.string.pref_hunter_name_key), tName);
 		mainTut = setting.getBoolean("MainTut", true);
 
 		// Check bundle for first launch Initiator.
@@ -389,7 +395,7 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 	 * database to add a new user, or get the user's name.
 	 */
 	private void InitiateUser() {
-		int huntID = setting.getInt("HUNT_ID", 0);
+		int huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
 		RequestQueue requestQueue;
 
 		String url = "https://tchost.000webhostapp.com/UserRegister.php";
@@ -411,11 +417,11 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 						// Locally Initialize Hunter Information
 						SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 						SharedPreferences.Editor editor = setting.edit();
-						editor.putInt("HUNT_ID", temp);
-						editor.putString("CurrentLocation", "Start");
-						editor.putString("CurrentHome", "Start");
-						editor.putString("LastLocation", "Start");
-						editor.putBoolean("CanTravel", true);
+						editor.putInt(getString(R.string.pref_hunter_id_key), temp);
+						editor.putString(getString(R.string.pref_current_location_key), getString(R.string.pref_town_default));
+						editor.putString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
+						editor.putString(getString(R.string.pref_lastlocation_key), getString(R.string.pref_town_default));
+						editor.putBoolean(getString(R.string.pref_can_travel_key), true);
 
 						// Initialize Reward Cards!
 						editor.putInt("Rewards", 0);
@@ -441,7 +447,7 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 
 				// Retrieve HuntID from Database.
 				// REGISTER Start Point As Base
-				final int hunterID = setting.getInt("HUNT_ID", 99999);
+				final int hunterID = setting.getInt(getString(R.string.pref_hunter_id_key), 99999);
 				stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -457,8 +463,8 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 					@Override
 					protected Map<String, String> getParams() {
 						params = new HashMap<>();
-						params.put("oldlocation", "Start");
-						params.put("travelto", "Start");
+						params.put("oldlocation", getString(R.string.pref_town_default));
+						params.put("travelto", getString(R.string.pref_town_default));
 						params.put("hunterid", String.valueOf(hunterID));
 						params.put("huntername", hunterName);
 						params.put("actiontoken", String.valueOf(3));
@@ -476,8 +482,8 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 				Toast.makeText(this, R.string.internet_down_message, Toast.LENGTH_LONG).show();
 			} else {
 				// Get ID and base location
-				huntID = setting.getInt("HUNT_ID", 0);
-				String currentHome = setting.getString("CurrentHome", "Start");
+				huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
+				String currentHome = setting.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
 
 				url = "https://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
 				Log.i("Link: ", url);
@@ -518,8 +524,15 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 		super.onResume();
 		setting = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		android.preference.PreferenceManager.getDefaultSharedPreferences(this)
+						.unregisterOnSharedPreferenceChangeListener(this);
 	}
 
 	private static class Adapter extends FragmentPagerAdapter {
@@ -546,5 +559,6 @@ MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPref
 			return mFragmentList.size();
 		}
 	}
+
 }
 

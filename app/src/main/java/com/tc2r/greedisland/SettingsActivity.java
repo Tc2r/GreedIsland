@@ -227,9 +227,9 @@ public class SettingsActivity extends myPreferenceActivity {
 			// When their values change, their summaries are
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
-			bindPreferenceSummaryToValue(findPreference("Hunter_Name_Pref"));
-			bindPreferenceSummaryToValue(findPreference("Tutor_Preference"));
-			bindPreferenceSummaryToValue(findPreference("Theme_Preference"));
+			bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_hunter_name_key)));
+			bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_first_time_tut_key)));
+			bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_theme_selection_key)));
 
 		}
 

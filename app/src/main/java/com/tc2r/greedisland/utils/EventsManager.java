@@ -200,7 +200,7 @@ public class EventsManager {
 
 		if (event < 3) {
 			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-			String currentLocation = sharedPreferences.getString("CurrentLocation", "FIRST RUN");
+			String currentLocation = sharedPreferences.getString(context.getString(R.string.pref_current_location_key), context.getString(R.string.pref_town_first));
 			// 20% chance of town specific event
 			switch (currentLocation) {
 				case "Aiai":

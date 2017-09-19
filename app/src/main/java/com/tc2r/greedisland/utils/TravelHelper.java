@@ -90,9 +90,9 @@ public class TravelHelper {
 
 	public static void ViewTown(Context context, int mode) {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String currentLocation = settings.getString("CurrentLocation", "Start");
+		String currentLocation = settings.getString(context.getString(R.string.pref_current_location_key), context.getString(R.string.pref_town_default));
 		Intent travel = new Intent(context, MapActivity.class);
-		String currentBase = settings.getString("CurrentHome", "Start");
+		String currentBase = settings.getString(context.getString(R.string.pref_current_home_key), context.getString(R.string.pref_town_default));
 		Intent base = new Intent(context, MapActivity.class);
 		switch (mode) {
 			case 1:
@@ -184,7 +184,7 @@ public class TravelHelper {
 
 	public static int getBaseTownID(Context context) {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String currentHome = settings.getString("CurrentHome", "Start");
+		String currentHome = settings.getString(context.getString(R.string.pref_current_home_key), context.getString(R.string.pref_town_default));
 		// Default position Start
 
 		int baseID = 4;

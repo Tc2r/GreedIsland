@@ -38,7 +38,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash2);
@@ -108,7 +108,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals("Theme_Preference")) {
+		if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
 		}
 	}

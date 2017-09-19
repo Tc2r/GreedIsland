@@ -1,12 +1,43 @@
 <resources>
     <string name="title_activity_settings">Settings</string>
 
-    <!-- Example General settings -->
+
+    <!-- Keys -->
+    <string name="pref_initiate_key" translatable="false">first_Pref</string>
+    <string name="pref_hunter_name_key" translatable="false">Hunter_Name_Pref</string>
+    <string name="pref_theme_selection_key" translatable="false">Theme_Preference</string>
+    <string name="pref_first_time_tut_key" translatable="false">Tutor_Preference</string>
+    <string name="pref_hunter_id_key" translatable="false">HUNT_ID</string>
+
+    <string name="pref_current_home_key" translatable="false">CurrentHome</string>
+    <string name="pref_current_location_key" translatable="false">CurrentLocation</string>
+    <string name="pref_lastlocation_key" translatable="false">LastLocation</string>
+    <string name="pref_hunter_temp_key" translatable="false">TempName</string>
+
+    <string name="pref_town_default" translatable="false">Start</string>
+    <string name="pref_town_never" translatable="false">NEVER RAN</string>
+    <string name="pref_town_first" translatable="false">FIRST RUN</string>
+    <string name="pref_can_travel_key" translatable="false">CanTravel</string>
+
+    <!-- Preferences-->
+
+
+
     <string name="pref_header_general">General</string>
-    <string name="pref_title_hunter_name">Hunter Name?</string>
-    <string name="pref_default_hunter_name">Chrollo Lucilfer</string>
-    <string name="pref_first_time_tutorial">First Time Tutorial</string>
-    <string name="pref_theme_color">Theme Color</string>
+
+
+    <string name="pref_first_tutorial_title">First Time Tutorial</string>
+    <string name="pref_first_tutorial_summary">First Time Tutorial</string>
+
+
+    <string name="pref_hunter_default_name">Chrollo Lucilfer</string>
+    <string name="pref_hunter_title">Hunter Name?</string>
+
+
+
+    <string name="pref_theme_title">Theme Color</string>
+    <string name="pref_theme_summary">Change Theme Of App</string>
+    <string name="pref_theme_default_selection">Fresh Greens</string>
     <string-array name="pref_theme_choice_entries">
         <item>Red Wedding</item>
         <item>Bouquets</item>

@@ -57,11 +57,11 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
 		super.onCreate(savedInstanceState);
 
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences firstPrefer = getSharedPreferences("first_Pref", Context.MODE_PRIVATE);
-		Boolean firsttime = firstPrefer.getBoolean("first_Pref", true);
+		SharedPreferences firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
+		Boolean firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Hunter_Name_Pref");
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 
 		setContentView(R.layout.deck_main);
 		tabs = (TabLayout) findViewById(R.id.tabs);
@@ -138,10 +138,10 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals("Hunter_Name_Pref")) {
+		if (key.equals(getString(R.string.pref_hunter_name_key))) {
 			//Log.d("Change", "Name!");
-			hunterName = setting.getString("Hunter_Name_Pref", getString(R.string.default_Hunter_ID));
-		} else if (key.equals("Theme_Preference")) {
+			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+		} else if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
 		}
 	}
@@ -180,7 +180,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
 	protected void onResume() {
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 		super.onResume();
 	}
 

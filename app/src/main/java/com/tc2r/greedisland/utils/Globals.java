@@ -66,7 +66,7 @@ public class Globals {
 
 	public static void ChangeTheme(Context context) {
 		SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
-		String customTheme = setting.getString("Theme_Preference", "Fresh Greens");
+		String customTheme = setting.getString(context.getString(R.string.pref_theme_selection_key), context.getString(R.string.pref_theme_default_selection));
 		switch (customTheme) {
 			case "Sunlight":
 				context.setTheme(R.style.AppTheme_Sunlight);

@@ -44,7 +44,7 @@ public class CreditsFragment extends Fragment {
 			//Log.d("Working", "this is");
 //			SharedPreferences userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
 //			SharedPreferences.Editor editor = userMap.edit();
-//			editor.putBoolean("CanTravel", true);
+//			editor.putBoolean(getString(R.string.pref_can_travel_key), true);
 //			editor.putInt("Rewards", 0);
 //			editor.apply();
 //			RewardsHelper.BootAlarm(getContext());

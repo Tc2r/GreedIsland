@@ -40,7 +40,7 @@ public class CardDetail extends AppCompatActivity implements SharedPreferences.O
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-		if (key.equals("Theme_Preference")) {
+		if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
 
 		}
@@ -52,7 +52,7 @@ public class CardDetail extends AppCompatActivity implements SharedPreferences.O
 		super.onCreate(savedInstanceState);
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 		setContentView(R.layout.activity_card_detail);
 
 
@@ -127,7 +127,7 @@ public class CardDetail extends AppCompatActivity implements SharedPreferences.O
 	protected void onResume() {
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, "Theme_Preference");
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 		super.onResume();
 	}
 
