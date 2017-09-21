@@ -294,6 +294,7 @@ MainActivity extends AppCompatActivity implements
 	private void getSavedSettings() {
 		firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
 		firstTime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
+		firstTimeEditor = firstPrefer.edit();
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
 
 
