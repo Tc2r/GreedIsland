@@ -51,66 +51,31 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class BookTab extends Fragment implements View.OnClickListener {
 
-	Context context;
-	RecyclerView rulesView;
-	TextView bookText;
-	ImageView bookImage, card1, card2, card3;
-	Rule rule;
-	List<Rule> rulesList;
-	RulesAdapter rulesAdapter;
-	GridLayoutManager gridLayoutManager;
-	RelativeLayout bookLayout;
-	boolean[] cardCheck = new boolean[100];
-	List<Integer> notFlipped = new ArrayList<>();
-	Random random = new Random();
-	int rewards = 0;
-	boolean dailyCards = false;
+	// Initialize Objects.
+	private RecyclerView rulesView;
+	private TextView bookText;
+	private ImageView bookImage, card1, card2, card3;
+	private GridLayoutManager gridLayoutManager;
+	private RelativeLayout bookLayout;
 
-
-	SharedPreferences settings;
+	// Initialize Variables.
+	private Context context;
 	private MediaPlayer mp;
 	private RestrictCard temp;
+	private Rule rule;
+	private List<Rule> rulesList;
+	private List<Integer> notFlipped = new ArrayList<>();
+	private RulesAdapter rulesAdapter;
+	private boolean[] cardCheck = new boolean[100];
+	private boolean dailyCards = false;
+	private Random random = new Random();
+	private int rewards = 0;
 
+	// Initialize Shared Preferences.
+	SharedPreferences settings;
 
 	public BookTab() {
 		// Required empty public constructor
-
-	}
-
-	public void SaveBook() {
-		SharedPreferences prefs_book = getContext().getSharedPreferences("UserBook", MODE_PRIVATE);
-		SharedPreferences.Editor editor = prefs_book.edit();
-
-		editor.putInt("bookPreferenceArray" + "_size", cardCheck.length);
-		////Log.d("CardCheck", String.valueOf(cardCheck.length));
-		for (int i = 0; i < cardCheck.length; i++) {
-
-			editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
-
-		}
-		editor.commit();
-	}
-
-	public boolean[] loadArray(String arrayName, int preSize) {
-		SharedPreferences prefs_book = getContext().getSharedPreferences("UserBook", MODE_PRIVATE);
-		int size = prefs_book.getInt(("bookPreferenceArray" + "_size"), MODE_PRIVATE);
-		boolean array[];
-		if (size == 0) {
-			array = new boolean[preSize];
-			//Log.d("Check", "SIZE IS ZERO");
-		} else {
-			array = new boolean[size];
-			//Log.d("SIZE", String.valueOf(array.length));
-		}
-
-
-		for (int i = 0; i < size; i++) {
-			array[i] = prefs_book.getBoolean("bookPreferenceArray" + "_" + i, false);
-			//Log.d("Load: ", "CardID " + i + " is " + String.valueOf(array[i]));
-		}
-		//Log.d("Loading Deck", "Complete");
-
-		return array;
 	}
 
 	@SuppressWarnings("ResourceType")
@@ -118,39 +83,16 @@ public class BookTab extends Fragment implements View.OnClickListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 													 Bundle savedInstanceState) {
 
-		// Initalize Variables
+		// Initialize Variables
 		context = getContext();
-		View view = inflater.inflate(R.layout.fragment_book, container, false);
-
-		bookText = (TextView) view.findViewById(R.id.tv_bookText);
-		bookImage = (ImageView) view.findViewById(R.id.iv_book);
-		bookLayout = (RelativeLayout) view.findViewById(R.id.lay_book);
-		mp = MediaPlayer.create(view.getContext(), R.raw.greed);
-		settings = PreferenceManager.getDefaultSharedPreferences(view.getContext());
-		dailyCards = settings.getBoolean("DailyCards", false);
-		rewards = settings.getInt("Rewards", 0);
-
-		card1 = (ImageView) view.findViewById(R.id.dailyCard_1);
-		card2 = (ImageView) view.findViewById(R.id.dailyCard_2);
-		card3 = (ImageView) view.findViewById(R.id.dailyCard_3);
-
-		LinearLayout mainLayout = (LinearLayout) view.findViewById(R.id.layout_main);
-
+		View view;
+		view = inflater.inflate(R.layout.fragment_book, container, false);
+		LinearLayout mainLayout = initVariables(view, container);
 
 		// Use a Runnable Thread to Load deck from Saved Preference!
 		Handler handler = new Handler();
 		Runnable r = new LoadDeckRunnable();
 		handler.post(r);
-		//cardCheck = loadArray("bookPreferenceArray", cardCheck.length);
-
-
-		// Setting up bottom section
-		rulesView = (RecyclerView) view.findViewById(R.id.rules_view);
-		// - Initalize Recyclerview
-		gridLayoutManager = new GridLayoutManager(container.getContext(), 1);
-		// Create A Grid, could have used Linear. Setup Recyclerview.
-		rulesView.setHasFixedSize(true);
-		rulesList = new ArrayList<>();
 
 		// Create a Rules list (List<Rule>) using Rule(s)
 		prepareRules();
@@ -162,17 +104,19 @@ public class BookTab extends Fragment implements View.OnClickListener {
 		rulesView.setAdapter(rulesAdapter);
 		rulesView.setLayoutManager(gridLayoutManager);
 
-
 		// Create click Listeners
 		bookLayout.setOnClickListener(this);
 		card1.setOnClickListener(this);
 		card2.setOnClickListener(this);
 		card3.setOnClickListener(this);
 		mainLayout.setOnClickListener(this);
-		//bookText.setOnClickListener(this);
-		//bookImage.setOnClickListener(this);
 
 
+		setVisibleDailyCards();
+		return view;
+	}
+
+	private void setVisibleDailyCards() {
 		if (settings.getBoolean("DailyCards", false)) {
 			//Log.d("DailyCards", "True");
 			// Clear Notifications
@@ -190,9 +134,34 @@ public class BookTab extends Fragment implements View.OnClickListener {
 				}
 			}
 		}
+	}
 
+	private LinearLayout initVariables(View view, ViewGroup container) {
 
-		return view;
+		settings = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+		dailyCards = settings.getBoolean("DailyCards", false);
+		rewards = settings.getInt("Rewards", 0);
+
+		bookText = (TextView) view.findViewById(R.id.tv_bookText);
+		bookImage = (ImageView) view.findViewById(R.id.iv_book);
+		bookLayout = (RelativeLayout) view.findViewById(R.id.lay_book);
+		mp = MediaPlayer.create(view.getContext(), R.raw.greed);
+
+		card1 = (ImageView) view.findViewById(R.id.dailyCard_1);
+		card2 = (ImageView) view.findViewById(R.id.dailyCard_2);
+		card3 = (ImageView) view.findViewById(R.id.dailyCard_3);
+
+		// Setting up bottom section
+		rulesView = (RecyclerView) view.findViewById(R.id.rules_view);
+
+		// - Initialize Recyclerview
+		gridLayoutManager = new GridLayoutManager(container.getContext(), 1);
+
+		// Create A Grid, could have used Linear. Setup Recyclerview.
+		rulesList = new ArrayList<>();
+		rulesView.setHasFixedSize(true);
+
+		return (LinearLayout) view.findViewById(R.id.layout_main);
 	}
 
 	@Override
@@ -251,12 +220,14 @@ public class BookTab extends Fragment implements View.OnClickListener {
 			case R.id.dailyCard_1:
 			case R.id.dailyCard_2:
 			case R.id.dailyCard_3:
+
 				// Check Connectivity, if no net, do nothing
 				if (!Globals.isNetworkAvailable(getActivity())) {
 					Toast.makeText(getActivity(), "Must Have Internet Connection for this Action!", Toast.LENGTH_LONG).show();
 					break;
 				}
 				Random rnd = new Random();
+
 				if (rnd.nextInt(10) < 3) {
 					SpellsHelper.CreateRandomSpell(context, 1);
 				}
@@ -266,14 +237,17 @@ public class BookTab extends Fragment implements View.OnClickListener {
 				rewards = settings.getInt("Rewards", 0);
 				rewards = rewards + 1;
 				//Log.d("Rewards: ", String.valueOf(rewards));
+
 				editor.putInt("Rewards", rewards);
 				editor.commit();
+
 				if (settings.getInt("Rewards", 0) >= 3) {
 					//Log.d("ACTIVATE", "RECEIVER");
 					RewardsHelper.EnableBroadcast(context);
 					RewardsHelper.setAlarm(context);
 				}
 				mp.start();
+
 				// Cycle through entire array for all variables false
 				// save false variables to notFlipped List
 				// cardCheck.length
@@ -294,8 +268,6 @@ public class BookTab extends Fragment implements View.OnClickListener {
 						int newNum = random.nextInt(notFlipped.size());
 						cardCheck[notFlipped.get(newNum)] = true;
 						ShowCard(v, notFlipped.get(newNum));
-
-
 						SaveBook();
 						notFlipped.remove(newNum);
 						v.setVisibility(View.GONE);
@@ -309,7 +281,6 @@ public class BookTab extends Fragment implements View.OnClickListener {
 						int newNum = random.nextInt(notFlipped.size() - 1);
 						cardCheck[notFlipped.get(newNum)] = true;
 						ShowCard(v, notFlipped.get(newNum));
-
 						//Log.d("SET TO TRUE ", String.valueOf(notFlipped.get(newNum)));
 						SaveBook();
 						notFlipped.remove(newNum);
@@ -392,7 +363,52 @@ public class BookTab extends Fragment implements View.OnClickListener {
 
 		@Override
 		public void run() {
-			cardCheck = loadArray("bookPreferenceArray", (cardCheck.length));
+			cardCheck = loadBook(cardCheck.length);
 		}
 	}
+
+	// Saves players Book data internally.
+	public void SaveBook() {
+		// Save Players Deck to shared preferences.
+		SharedPreferences prefs_book = getContext().getSharedPreferences("UserBook", MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefs_book.edit();
+		editor.putInt("bookPreferenceArray" + "_size", cardCheck.length);
+		//Log.d("CardCheck", String.valueOf(cardCheck.length));
+
+		// save each cards status (available or not) to shared preference.
+		for (int i = 0; i < cardCheck.length; i++) {
+			editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
+		}
+
+		editor.commit();
+	}
+
+	// Load and arrange the player book from internal saved structure.
+	public boolean[] loadBook(int preSize) {
+
+		// Load data from shared Preference.
+		SharedPreferences prefs_book = getContext().getSharedPreferences("UserBook", MODE_PRIVATE);
+		int size = prefs_book.getInt(("bookPreferenceArray" + "_size"), MODE_PRIVATE);
+		boolean array[];
+
+		// get or initialize array.
+		if (size == 0) {
+			array = new boolean[preSize];
+			//Log.d("Check", "SIZE IS ZERO");
+
+		} else {
+			array = new boolean[size];
+			//Log.d("SIZE", String.valueOf(array.length));
+		}
+
+		// File array with players deck information.
+		for (int i = 0; i < size; i++) {
+
+			array[i] = prefs_book.getBoolean("bookPreferenceArray" + "_" + i, false);
+			//Log.d("Load: ", "CardID " + i + " is " + String.valueOf(array[i]));
+		}
+		//Log.d("Loading Deck", "Complete");
+		return array;
+	}
+
 }

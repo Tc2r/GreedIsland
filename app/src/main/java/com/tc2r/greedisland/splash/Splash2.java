@@ -133,7 +133,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
 				intent.putExtra("init", true);
 				activity.startActivity(intent);
 				activity.finish();
-				activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+				//activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				intent = null;
 				activity = null;
 
