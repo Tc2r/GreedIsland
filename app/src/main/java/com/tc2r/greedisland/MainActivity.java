@@ -75,7 +75,31 @@ MainActivity extends AppCompatActivity implements
 	private SharedPreferences.Editor firstTimeEditor;
 	private Map<String, String> params;
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Check for Shared Preferences.
+		getSavedSettings();
 
+		// Set the Content View
+		setContentView(R.layout.activity_main);
+
+		// Check for Ads:
+		InitAds();
+
+		// Initiate Variables
+		initVariables();
+
+		// Show Tutorial Only In Some Conditions
+		showTutorial();
+
+		// Set text on hunter ID card.
+		updateHunterCard();
+
+		// Link toolbar with ActionBar
+		setSupportActionBar(toolbar);
+		setToolbarandViewPager();
+	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -89,16 +113,19 @@ MainActivity extends AppCompatActivity implements
 		}
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	private void initVariables() {
+		rootview = findViewById(R.id.RootLayout);
+		hunterID = (TextView) findViewById(R.id.tv_hunterID);
+		tutorial = (RelativeLayout) findViewById(R.id.welcome_tutorial);
+		tutText = (TextView) findViewById(R.id.tutorial_text);
 
-		getSavedSettings();
+		// INITIALIZE TOOLBAR and Collapsing Layout
+		toolbar = (Toolbar) findViewById(R.id.toolbar_book);
+		collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.main_collapsingtoolbar);
+		appBar = (AppBarLayout) findViewById(R.id.appbar);
+	}
 
-		// Set the Content View
-		setContentView(R.layout.activity_main);
-
-		// Check for Ads:
+	private void InitAds() {
 		adView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.
 						Builder()
@@ -108,32 +135,7 @@ MainActivity extends AppCompatActivity implements
 						.addKeyword("Social")
 						.build();
 		adView.loadAd(adRequest);
-
-		// Initiate Variables
-		rootview = findViewById(R.id.RootLayout);
-		hunterID = (TextView) findViewById(R.id.tv_hunterID);
-		tutorial = (RelativeLayout) findViewById(R.id.welcome_tutorial);
-		tutText = (TextView) findViewById(R.id.tutorial_text);
-
-
-		// Show Tutorial Only In Some Conditions
-		showTutorial();
-
-		// Set text on hunter ID card.
-		updateHunterCard();
-
-
-		// INITIALIZE TOOLBAR and Collasping Layout
-		toolbar = (Toolbar) findViewById(R.id.toolbar_book);
-		collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.main_collapsingtoolbar);
-		appBar = (AppBarLayout) findViewById(R.id.appbar);
-
-		// Link toolbar with ActionBar
-		setSupportActionBar(toolbar);
-		setToolbarandViewPager();
-
 	}
-
 
 
 	private void setToolbarandViewPager() {
@@ -203,6 +205,7 @@ MainActivity extends AppCompatActivity implements
 
 	private void updateHunterCard() {
 		// Get Fonts from Asset Folder
+
 		Typeface hunterFont = Typeface.createFromAsset(getAssets(), HUNTER_FONT_NAME);
 		Typeface creditFont = Typeface.createFromAsset(getAssets(), CREDIT_FONT_NAME);
 
@@ -321,7 +324,6 @@ MainActivity extends AppCompatActivity implements
 			boolean init = b.getBoolean("init", false);
 
 			if (init) {
-
 				Log.wtf("Start", "Run Once");
 				// Once Per Launch Events
 				AppRater.app_launched(this);
@@ -335,7 +337,6 @@ MainActivity extends AppCompatActivity implements
 	// Method to Initialize and Fill View Pager
 	private void SetupViewPager(ViewPager viewPager) {
 		Adapter adapter = new Adapter(getSupportFragmentManager());
-
 		adapter.addFragment(new FrontFragment(), getString(R.string.app_name));
 		adapter.addFragment(new CreditsFragment(), getString(R.string.title_activity_credits));
 		viewPager.setAdapter(adapter);
@@ -352,7 +353,6 @@ MainActivity extends AppCompatActivity implements
 		String shareBody = getString(R.string.share_Info);
 		sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
 		sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-
 
 		// Fetch and store ShareActionProvider
 		MenuItem item = menu.findItem(R.id.action_share);
@@ -397,12 +397,10 @@ MainActivity extends AppCompatActivity implements
 	 */
 	private void InitiateUser() {
 		int huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
+
 		RequestQueue requestQueue;
-
 		String url = "https://tchost.000webhostapp.com/UserRegister.php";
-
 		if (huntID == 0) {
-
 			if (!Globals.isNetworkAvailable(this)) {
 				Toast.makeText(this, R.string.internet_down_message, Toast.LENGTH_LONG).show();
 			} else {
@@ -432,7 +430,6 @@ MainActivity extends AppCompatActivity implements
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						//Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
 						Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
 					}
 				}) {
@@ -443,11 +440,12 @@ MainActivity extends AppCompatActivity implements
 						return params;
 					}
 				};
+
 				requestQueue = Volley.newRequestQueue(this);
 				requestQueue.add(stringRequest);
 
 				// Retrieve HuntID from Database.
-				// REGISTER Start Point As Base
+				// REGISTER Start Point (Town) as new Base
 				final int hunterID = setting.getInt(getString(R.string.pref_hunter_id_key), 99999);
 				stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 					@Override
@@ -481,13 +479,15 @@ MainActivity extends AppCompatActivity implements
 
 			if (!Globals.isNetworkAvailable(this)) {
 				Toast.makeText(this, R.string.internet_down_message, Toast.LENGTH_LONG).show();
+
 			} else {
-				// Get ID and base location
+				// Get ID and Home Base Location
 				huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
 				String currentHome = setting.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
 
 				url = "https://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
 				Log.i("Link: ", url);
+
 				// First Run, Initiate Things.
 				StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -496,22 +496,24 @@ MainActivity extends AppCompatActivity implements
 						// Response is A_I ID Counter
 						int actionToken;
 						SharedPreferences.Editor editor = setting.edit();
+
 						try {
 							actionToken = Integer.parseInt(response);
-
-							// action tokens now
 							EventsManager.UseTokens(getApplicationContext(), actionToken);
+
 						} catch (NumberFormatException ee) {
 							actionToken = 0;
+
 						}
 						editor.putInt("ActionToken", actionToken);
 						editor.apply();
 					}
 				}, new Response.ErrorListener() {
+
 					@Override
 					public void onErrorResponse(VolleyError error) {
-						//Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
 						Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
+
 					}
 				});
 				requestQueue = Volley.newRequestQueue(this);

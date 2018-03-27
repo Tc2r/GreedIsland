@@ -8,13 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/MyTextViewStyle</item>
         <item name="android:buttonStyle">@style/MyButtonStyle</item>
-        <item name="android:windowAnimationStyle">@style/Fade</item>
+        <!--<item name="android:windowAnimationStyle">@style/Fade</item>-->
     </style>
 
     <style name="SplashScreenTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/xml_splash</item>
-
-
     </style>
 
     <style name="MyTextViewStyle" parent="android:Widget.TextView">

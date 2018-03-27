@@ -32,21 +32,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
-	String hunterName;
-	private RelativeLayout tutorial;
-	private int tutorialCounter = 4;
+
+	// Initialize Objects.
 	private TextView tutText;
-	private boolean tutorialPreference, bookTut;
+	private RelativeLayout tutorial;
 
+	// Initialize Variables.
+	private boolean tutorialPreference, bookTut, firsttime;
+	;
+	private String hunterName;
+	private int tutorialCounter = 4;
 
-	private SharedPreferences setting;
+	// Initialize Shared Preferences.
+	private SharedPreferences setting, firstPrefer;
 	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
 		if (key.equals(getString(R.string.pref_hunter_name_key))) {
-
 			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
 
 		} else if (key.equals(getString(R.string.pref_theme_selection_key))) {
@@ -59,26 +63,33 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-		SharedPreferences firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
-		Boolean firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
-		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
-		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
-		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
-		bookTut = setting.getBoolean("BookTut", true);
 
+		// Check for Shared Preferences.
+		getSavedSettings();
 
-
+		// Set the Content View
 		setContentView(R.layout.activity_book);
 
+		// Show Tutorial Only In Some Conditions
+		showTutorial();
 
 		// Setup Toolbar
+		initToolbar();
+
+	}
+
+	private void initToolbar() {
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_book);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+		Adapter adapter = new Adapter(getSupportFragmentManager());
+		adapter.addFragment(new BookTab(), "BookTab");
+		viewPager.setAdapter(adapter);
+		CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
+	}
 
-		// Show Tutorial Only In Some Conditions
+	private void showTutorial() {
 		tutorial = (RelativeLayout) findViewById(R.id.book_tutorial);
 		tutText = (TextView) findViewById(R.id.tutorial_text);
 		tutText.setText(R.string.Tutorial_Book_Text_1);
@@ -132,7 +143,6 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && bookTut) {
 			tutorial.setVisibility(View.VISIBLE);
-			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
 			tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
@@ -140,17 +150,17 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
 		}
+	}
 
-
-		ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-		Adapter adapter = new Adapter(getSupportFragmentManager());
-		adapter.addFragment(new BookTab(), "BookTab");
-		viewPager.setAdapter(adapter);
-
-
-		CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
-
-
+	private void getSavedSettings() {
+		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+		firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
+		firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
+		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+		setting.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		bookTut = setting.getBoolean("BookTut", true);
 	}
 
 	@Override

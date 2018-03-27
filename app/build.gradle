@@ -5,7 +5,7 @@ android {
         Release {
             keyAlias 'greed'
             keyPassword 'firstcomesrock'
-            storeFile file('C:/Users/Tc2r/Documents/School/Self/Andriod/KEY_STORE/GreedIsland.jks')
+
             storePassword 'firstcomesrock'
         }
     }
