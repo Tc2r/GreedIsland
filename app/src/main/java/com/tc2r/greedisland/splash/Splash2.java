@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PlayerInfo;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
@@ -38,7 +39,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
 		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		onSharedPreferenceChanged(setting, PlayerInfo.getInstance().Get_Pref_Theme_Key(this));
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash2);
@@ -108,7 +109,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals(getString(R.string.pref_theme_selection_key))) {
+		if (key.equals(PlayerInfo.getInstance().Get_Pref_Theme_Key(this))) {
 			Globals.ChangeTheme(this);
 		}
 	}

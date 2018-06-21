@@ -1,6 +1,5 @@
 package com.tc2r.greedisland;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -39,6 +38,7 @@ import com.tc2r.greedisland.utils.AppRater;
 import com.tc2r.greedisland.utils.CustomTypefaceSpan;
 import com.tc2r.greedisland.utils.EventsManager;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PlayerInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -272,18 +272,18 @@ MainActivity extends AppCompatActivity implements
 			}
 		});
 
+		Log.wtf("TutorialPreference = ", String.valueOf(PlayerInfo.getInstance().GetTutRan(this)));
 		// Check for Tutorial
-		if (firstTime) {
+		if (PlayerInfo.getInstance().GetFirstRun(this, true)) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
-			firstTimeEditor.commit();
+			PlayerInfo.getInstance().SetFirstRun(this,false);
 		} else if (tutorialPreference && mainTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+			tutorialPreference = PlayerInfo.getInstance().GetTutRan(this);
 		} else {
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
@@ -295,16 +295,13 @@ MainActivity extends AppCompatActivity implements
 	 * Checks for and uses Saved Shared Preferences of settings.
 	 */
 	private void getSavedSettings() {
-		firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
-		firstTime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
-		firstTimeEditor = firstPrefer.edit();
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
 
 
 		//Check for changed listener in case layout needs updating.
 		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
 		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
-		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+		tutorialPreference = PlayerInfo.getInstance().GetTutRan(this);
 		SharedPreferences.Editor tempName = setting.edit();
 		setting.registerOnSharedPreferenceChangeListener(this);
 
