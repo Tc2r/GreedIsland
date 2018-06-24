@@ -21,56 +21,55 @@ import com.tc2r.greedisland.book.BookActivity;
 
 public class RewardsServiceReceiver extends BroadcastReceiver {
 
-	private MediaPlayer mp;
+    private MediaPlayer mp;
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
+    @Override
+    public void onReceive(Context context, Intent intent) {
 
 
-		// Access Saved Variables
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor editor = settings.edit();
+        // Access Saved Variables
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
 
-		// Create MediaPlayer for Sound Effect
-		mp = MediaPlayer.create(context, R.raw.greed);
+        // Create MediaPlayer for Sound Effect
+        mp = MediaPlayer.create(context, R.raw.greed);
 
-		// Reset saved Variables to show new cards
-		editor.putBoolean("DailyCards", true);
-		editor.putBoolean("AlarmRewardSet", false);
-		editor.putInt("Rewards", 0);
-		editor.apply();
-		// Play Sound Effect
-		mp.start();
+        // Reset saved Variables to show new cards
+        editor.putBoolean("DailyCards", true);
+        editor.putBoolean("AlarmRewardSet", false);
+        editor.putInt("Rewards", 0);
+        editor.apply();
+        // Play Sound Effect
+        mp.start();
 
-		// Testing!
-		//Toast.makeText(context, String.valueOf(context.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
-		////Log.d("Alarm Worked", String.valueOf(settings.getAll()));
+        // Testing!
+        //Toast.makeText(context, String.valueOf(context.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
+        ////Log.d("Alarm Worked", String.valueOf(settings.getAll()));
 
-		// Create notification and send it!
-		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification notification = getNotification(context, context.getString(R.string.new_Card_Notification));
-		notification.defaults |= Notification.DEFAULT_LIGHTS;
-		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_ONLY_ALERT_ONCE;
-		notificationManager.notify(001, notification);
+        // Create notification and send it!
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = getNotification(context, context.getString(R.string.new_Card_Notification));
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS | Notification.FLAG_ONLY_ALERT_ONCE;
+        notificationManager.notify(001, notification);
 
-	}
+    }
 
-	private Notification getNotification(Context context, String content) {
-		Notification.Builder builder = new Notification.Builder(context);
-		builder.setContentTitle(context.getString(R.string.app_name));
-		builder.setContentText(content);
-		builder.setSmallIcon(R.drawable.ic_notification);
+    private Notification getNotification(Context context, String content) {
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setContentTitle(context.getString(R.string.app_name));
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_notification);
 
-		// Set up actions for Notification
-		Intent resultIntent = new Intent(context, BookActivity.class);
+        // Set up actions for Notification
+        Intent resultIntent = new Intent(context, BookActivity.class);
 
-		PendingIntent resultPendingIntent =
-						PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		builder.setContentIntent(resultPendingIntent);
-		builder.setAutoCancel(true);
-		builder.setVibrate(new long[]{1000, 500});
-		return builder.build();
-	}
+        builder.setContentIntent(resultPendingIntent);
+        builder.setAutoCancel(true);
+        builder.setVibrate(new long[]{1000, 500});
+        return builder.build();
+    }
 
 }

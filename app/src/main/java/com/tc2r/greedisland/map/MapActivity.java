@@ -45,7 +45,6 @@ import java.util.Map;
 public class MapActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private ViewPager viewPager;
-    private String hunterName;
     private SharedPreferences setting;
     private RelativeLayout tutorial;
     private int tutorialCounter = 4;
@@ -63,7 +62,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
         onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
         onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
         tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
-        hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+        //hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
         mapTut = setting.getBoolean("MapTut", true);
         Boolean firstTime = setting.getBoolean(getString(R.string.pref_initiate_key), true);
 
@@ -80,8 +79,9 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
         final ImageView headerImage = (ImageView) findViewById(R.id.headerImage);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         // Check for Ads;
         AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().addKeyword("Anime").addKeyword("Game").addKeyword("Manga").addKeyword("Social").build();
@@ -138,7 +138,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
             tutorial.setEnabled(true);
             SharedPreferences.Editor firstTimeEditor = setting.edit();
             firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
-            firstTimeEditor.commit();
+            firstTimeEditor.apply();
 
         } else if (tutorialPreference && mapTut) {
             tutorial.setVisibility(View.VISIBLE);
@@ -315,7 +315,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
         onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
         onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 
-        if (setting.getBoolean(getString(R.string.pref_can_travel_key), false) == true) {
+        if (setting.getBoolean(getString(R.string.pref_can_travel_key), false)) {
             // Clear Notifications
             NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.cancel(002);
@@ -327,7 +327,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
         //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
         if (key.equals(getString(R.string.pref_hunter_name_key))) {
             //Log.d("Change", "Name!");
-            hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+            //hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
         } else if (key.equals(getString(R.string.pref_theme_selection_key))) {
             Globals.ChangeTheme(this);
         }
@@ -336,15 +336,14 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
     private static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
-        private Map<Integer, String> mFragmentTags;
-        private FragmentManager mFragmentManager;
-        private Context mContext;
+        private final Map<Integer, String> mFragmentTags;
+        private final FragmentManager mFragmentManager;
+        // --Commented out by Inspection (6/24/18, 11:05 AM):private final Context mContext;
 
         Adapter(FragmentManager fm, Context context) {
             super(fm);
             mFragmentManager = fm;
             mFragmentTags = new HashMap<Integer, String>();
-            mContext = context;
         }
 
         //Create a method to return tag of a previously created fragment.
@@ -364,7 +363,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
             return mFragmentList.get(position);
         }
 
-        // Override InstantiateItem to save the tag of the fragment into a hashmap
+        // Override InstantiateItem to save the tag of the fragment into a hash map
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Object obj = super.instantiateItem(container, position);

@@ -18,54 +18,54 @@ import java.util.List;
 
 public class AboutActivity extends AppCompatActivity {
 
-	// Declare Layout Variables
-	ViewPager viewPager;
+    // Declare Layout Variables
+    ViewPager viewPager;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_about);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
 
-		viewPager = (ViewPager) findViewById(R.id.viewpager);
-		SetupViewPager(viewPager);
-	}
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        SetupViewPager(viewPager);
+    }
 
-	private void SetupViewPager(ViewPager viewPager) {
-		Adapter adapter = new Adapter(getSupportFragmentManager());
-		// ADD FRAGMENTS HERE:
-		adapter.addFragment(new AboutDanielFragment(),"Daniel");
-		adapter.addFragment(new AboutMuniabFragment(), "Munaib");
-		adapter.addFragment(new AboutCourtneyFragment(),"Courtney");
-		adapter.addFragment(new AboutDreFragment(), "Dre");
-		viewPager.setAdapter(adapter);
-	}
+    private void SetupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        // ADD FRAGMENTS HERE:
+        adapter.addFragment(new AboutDanielFragment(), "Daniel");
+        adapter.addFragment(new AboutMuniabFragment(), "Munaib");
+        adapter.addFragment(new AboutCourtneyFragment(), "Courtney");
+        adapter.addFragment(new AboutDreFragment(), "Dre");
+        viewPager.setAdapter(adapter);
+    }
 
-	private static class Adapter extends FragmentPagerAdapter{
-		private List<Fragment> mFragmentList = new ArrayList<>();
-		private List<String> mFragmentTitleList = new ArrayList<>();
+    private static class Adapter extends FragmentPagerAdapter {
+        private List<Fragment> mFragmentList = new ArrayList<>();
+        private List<String> mFragmentTitleList = new ArrayList<>();
 
 
-		public Adapter(FragmentManager fm) {
-			super(fm);
-		}
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
 
-		void addFragment(Fragment fragment, String title){
-			mFragmentList.add(fragment);
-			mFragmentTitleList.add(title);
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
 
-		}
+        }
 
-		@Override
-		public Fragment getItem(int position) {
-				return mFragmentList.get(position);
-		}
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
 
-		@Override
-		public int getCount() {
-			return mFragmentList.size();
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
 
-		}
-	}
+        }
+    }
 
 }
 

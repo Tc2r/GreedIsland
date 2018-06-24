@@ -19,42 +19,42 @@ import java.util.List;
 
 public class localAdapter extends RecyclerView.Adapter<localAdapter.ViewHolder> {
 
-	private Context context;
-	private List<localHunter> hunters;
+    private Context context;
+    private List<localHunter> hunters;
 
-	localAdapter(Context context, List<localHunter> hunters) {
-		super();
-		this.context = context;
-		this.hunters = hunters;
-	}
+    localAdapter(Context context, List<localHunter> hunters) {
+        super();
+        this.context = context;
+        this.hunters = hunters;
+    }
 
-	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.locals_list, parent, false));
-	}
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.locals_list, parent, false));
+    }
 
-	@Override
-	public void onBindViewHolder(ViewHolder holder, int position) {
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
-		localHunter localHunter = hunters.get(position);
-		holder.textViewHunterName.setText(localHunter.getHunterName());
+        localHunter localHunter = hunters.get(position);
+        holder.textViewHunterName.setText(localHunter.getHunterName());
 
-	}
+    }
 
-	@Override
-	public int getItemCount() {
-		return hunters.size();
-	}
+    @Override
+    public int getItemCount() {
+        return hunters.size();
+    }
 
-	class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-		private TextView textViewHunterName;
+        private TextView textViewHunterName;
 
-		private ViewHolder(View itemView) {
-			super(itemView);
-			textViewHunterName = (TextView) itemView.findViewById(R.id.textViewName);
-		}
-	}
+        private ViewHolder(View itemView) {
+            super(itemView);
+            textViewHunterName = (TextView) itemView.findViewById(R.id.textViewName);
+        }
+    }
 }
 
 

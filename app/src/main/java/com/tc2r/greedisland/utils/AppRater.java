@@ -23,7 +23,9 @@ public class AppRater {
     public static void app_launched(Context mContext) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         APP_TITLE = mContext.getString(R.string.app_name);
-        if (prefs.getBoolean("dontshowagain", false)) { return ; }
+        if (prefs.getBoolean("dontshowagain", false)) {
+            return;
+        }
 
         SharedPreferences.Editor editor = prefs.edit();
 
@@ -40,8 +42,7 @@ public class AppRater {
 
         // Wait at least n days before opening
         if (launch_count >= LAUNCHES_UNTIL_PROMPT) {
-            if (System.currentTimeMillis() >= date_firstLaunch +
-                    (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
+            if (System.currentTimeMillis() >= date_firstLaunch + (DAYS_UNTIL_PROMPT * 24 * 60 * 60 * 1000)) {
                 showRateDialog(mContext, editor);
             }
         }

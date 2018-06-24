@@ -24,120 +24,120 @@ import java.util.Random;
 
 public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-	// Declare final variables
-	private static final int SPLASH_DISPLAY_LENGTH = 1500;
+    // Declare final variables
+    private static final int SPLASH_DISPLAY_LENGTH = 1500;
 
-	// Declare variables
-	private Handler handler = new Handler();
-	private SharedPreferences setting;
-
-
-	// 1. Create a static nested class that extends Runnable to start the main Activity
-
-	@Override
-	protected void onCreate(@Nullable Bundle savedInstanceState) {
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
-		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, PlayerInfo.getInstance().Get_Pref_Theme_Key(this));
-
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.splash2);
-
-		ImageView splash = (ImageView) findViewById(R.id.splashScreen);
-		Random rand = new Random();
-		int showSplash = rand.nextInt(5)+1;
-		switch (showSplash){
-			case 1:
-				splash.setImageResource(R.drawable.splash1);
-				break;
-			case 2:
-				splash.setImageResource(R.drawable.splash2);
-				break;
-
-			case 3:
-				splash.setImageResource(R.drawable.splash3);
-				break;
-
-			case 4:
-				splash.setImageResource(R.drawable.splash4);
-				break;
-			case 5:
-				splash.setImageResource(R.drawable.splash5);
-				break;
-
-		}
-
-		handler.postDelayed(new StartSplashRunnable(this), SPLASH_DISPLAY_LENGTH);
-	}
-
-	@Override
-	protected void onStop() {
-		if (handler != null) {
-			handler.removeCallbacksAndMessages(null);
-			handler = null;
-		}
-		View root = findViewById(R.id.activity_splash2);
-		setContentView(new View(this));
-		unbindDrawables(root);
-		System.gc();
-		super.onStop();
-	}
-
-	@Override
-	public void onDestroy() {
-
-		if (handler != null) {
-			handler.removeCallbacksAndMessages(null);
-			handler = null;
-		}
-		super.onDestroy();
-	}
-
-	private void unbindDrawables(View view) {
-		if (view.getBackground() != null) {
-			view.getBackground().setCallback(null);
-		}
-		if (view instanceof ViewGroup) {
-			for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-				unbindDrawables(((ViewGroup) view).getChildAt(i));
-			}
-			((ViewGroup) view).removeAllViews();
-		}
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		//Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-		if (key.equals(PlayerInfo.getInstance().Get_Pref_Theme_Key(this))) {
-			Globals.ChangeTheme(this);
-		}
-	}
-
-	public static class StartSplashRunnable implements Runnable {
-		private WeakReference<Activity> mActivity;
+    // Declare variables
+    private Handler handler = new Handler();
+    private SharedPreferences setting;
 
 
-		public StartSplashRunnable(Activity mActivity) {
-			this.mActivity = new WeakReference<Activity>(mActivity);
+    // 1. Create a static nested class that extends Runnable to start the main Activity
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
+        setting.registerOnSharedPreferenceChangeListener(this);
+        onSharedPreferenceChanged(setting, PlayerInfo.getInstance().Get_Pref_Theme_Key(this));
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash2);
+
+        ImageView splash = (ImageView) findViewById(R.id.splashScreen);
+        Random rand = new Random();
+        int showSplash = rand.nextInt(5) + 1;
+        switch (showSplash) {
+            case 1:
+                splash.setImageResource(R.drawable.splash1);
+                break;
+            case 2:
+                splash.setImageResource(R.drawable.splash2);
+                break;
+
+            case 3:
+                splash.setImageResource(R.drawable.splash3);
+                break;
+
+            case 4:
+                splash.setImageResource(R.drawable.splash4);
+                break;
+            case 5:
+                splash.setImageResource(R.drawable.splash5);
+                break;
+
+        }
+
+        handler.postDelayed(new StartSplashRunnable(this), SPLASH_DISPLAY_LENGTH);
+    }
+
+    @Override
+    protected void onStop() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+        View root = findViewById(R.id.activity_splash2);
+        setContentView(new View(this));
+        unbindDrawables(root);
+        System.gc();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+        super.onDestroy();
+    }
+
+    private void unbindDrawables(View view) {
+        if (view.getBackground() != null) {
+            view.getBackground().setCallback(null);
+        }
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                unbindDrawables(((ViewGroup) view).getChildAt(i));
+            }
+            ((ViewGroup) view).removeAllViews();
+        }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+        if (key.equals(PlayerInfo.getInstance().Get_Pref_Theme_Key(this))) {
+            Globals.ChangeTheme(this);
+        }
+    }
+
+    public static class StartSplashRunnable implements Runnable {
+        private WeakReference<Activity> mActivity;
 
 
-		}
+        public StartSplashRunnable(Activity mActivity) {
+            this.mActivity = new WeakReference<Activity>(mActivity);
 
-		@Override
-		public void run() {
 
-			// check that the reference is valid and execute the code
-			if (mActivity.get() != null) {
-				Activity activity = mActivity.get();
-				Intent intent = new Intent(activity, MainActivity.class);
-				intent.putExtra("init", true);
-				activity.startActivity(intent);
-				activity.finish();
-				intent = null;
-				activity = null;
+        }
 
-			}
-		}
-	}
+        @Override
+        public void run() {
+
+            // check that the reference is valid and execute the code
+            if (mActivity.get() != null) {
+                Activity activity = mActivity.get();
+                Intent intent = new Intent(activity, MainActivity.class);
+                intent.putExtra("init", true);
+                activity.startActivity(intent);
+                activity.finish();
+                intent = null;
+                activity = null;
+
+            }
+        }
+    }
 }

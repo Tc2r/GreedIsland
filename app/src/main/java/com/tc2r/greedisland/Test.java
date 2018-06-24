@@ -21,60 +21,59 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class Test extends Fragment implements View.OnClickListener {
-	TextView creditTitle, creditText;
-	SpellsHelper db;
-	EditText spell;
-	List<SpellCard> userSpells;
+    TextView creditTitle, creditText;
+    SpellsHelper db;
+    EditText spell;
+    List<SpellCard> userSpells;
 
-	public Test() {
-		// Required empty public constructor
-	}
+    public Test() {
+        // Required empty public constructor
+    }
 
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-													 Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
-		View view = inflater.inflate(R.layout.fragment_test, container, false);
-		creditTitle = (TextView) view.findViewById(R.id.credits_title);
-		Button addSpell = (Button) view.findViewById(R.id.createButton);
-		Button removeSpell = (Button) view.findViewById(R.id.removeButton);
-		Button removeRndSpell = (Button) view.findViewById(R.id.removerndButton);
-		spell = (EditText) view.findViewById(R.id.spellId);
-		LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.secret);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_test, container, false);
+        creditTitle = (TextView) view.findViewById(R.id.credits_title);
+        Button addSpell = (Button) view.findViewById(R.id.createButton);
+        Button removeSpell = (Button) view.findViewById(R.id.removeButton);
+        Button removeRndSpell = (Button) view.findViewById(R.id.removerndButton);
+        spell = (EditText) view.findViewById(R.id.spellId);
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.secret);
 
-		userSpells = SpellsHelper.LoadUserSpells(view.getContext());
+        userSpells = SpellsHelper.LoadUserSpells(view.getContext());
 
-		db = new SpellsHelper(view.getContext());
-		addSpell.setOnClickListener(this);
-		removeRndSpell.setOnClickListener(this);
-		removeSpell.setOnClickListener(this);
+        db = new SpellsHelper(view.getContext());
+        addSpell.setOnClickListener(this);
+        removeRndSpell.setOnClickListener(this);
+        removeSpell.setOnClickListener(this);
 
-		return view;
+        return view;
 
-	}
+    }
 
-	@Override
-	public void onClick(View v) {
-		int id;
-		SpellCard reward;
-		switch (v.getId()) {
-			case R.id.createButton:
-				id = Integer.parseInt(String.valueOf(spell.getText()));
-				reward = db.CreateSpell(id);
-				userSpells.add(reward);
-				SpellsHelper.SaveUserSpells(v.getContext(), userSpells);
-				break;
-			case R.id.removeButton:
-				id = Integer.parseInt(String.valueOf(spell.getText()));
-				SpellsHelper.DeleteSpell(v.getContext(), id);
-				break;
-			case R.id.removerndButton:
-				SpellsHelper.CreateRandomSpell(Test.this.getContext(), 3);
-				break;
-		}
+    @Override
+    public void onClick(View v) {
+        int id;
+        SpellCard reward;
+        switch (v.getId()) {
+            case R.id.createButton:
+                id = Integer.parseInt(String.valueOf(spell.getText()));
+                reward = db.CreateSpell(id);
+                userSpells.add(reward);
+                SpellsHelper.SaveUserSpells(v.getContext(), userSpells);
+                break;
+            case R.id.removeButton:
+                id = Integer.parseInt(String.valueOf(spell.getText()));
+                SpellsHelper.DeleteSpell(v.getContext(), id);
+                break;
+            case R.id.removerndButton:
+                SpellsHelper.CreateRandomSpell(Test.this.getContext(), 3);
+                break;
+        }
 
-	}
+    }
 
 
 }
