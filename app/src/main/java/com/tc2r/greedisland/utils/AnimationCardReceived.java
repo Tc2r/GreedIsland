@@ -19,60 +19,58 @@ import android.widget.RelativeLayout;
 public class AnimationCardReceived implements Interpolator {
 
 
-	public static void ReceiveCard(final RelativeLayout layout, final View view) {
-		Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-						Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_PARENT,
-						-0.2f, Animation.RELATIVE_TO_SELF, 3.0f);
+    public static void ReceiveCard(final RelativeLayout layout, final View view) {
+        Animation slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_PARENT, -0.2f, Animation.RELATIVE_TO_SELF, 3.0f);
 
-		slide.setInterpolator(new AnticipateOvershootInterpolator());
-		slide.setStartOffset(400);
+        slide.setInterpolator(new AnticipateOvershootInterpolator());
+        slide.setStartOffset(400);
 
 
-		final Animation shrink = new ScaleAnimation(1, .2f, 1, .2f, layout.getWidth() / 2, layout.getHeight());
+        final Animation shrink = new ScaleAnimation(1, .2f, 1, .2f, layout.getWidth() / 2, layout.getHeight());
 
-		shrink.setDuration(400);
-		slide.setDuration(700);
+        shrink.setDuration(400);
+        slide.setDuration(700);
 
-		slide.setFillAfter(false);
-		slide.setFillEnabled(true);
-		slide.setAnimationListener(new Animation.AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation animation) {
-				//layout.startAnimation(shrink);
+        slide.setFillAfter(false);
+        slide.setFillEnabled(true);
+        slide.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //layout.startAnimation(shrink);
 
-			}
+            }
 
-			@Override
-			public void onAnimationEnd(Animation animation) {
+            @Override
+            public void onAnimationEnd(Animation animation) {
 
-				layout.removeAllViews();
+                layout.removeAllViews();
 
-				if (view != null) {
-					view.setVisibility(View.VISIBLE);
-				}
-				//layout.setVisibility(View.GONE);
-				//layout.setVisibility(View.VISIBLE);
-
-
-			}
-
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-
-			}
-		});
-
-		AnimationSet animationSet = new AnimationSet(true);
-		animationSet.addAnimation(shrink);
-		animationSet.addAnimation(slide);
-
-		layout.startAnimation(animationSet);
+                if (view != null) {
+                    view.setVisibility(View.VISIBLE);
+                }
+                //layout.setVisibility(View.GONE);
+                //layout.setVisibility(View.VISIBLE);
 
 
-	}
+            }
 
-	@Override
-	public float getInterpolation(float input) {
-		return 0;
-	}
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(shrink);
+        animationSet.addAnimation(slide);
+
+        layout.startAnimation(animationSet);
+
+
+    }
+
+    @Override
+    public float getInterpolation(float input) {
+        return 0;
+    }
 }

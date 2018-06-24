@@ -8,18 +8,18 @@ package com.tc2r.greedisland.map;
 
 public class localHunter {
 
-	// Data Variables
-	private String hunterName;
+    // Data Variables
+    private String hunterName;
 
-	public localHunter(String hunterName) {
-		this.hunterName = hunterName;
-	}
+    public localHunter(String hunterName) {
+        this.hunterName = hunterName;
+    }
 
-	public String getHunterName() {
-		return hunterName;
-	}
+    public String getHunterName() {
+        return hunterName;
+    }
 
-	public void setHunterName(String hunterName) {
-		this.hunterName = hunterName;
-	}
+    public void setHunterName(String hunterName) {
+        this.hunterName = hunterName;
+    }
 }

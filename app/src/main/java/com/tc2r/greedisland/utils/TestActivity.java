@@ -10,8 +10,8 @@ import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
-	boolean[] cardCheck = new boolean[99];
-	List<Integer> notFlipped = new ArrayList<>();
+    boolean[] cardCheck = new boolean[99];
+    List<Integer> notFlipped = new ArrayList<>();
 
 
 //	@Override
@@ -46,20 +46,6 @@ public class TestActivity extends AppCompatActivity {
 //		}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //		for (int i = 0; i <= 10; i++) {
 //
 //
@@ -77,9 +63,6 @@ public class TestActivity extends AppCompatActivity {
 //
 
 
-
-
-
 //		///PRINT TRUE ARRAY SLOTS
 //		int k = 1;
 //		for (int j = 0; j < cardCheck.length; j++) {
@@ -93,15 +76,15 @@ public class TestActivity extends AppCompatActivity {
 //
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_test);
-		scheduleAlarm();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+        scheduleAlarm();
+    }
 
-	public void scheduleAlarm() {
-		RewardsHelper.setAlarm(this);
+    public void scheduleAlarm() {
+        RewardsHelper.setAlarm(this);
 
-	}
+    }
 }
