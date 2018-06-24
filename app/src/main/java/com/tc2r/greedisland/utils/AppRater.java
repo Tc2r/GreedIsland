@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,12 +16,12 @@ import com.tc2r.greedisland.R;
 
 public class AppRater {
     private final static String APP_PNAME = "com.tc2r.greedisland";// Package Name
-    private final static int DAYS_UNTIL_PROMPT = 2;//Min number of days
+    private static int DAYS_UNTIL_PROMPT = 2;//Min number of days
     private final static int LAUNCHES_UNTIL_PROMPT = 4;//Min number of launches
     private static String APP_TITLE;// App Name
 
     public static void app_launched(Context mContext) {
-        SharedPreferences prefs = mContext.getSharedPreferences("apprater", 0);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         APP_TITLE = mContext.getString(R.string.app_name);
         if (prefs.getBoolean("dontshowagain", false)) { return ; }
 
@@ -66,6 +67,7 @@ public class AppRater {
         b1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + APP_PNAME)));
+                DAYS_UNTIL_PROMPT = DAYS_UNTIL_PROMPT + 2;
                 dialog.dismiss();
             }
         });

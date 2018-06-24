@@ -1,6 +1,7 @@
 package com.tc2r.greedisland.book;
 
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -37,10 +38,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -110,8 +113,6 @@ public class BookTab extends Fragment implements View.OnClickListener {
 		card2.setOnClickListener(this);
 		card3.setOnClickListener(this);
 		mainLayout.setOnClickListener(this);
-
-
 		setVisibleDailyCards();
 		return view;
 	}
@@ -181,23 +182,19 @@ public class BookTab extends Fragment implements View.OnClickListener {
 		String ruleDescs[] = getResources().getStringArray(R.array.ruleDescs);
 
 		int ruleImages[] = {
+						R.drawable.rule_1,
 						R.drawable.rule_2,
 						R.drawable.rule_3,
+						R.drawable.rule_4,
 						R.drawable.rule_5,
 						R.drawable.rule_6,
 						R.drawable.rule_7,
-						R.drawable.rule_1,
-						R.drawable.rule_2,
-						R.drawable.rule_3,
-						R.drawable.rule_1,
-						R.drawable.rule_4,
-						R.drawable.rule_5,
-						R.drawable.rule_4,
 		};
 
 		// We run through the rules and add them to the rules list.
 		for (int i = 0; i < ruleTitles.length; i++) {
-			rule = new Rule(ruleTitles[i], ruleDescs[i], ruleImages[i]);
+			int randRulesImage = random.nextInt(ruleImages.length);
+			rule = new Rule(ruleTitles[i], ruleDescs[i], ruleImages[randRulesImage]);
 			rulesList.add(rule);
 		}
 	}
@@ -295,24 +292,25 @@ public class BookTab extends Fragment implements View.OnClickListener {
 		Log.wtf("new card", String.valueOf(Id + 1));
 
 
-		AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+		@SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
 			@Override
 			protected Void doInBackground(Integer... params) {
 
-				OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = new OkHttpClient.Builder()
+                                .protocols(Arrays.asList(Protocol.HTTP_1_1))
+                                .build();
 				Request request = new Request.Builder()
 								.url("https://tchost.000webhostapp.com/getcard.php?id=" + (Id + 1))
 								.build();
+                Log.i("REQUEST URL IS: ", request.url().toString());
 
 				try {
 					Response response = client.newCall(request).execute();
+					Log.d("Response: ", String.valueOf(response.code()));
 
 					JSONArray array = new JSONArray(response.body().string());
 					JSONObject object = array.getJSONObject(0);
-
-
-					temp = new RestrictCard((object.getInt("id") - 1), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
-
+					temp = new RestrictCard(object.getInt("id"), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
 
 				} catch (IOException | JSONException e) {
 					e.printStackTrace();
@@ -338,7 +336,8 @@ public class BookTab extends Fragment implements View.OnClickListener {
 				ranklimit.setText(temp.getRank() + "-" + String.valueOf(temp.getLimit()));
 				description.setText(temp.getDescription());
 				border.setBackgroundResource(R.drawable.text_border_restrict);
-				final String newUrl = "http://res.cloudinary.com/munaibh/image/upload/v1485443356/HxH/" + (temp.getId()) + ".png";
+				final String newUrl = "http://res.cloudinary.com/munaibh/image/upload/v1485443356/HxH/" + (temp.getId() - 1) + ".png";
+                Log.i("Card image url is: ", newUrl);
 				Glide.with(context).load(newUrl)
 								.placeholder(R.drawable.placeholder)
 								.centerCrop()
@@ -379,7 +378,6 @@ public class BookTab extends Fragment implements View.OnClickListener {
 		for (int i = 0; i < cardCheck.length; i++) {
 			editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
 		}
-
 		editor.commit();
 	}
 

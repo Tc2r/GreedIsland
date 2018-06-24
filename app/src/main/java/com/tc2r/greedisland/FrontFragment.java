@@ -71,7 +71,7 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 
 		String huntLang = hunterName;
 		String huntTitle = getString(R.string.Main_Hunter_Title) + hunterName;
-		String hunttId = getString(R.string.Main_Hunter_Num) + hunterIdNum;
+		String huntId = getString(R.string.Main_Hunter_Num) + hunterIdNum;
 		String huntCurrent = getString(R.string.Main_Hunter_Location) + location;
 		String huntHome = getString(R.string.Main_Hunter_Base) + homeTown;
 
@@ -80,7 +80,7 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
 		Typeface hunterFont = Typeface.createFromAsset(getActivity().getAssets(), "hunterxhunter.ttf");
 		statusLang.setTypeface(hunterFont);
 		statusLang.setText(huntLang);
-		statusID.setText(hunttId);
+		statusID.setText(huntId);
 		statusBase.setText(huntHome);
 		statusLocation.setText(huntCurrent);
 

@@ -1,13 +1,18 @@
 package com.tc2r.greedisland;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.tc2r.greedisland.utils.RewardsHelper;
 
 
 /**
@@ -41,13 +46,13 @@ public class CreditsFragment extends Fragment {
 	private class SecretButton implements View.OnClickListener {
 		@Override
 		public void onClick(View v) {
-			//Log.d("Working", "this is");
-//			SharedPreferences userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//			SharedPreferences.Editor editor = userMap.edit();
-//			editor.putBoolean(getString(R.string.pref_can_travel_key), true);
-//			editor.putInt("Rewards", 0);
-//			editor.apply();
-//			RewardsHelper.BootAlarm(getContext());
+			Log.d("Working", "this is");
+			SharedPreferences userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			SharedPreferences.Editor editor = userMap.edit();
+			editor.putBoolean(getString(R.string.pref_can_travel_key), true);
+			editor.putInt("Rewards", 0);
+			editor.apply();
+			RewardsHelper.BootAlarm(getContext());
 		}
 	}
 }

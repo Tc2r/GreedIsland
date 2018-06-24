@@ -117,8 +117,7 @@ public class SettingsActivity extends myPreferenceActivity {
 	 */
 	private static void bindPreferenceSummaryToValue(Preference preference) {
 		// Set the listener to watch for value changes.
-		preference
-						.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+		preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
 		// Trigger the listener immediately with the preference's
 		// current value.
@@ -151,17 +150,21 @@ public class SettingsActivity extends myPreferenceActivity {
 		ActionBar actionBar = getSupportActionBar();
 		if (actionBar != null) {
 			// Show the Up button in the action bar.
+			getSupportActionBar().setDisplayShowHomeEnabled(true);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			actionBar.setDisplayHomeAsUpEnabled(true);
 		}
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
+		switch (item.getItemId()) {
+			// Respond to the action bar's Up/Home button
 			// When the action bar icon on the top right is clicked,
 			// finish this activity
-			this.finish();
-			return true;
+			case android.R.id.home:
+				this.finish();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

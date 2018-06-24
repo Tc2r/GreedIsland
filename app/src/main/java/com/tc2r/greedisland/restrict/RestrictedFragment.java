@@ -1,6 +1,7 @@
 package com.tc2r.greedisland.restrict;
 
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.AsyncTask;
@@ -27,9 +28,11 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -143,12 +146,14 @@ public class RestrictedFragment extends Fragment {
 
 	private void prepareCards(final int id) {
 		// For Server Data
-		AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+		@SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
 			@Override
 			protected Void doInBackground(Integer... integers) {
 
 
-				OkHttpClient client = new OkHttpClient();
+				OkHttpClient client = new OkHttpClient.Builder()
+						.protocols(Arrays.asList(Protocol.HTTP_1_1))
+						.build();
 				Request request = new Request.Builder()
 								.url("https://tchost.000webhostapp.com/greedget.php?id=" + (id))
 								.build();

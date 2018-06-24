@@ -55,15 +55,13 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setting = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
-		Boolean firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
 		setting.registerOnSharedPreferenceChangeListener(this);
 		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
 		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 
 		setContentView(R.layout.deck_main);
+
 		tabs = (TabLayout) findViewById(R.id.tabs);
 		toolbar = (Toolbar) findViewById(R.id.toolbar_deck);
 		appBar = (AppBarLayout) findViewById(R.id.appbar);

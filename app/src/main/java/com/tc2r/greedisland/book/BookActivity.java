@@ -44,14 +44,14 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 	private int tutorialCounter = 4;
 
 	// Initialize Shared Preferences.
-	private SharedPreferences setting, firstPrefer;
+	private SharedPreferences sharedPreferences;
 	private ShareActionProvider mShareActionProvider;
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
 		if (key.equals(getString(R.string.pref_hunter_name_key))) {
-			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
+			hunterName = this.sharedPreferences.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
 
 		} else if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
@@ -128,24 +128,24 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 						SharedPreferences.Editor editor = settings.edit();
 						editor.putBoolean("BookTut", false);
 						editor.apply();
-
 						break;
 				}
 			}
 		});
+
 		// Check for Tutorial
 		if (firsttime) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			SharedPreferences.Editor firstTimeEditor = firstPrefer.edit();
+			SharedPreferences.Editor firstTimeEditor = sharedPreferences.edit();
 			firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
 			firstTimeEditor.commit();
 		} else if (tutorialPreference && bookTut) {
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
-			tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+			tutorialPreference = sharedPreferences.getBoolean(getString(R.string.pref_first_time_tut_key), false);
 		} else {
 			tutorial.setVisibility(View.GONE);
 			tutorial.setEnabled(false);
@@ -153,14 +153,13 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 	}
 
 	private void getSavedSettings() {
-		setting = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-		firstPrefer = getSharedPreferences(getString(R.string.pref_initiate_key), Context.MODE_PRIVATE);
-		firsttime = firstPrefer.getBoolean(getString(R.string.pref_initiate_key), true);
-		tutorialPreference = setting.getBoolean(getString(R.string.pref_first_time_tut_key), false);
-		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
-		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
-		bookTut = setting.getBoolean("BookTut", true);
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+		firsttime = sharedPreferences.getBoolean(getString(R.string.pref_initiate_key), true);
+		tutorialPreference = sharedPreferences.getBoolean(getString(R.string.pref_first_time_tut_key), false);
+		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_theme_selection_key));
+		bookTut = sharedPreferences.getBoolean("BookTut", true);
 	}
 
 	@Override
@@ -214,7 +213,6 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 				this.startActivity(intent);
 				return true;
 		}
-		intent = null;
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -228,10 +226,10 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setting = PreferenceManager.getDefaultSharedPreferences(this);
-		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
-		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_theme_selection_key));
 	}
 
 	private static class Adapter extends FragmentPagerAdapter {
@@ -246,8 +244,6 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
 		public void addFragment(Fragment fragment, String title) {
 			mFragmentList.add(fragment);
 			mFragmentTitleList.add(title);
-
-
 		}
 
 		@Override
