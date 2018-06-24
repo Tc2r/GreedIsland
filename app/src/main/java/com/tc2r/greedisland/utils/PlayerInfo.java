@@ -2,10 +2,10 @@ package com.tc2r.greedisland.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-
 import com.tc2r.greedisland.R;
-
+import java.util.Random;
 
 
 /**
@@ -14,12 +14,22 @@ import com.tc2r.greedisland.R;
 
 public class PlayerInfo extends AppCompatActivity {
     private static final PlayerInfo ourInstance = new PlayerInfo();
+    private static SharedPreferences preferences;
+    private static SharedPreferences.Editor editor;
+    private static Context context;
+
+    private String tName = "Chrollo";
 
     public static PlayerInfo getInstance() {
         return ourInstance;
     }
 
     private PlayerInfo() {
+    }
+
+    public void init(Context context){
+        this.context = context.getApplicationContext();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public String Get_Pref_Theme_Key(Context context){
@@ -36,22 +46,47 @@ public class PlayerInfo extends AppCompatActivity {
 
 
     public Boolean GetFirstRun(Context context, Boolean defaultValue){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Get_Pref_First_Run_Key(context), Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(Get_Pref_First_Run_Key(context), defaultValue);
+        return preferences.getBoolean(Get_Pref_First_Run_Key(context), defaultValue);
     }
     public void SetFirstRun(Context context, Boolean setRun){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Get_Pref_First_Run_Key(context), Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(Get_Pref_First_Run_Key(context), setRun);
-        sharedPreferences.edit().commit();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = preferences.edit();
+        editor.putBoolean(Get_Pref_First_Run_Key(context), setRun);
+        editor.apply();
     }
 
     public Boolean GetTutRan(Context context){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Get_Pref_First_Tut_Key(context), Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(Get_Pref_First_Tut_Key(context), false);
+        return preferences.getBoolean(Get_Pref_First_Tut_Key(context), false);
     }
-    public void SetTutRan(Boolean setRun){
-        SharedPreferences sharedPreferences = getSharedPreferences(PlayerInfo.getInstance().Get_Pref_First_Tut_Key(getApplicationContext()), Context.MODE_PRIVATE);
-        sharedPreferences.edit().putBoolean(getString(R.string.pref_first_time_tut_key), setRun);
-        sharedPreferences.edit().commit();
+    public void SetTutRan(Context context, Boolean setRun){
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = preferences.edit();
+        editor.putBoolean(getString(R.string.pref_first_time_tut_key), setRun);
+        editor.apply();
+    }
+
+    public void SetRandomName(Context context) {
+        SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor tempName = setting.edit();
+        Random rand = new Random();
+        String[] tempNames = context.getResources().getStringArray(R.array.random_names);
+        int n = rand.nextInt(tempNames.length);
+        tName = tempNames[n];
+        tempName.putString("TempName", tName);
+        tempName.commit();
+    }
+    public String GetHunterName(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(context.getResources().getString(R.string.pref_hunter_name_key), tName);
+
+    }
+    public int GetHunterID(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getInt(context.getResources().getString(R.string.pref_hunter_id_key), 0);
+    }
+
+    public String GetCurrentHome(Context context){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(context.getResources().getString(R.string.pref_current_home_key), context.getResources().getString(R.string.pref_town_default));
     }
 }

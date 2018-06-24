@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class
 MainActivity extends AppCompatActivity implements
@@ -57,28 +56,24 @@ MainActivity extends AppCompatActivity implements
 	// Declare Layout Variables
 	private RelativeLayout tutorial;
 	private TextView tutText, hunterID;
-	private View rootview;
-	private AdView adView;
 	private Toolbar toolbar;
 	private CollapsingToolbarLayout collapsingToolbarLayout;
 	private AppBarLayout appBar;
 
 	// Declare Variables
-	private boolean firstTime, mainTut, tutorialPreference;
-	private String titleCollapsed, titleExpanded, hunterName, tName;
+	private boolean mainTut, tutorialPreference;
+	private String titleCollapsed, titleExpanded, hunterName;
 	private int tutorialCounter = 4;
 	private int SpanDist;
 
 	private Intent intent;
-	private ShareActionProvider mShareActionProvider;
-	private SharedPreferences setting, firstPrefer;
-	private SharedPreferences.Editor firstTimeEditor;
 	private Map<String, String> params;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Check for Shared Preferences.
+		PlayerInfo.getInstance().init(this);
 		getSavedSettings();
 
 		// Set the Content View
@@ -106,7 +101,7 @@ MainActivity extends AppCompatActivity implements
 		// When settings change, update name and them in layout.
 		if (key.equals(getString(R.string.pref_hunter_name_key))) {
 			//Log.d("Change", "Name!");
-			hunterName = setting.getString(getString(R.string.pref_hunter_name_key), tName);
+			hunterName = PlayerInfo.getInstance().GetHunterName(getApplicationContext());
 		}
 		if (key.equals(getString(R.string.pref_theme_selection_key))) {
 			Globals.ChangeTheme(this);
@@ -114,7 +109,7 @@ MainActivity extends AppCompatActivity implements
 	}
 
 	private void initVariables() {
-		rootview = findViewById(R.id.RootLayout);
+		View rootview = findViewById(R.id.RootLayout);
 		hunterID = (TextView) findViewById(R.id.tv_hunterID);
 		tutorial = (RelativeLayout) findViewById(R.id.welcome_tutorial);
 		tutText = (TextView) findViewById(R.id.tutorial_text);
@@ -126,7 +121,7 @@ MainActivity extends AppCompatActivity implements
 	}
 
 	private void InitAds() {
-		adView = (AdView) findViewById(R.id.adView);
+		AdView adView = (AdView) findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest.
 						Builder()
 						.addKeyword("Anime")
@@ -141,9 +136,9 @@ MainActivity extends AppCompatActivity implements
 	private void setToolbarandViewPager() {
 		// Set Title and Appearance for collapsing Toolbar Layout
 		collapsingToolbarLayout.setTitle(getString(R.string.toolbar_Header_Main_Collasped));
+		collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.boldText);
 		titleCollapsed = getString(R.string.toolbar_Header_Main_Expanded);
 		titleExpanded = getString(R.string.toolbar_Header_Main_Collasped);
-		collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.boldText);
 
 		// Set Listener for appbar
 		appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -161,8 +156,7 @@ MainActivity extends AppCompatActivity implements
 				if (scrollRange + verticalOffset == 0) {
 					collapsingToolbarLayout.setTitle(titleCollapsed);
 					isOpen = true;
-
-					// When Collapsed, show app Title
+				// When Collapsed, show app Title
 				} else if (isOpen) {
 					collapsingToolbarLayout.setTitle(titleExpanded);
 					isOpen = false;
@@ -262,9 +256,8 @@ MainActivity extends AppCompatActivity implements
 						editor.putBoolean("MainTut", false);
 						editor.apply();
 
-						/**
-						 * Go to settings on first run, this way the user will create a custom userName.
-						 */
+
+						// Go to settings on first run, this way the user will create a custom userName.
 						intent = new Intent(MainActivity.this, SettingsActivity.class);
 						startActivity(intent);
 						break;
@@ -273,13 +266,17 @@ MainActivity extends AppCompatActivity implements
 		});
 
 		Log.wtf("TutorialPreference = ", String.valueOf(PlayerInfo.getInstance().GetTutRan(this)));
-		// Check for Tutorial
+
+		// Check to see if we should display tutorial to player, if PlayerInfo.GetFirstRun is false, skip tutorial
+		// if it is true or if the menu setting is enabled, show tutorial.
 		if (PlayerInfo.getInstance().GetFirstRun(this, true)) {
+
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
 			PlayerInfo.getInstance().SetFirstRun(this,false);
 		} else if (tutorialPreference && mainTut) {
+
 			tutorial.setVisibility(View.VISIBLE);
 			tutorial.bringToFront();
 			tutorial.setEnabled(true);
@@ -295,24 +292,19 @@ MainActivity extends AppCompatActivity implements
 	 * Checks for and uses Saved Shared Preferences of settings.
 	 */
 	private void getSavedSettings() {
-		setting = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(this);
 
 
 		//Check for changed listener in case layout needs updating.
 		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
 		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
 		tutorialPreference = PlayerInfo.getInstance().GetTutRan(this);
-		SharedPreferences.Editor tempName = setting.edit();
+
 		setting.registerOnSharedPreferenceChangeListener(this);
 
 		// If first run, create random name and assign it to Hunter Name temporary.
-		Random rand = new Random();
-		String[] tempNames = getResources().getStringArray(R.array.random_names);
-		int n = rand.nextInt(tempNames.length);
-		tName = tempNames[n];
-		tempName.putString("TempName", tName);
-		tempName.commit();
-		hunterName = setting.getString(getString(R.string.pref_hunter_name_key), tName);
+		PlayerInfo.getInstance().SetRandomName(this);
+		hunterName = PlayerInfo.getInstance().GetHunterName(this);
 		mainTut = setting.getBoolean("MainTut", true);
 
 		// Check bundle for first launch Initiator.
@@ -329,6 +321,8 @@ MainActivity extends AppCompatActivity implements
 		}
 		SpanDist = hunterName.length();
 	}
+
+
 
 
 	// Method to Initialize and Fill View Pager
@@ -353,9 +347,8 @@ MainActivity extends AppCompatActivity implements
 
 		// Fetch and store ShareActionProvider
 		MenuItem item = menu.findItem(R.id.action_share);
-		mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+		ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
 		mShareActionProvider.setShareIntent(sharingIntent);
-
 		return true;
 	}
 
@@ -382,6 +375,9 @@ MainActivity extends AppCompatActivity implements
 				intent = new Intent(MainActivity.this, BookActivity.class);
 				this.startActivity(intent);
 				return true;
+			case android.R.id.home:
+				super.onBackPressed();
+				return true;
 		}
 		intent = null;
 		return super.onOptionsItemSelected(item);
@@ -393,8 +389,7 @@ MainActivity extends AppCompatActivity implements
 	 * database to add a new user, or get the user's name.
 	 */
 	private void InitiateUser() {
-		int huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
-
+		int huntID = PlayerInfo.getInstance().GetHunterID(this);
 		RequestQueue requestQueue;
 		String url = "https://tchost.000webhostapp.com/UserRegister.php";
 		if (huntID == 0) {
@@ -428,6 +423,7 @@ MainActivity extends AppCompatActivity implements
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
+						Log.e("Volley Error", error.toString() + " " + error.getMessage());
 					}
 				}) {
 					@Override
@@ -443,7 +439,6 @@ MainActivity extends AppCompatActivity implements
 
 				// Retrieve HuntID from Database.
 				// REGISTER Start Point (Town) as new Base
-				final int hunterID = setting.getInt(getString(R.string.pref_hunter_id_key), 99999);
 				stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
@@ -461,7 +456,7 @@ MainActivity extends AppCompatActivity implements
 						params = new HashMap<>();
 						params.put("oldlocation", getString(R.string.pref_town_default));
 						params.put("travelto", getString(R.string.pref_town_default));
-						params.put("hunterid", String.valueOf(hunterID));
+						params.put("hunterid", String.valueOf(PlayerInfo.getInstance().GetHunterID(getApplicationContext())));
 						params.put("huntername", hunterName);
 						params.put("actiontoken", String.valueOf(3));
 						return params;
@@ -479,8 +474,8 @@ MainActivity extends AppCompatActivity implements
 
 			} else {
 				// Get ID and Home Base Location
-				huntID = setting.getInt(getString(R.string.pref_hunter_id_key), 0);
-				String currentHome = setting.getString(getString(R.string.pref_current_home_key), getString(R.string.pref_town_default));
+				huntID = PlayerInfo.getInstance().GetHunterID(this);
+				String currentHome = PlayerInfo.getInstance().GetCurrentHome(this);
 
 				url = "https://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
 				Log.i("Link: ", url);
@@ -492,7 +487,7 @@ MainActivity extends AppCompatActivity implements
 					public void onResponse(String response) {
 						// Response is A_I ID Counter
 						int actionToken;
-						SharedPreferences.Editor editor = setting.edit();
+						SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
 
 						try {
 							actionToken = Integer.parseInt(response);
@@ -510,7 +505,7 @@ MainActivity extends AppCompatActivity implements
 					@Override
 					public void onErrorResponse(VolleyError error) {
 						Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
-
+						Log.e("Volley Error", error.toString() + " " + error.getMessage());
 					}
 				});
 				requestQueue = Volley.newRequestQueue(this);
@@ -522,10 +517,10 @@ MainActivity extends AppCompatActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setting = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-		setting.registerOnSharedPreferenceChangeListener(this);
-		onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
-		onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_hunter_name_key));
+		onSharedPreferenceChanged(sharedPreferences, getString(R.string.pref_theme_selection_key));
 	}
 
 	@Override
