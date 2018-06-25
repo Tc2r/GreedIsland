@@ -151,7 +151,7 @@ public class RestrictedFragment extends Fragment {
 
 
                 OkHttpClient client = new OkHttpClient.Builder().protocols(Arrays.asList(Protocol.HTTP_1_1)).build();
-                Request request = new Request.Builder().url("https://tchost.000webhostapp.com/greedget.php?id=" + (id)).build();
+                Request request = new Request.Builder().url("http://tchost.000webhostapp.com/greedget.php?id=" + (id)).build();
 
                 try {
                     Response response = client.newCall(request).execute();

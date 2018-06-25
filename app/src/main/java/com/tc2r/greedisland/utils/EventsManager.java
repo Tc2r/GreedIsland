@@ -50,16 +50,13 @@ public class EventsManager {
         boolean array[];
         if (size == 0) {
             array = new boolean[preSize];
-            //Log.d("Check", "SIZE IS ZERO");
         } else {
             array = new boolean[size];
-            //Log.d("SIZE", String.valueOf(array.length));
         }
         for (int i = 0; i < size; i++) {
             array[i] = prefs_book.getBoolean("bookPreferenceArray" + "_" + i, false);
-            Log.d("Load: ", "CardID " + i + " is " + String.valueOf(array[i]));
         }
-        //Log.d("Loading Deck", "Complete");
+        PerformanceTracking.TrackEvent("Loading Deck Complete");
         return array;
     }
 
@@ -69,11 +66,8 @@ public class EventsManager {
         SharedPreferences.Editor editor = prefs_book.edit();
 
         editor.putInt("bookPreferenceArray" + "_size", cardCheck.length);
-        ////Log.d("CardCheck", String.valueOf(cardCheck.length));
         for (int i = 0; i < cardCheck.length; i++) {
-
             editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
-
         }
         editor.commit();
     }
@@ -100,7 +94,7 @@ public class EventsManager {
                 if (notFlipped.size() == 0) {
                     // Zero Cards Left
 
-                    //Log.d("NO CARDS LEFT ", "oh really?");
+
                     /// WHEN ALL CARDS ARE FLIPPED!
 
                 } else if (notFlipped.size() == 1) { // ONLY 1 CARD LEFT!
@@ -112,7 +106,7 @@ public class EventsManager {
                     toast.show();
                     notFlipped.remove(newNum);
 
-                } else { // All Cards Unflipped, flip some!
+                } else { // All Cards not flipped, flip some!
                     int newNum = random.nextInt(notFlipped.size() - 1);
                     cardCheck[notFlipped.get(newNum)] = true;
 
@@ -144,8 +138,6 @@ public class EventsManager {
 
                 if (flipped.size() == 0) { // User Has No Cards
 
-                    //Log.d("NO CARDS LEFT ", "oh really?");
-
                 } else if (flipped.size() == 1) { // User Only Has 1 Card, take it
                     int newNum = random.nextInt(flipped.size());
                     cardCheck[flipped.get(newNum)] = false;
@@ -155,7 +147,7 @@ public class EventsManager {
                     toast.show();
                     flipped.remove(newNum);
 
-                } else { // All Cards Unflipped, flip some!
+                } else { // All Cards not flipped, flip some!
                     int newNum = random.nextInt(flipped.size() - 1);
                     cardCheck[flipped.get(newNum)] = false;
                     cardCheck[99] = true;

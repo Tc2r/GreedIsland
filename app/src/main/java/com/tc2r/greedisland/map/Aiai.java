@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.TravelHelper;
 
 import org.json.JSONArray;
@@ -56,8 +56,8 @@ public class Aiai extends Fragment implements View.OnClickListener {
 
 
     // Server Request Stuff
-    public static final String url = "https://tchost.000webhostapp.com/settravel.php";
-    public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
+    public static final String url = "http://tchost.000webhostapp.com/settravel.php";
+    public static final String deleteUrl = "http://tchost.000webhostapp.com/deletelocation.php";
 
     TextView tvTravel, tvHomeSet;
     StringRequest stringRequest;
@@ -325,20 +325,18 @@ public class Aiai extends Fragment implements View.OnClickListener {
 
         // DELETES OLD BASE
 
-        ////Log.d("Old Town =", lastBase);
+        PerformanceTracking.TransactionBegin("Delete User from last base "+ deleteUrl);
         stringRequest = new StringRequest(Request.Method.POST, deleteUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                PerformanceTracking.TransactionEnd("Delete User from last base ");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                PerformanceTracking.TransactionFail("Delete User from last base: "+ error.getLocalizedMessage());
                 Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
-
             }
-
         }) {
             @Override
             protected Map<String, String> getParams() {
@@ -411,7 +409,7 @@ public class Aiai extends Fragment implements View.OnClickListener {
         @Override
         protected Void doInBackground(Integer... integers) {
             OkHttpClient client = new OkHttpClient();
-            okhttp3.Request request = new okhttp3.Request.Builder().url("https://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
+            okhttp3.Request request = new okhttp3.Request.Builder().url("http://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
 
             try {
                 okhttp3.Response response = client.newCall(request).execute();

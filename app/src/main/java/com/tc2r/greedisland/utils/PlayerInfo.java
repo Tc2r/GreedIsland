@@ -11,11 +11,12 @@ import java.util.Random;
 
 
 /**
- * Created by nudennie.white on 3/26/18.
+ * Created by Nudennie.white on 3/26/18.
  */
 
 public class PlayerInfo extends AppCompatActivity {
-    private static final PlayerInfo ourInstance = new PlayerInfo();
+
+    private static PlayerInfo INSTANCE = new PlayerInfo();
     private static SharedPreferences preferences;
     private static SharedPreferences.Editor editor;
     private static Context context;
@@ -23,11 +24,11 @@ public class PlayerInfo extends AppCompatActivity {
     private String tName = "Chrollo";
 
     public static PlayerInfo getInstance() {
-        return ourInstance;
+        return(INSTANCE);
     }
 
-    private PlayerInfo() {
-    }
+    private PlayerInfo() {};
+
 
     public void init(Context context) {
         this.context = context.getApplicationContext();

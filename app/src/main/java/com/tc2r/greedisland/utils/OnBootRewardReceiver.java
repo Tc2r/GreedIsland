@@ -24,7 +24,7 @@ public class OnBootRewardReceiver extends BroadcastReceiver {
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
             boolean checkTravel = settings.getBoolean("AlarmTravelSet", false);
             boolean checkReward = settings.getBoolean("AlarmRewardSet", false);
-            //Log.d("THIS", String.valueOf(settings.getAll()));
+            PerformanceTracking.TrackEvent("OnBoot Triggered");
 
             if (checkReward) {
                 if (!settings.getBoolean("AlarmTravelSet", false)) {
@@ -33,7 +33,7 @@ public class OnBootRewardReceiver extends BroadcastReceiver {
                     pm.setComponentEnabledSetting(compName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
                 }
                 RewardsHelper.BootAlarm(context);
-                //Log.d("BOOT", "REWARDS");
+                PerformanceTracking.TrackEvent("OnBootReward Rewards Alarm!");
             }
             if (checkTravel) {
                 if (!settings.getBoolean("AlarmRewardSet", false)) {
@@ -42,7 +42,7 @@ public class OnBootRewardReceiver extends BroadcastReceiver {
                     pm.setComponentEnabledSetting(compName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
                 }
                 TravelHelper.BootAlarm(context);
-                //Log.d("BOOT", "TRAVEL");
+                PerformanceTracking.TrackEvent("OnBoot Travel Alarm!");
             }
 
 

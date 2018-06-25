@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.restrict.RestrictCard;
 import com.tc2r.greedisland.spells.SpellsHelper;
-import com.tc2r.greedisland.utils.AnimationCardReceived;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.RewardsHelper;
 
 import org.json.JSONArray;
@@ -102,7 +104,7 @@ public class BookTab extends Fragment implements View.OnClickListener {
         // use adapter to set rule(s) in rulesList to layouts.
         rulesAdapter = new RulesAdapter(rulesList, context);
 
-        // set adapter to recyclerview
+        // set adapter to recycler view
         rulesView.setAdapter(rulesAdapter);
         rulesView.setLayoutManager(gridLayoutManager);
 
@@ -153,10 +155,10 @@ public class BookTab extends Fragment implements View.OnClickListener {
         // Setting up bottom section
         rulesView = (RecyclerView) view.findViewById(R.id.rules_view);
 
-        // - Initialize Recyclerview
+        // - Initialize Recycler view
         gridLayoutManager = new GridLayoutManager(container.getContext(), 1);
 
-        // Create A Grid, could have used Linear. Setup Recyclerview.
+        // Create A Grid, could have used Linear. Setup Recycler view.
         rulesList = new ArrayList<>();
         rulesView.setHasFixedSize(true);
 
@@ -259,11 +261,12 @@ public class BookTab extends Fragment implements View.OnClickListener {
                         v.setVisibility(View.GONE);
 
                     } else if (notFlipped.size() == 0) {
-                        //Log.d("NO CARDS LEFT ", "oh really?");
+                        PerformanceTracking.TrackEvent("All Cards Recieved!");
                         /// WHEN ALL CARDS ARE FLIPPED!
 
                     } else {
-                        Log.wtf("new card", "Shown!");
+                        PerformanceTracking.TrackEvent("New Card Recieved.");
+
                         int newNum = random.nextInt(notFlipped.size() - 1);
                         cardCheck[notFlipped.get(newNum)] = true;
                         ShowCard(v, notFlipped.get(newNum));
@@ -278,26 +281,29 @@ public class BookTab extends Fragment implements View.OnClickListener {
     }
 
     public void ShowCard(final View v, final int Id) {
-        Log.wtf("new card", String.valueOf(Id + 1));
-
+        PerformanceTracking.TrackEvent("New Card Recieved, Card #" + (Id+1));
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
             @Override
             protected Void doInBackground(Integer... params) {
 
                 OkHttpClient client = new OkHttpClient.Builder().protocols(Arrays.asList(Protocol.HTTP_1_1)).build();
-                Request request = new Request.Builder().url("https://tchost.000webhostapp.com/getcard.php?id=" + (Id + 1)).build();
-                Log.i("REQUEST URL IS: ", request.url().toString());
+                Request request = new Request.Builder().url("http://tchost.000webhostapp.com/getcard.php?id=" + (Id + 1)).build();
+                PerformanceTracking.TransactionBegin("Get Card " + request.url().toString());
 
                 try {
+                    PerformanceTracking.TrackEvent("GET CARD BEFORE");
                     Response response = client.newCall(request).execute();
-                    Log.d("Response: ", String.valueOf(response.code()));
+
+                    PerformanceTracking.TrackEvent("GET CARD AFTER" + response.code());
+                    PerformanceTracking.TransactionEnd("Get Card: Response" + String.valueOf(response.code()));
 
                     JSONArray array = new JSONArray(response.body().string());
                     JSONObject object = array.getJSONObject(0);
                     temp = new RestrictCard(object.getInt("id"), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
 
                 } catch (IOException | JSONException e) {
+                    PerformanceTracking.TransactionFail("Get Card: " + e.toString());
                     e.printStackTrace();
                 }
                 return null;
@@ -322,16 +328,27 @@ public class BookTab extends Fragment implements View.OnClickListener {
                 description.setText(temp.getDescription());
                 border.setBackgroundResource(R.drawable.text_border_restrict);
                 final String newUrl = "http://res.cloudinary.com/munaibh/image/upload/v1485443356/HxH/" + (temp.getId() - 1) + ".png";
-                Log.i("Card image url is: ", newUrl);
-                Glide.with(context).load(newUrl).placeholder(R.drawable.placeholder).centerCrop().skipMemoryCache(true).crossFade().into(cardImage);
-                reward.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AnimationCardReceived.ReceiveCard(reward, null);
+                PerformanceTracking.TransactionBegin("Get Card Image: "+ newUrl);
+                Glide.with(context)
+                        .load(newUrl)
+                        .placeholder(R.drawable.placeholder)
+                        .centerCrop()
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                PerformanceTracking.TransactionFail("Get Card Image: " + e.getLocalizedMessage());
+                                return false;
+                            }
 
-
-                    }
-                });
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                PerformanceTracking.TransactionEnd("Get Card Image");
+                                return false;
+                            }
+                        })
+                        .skipMemoryCache(true)
+                        .crossFade()
+                        .into(cardImage);
                 super.onPostExecute(aVoid);
             }
         };
@@ -372,20 +389,17 @@ public class BookTab extends Fragment implements View.OnClickListener {
         // get or initialize array.
         if (size == 0) {
             array = new boolean[preSize];
-            //Log.d("Check", "SIZE IS ZERO");
 
         } else {
             array = new boolean[size];
-            //Log.d("SIZE", String.valueOf(array.length));
         }
 
         // File array with players deck information.
         for (int i = 0; i < size; i++) {
 
             array[i] = prefs_book.getBoolean("bookPreferenceArray" + "_" + i, false);
-            //Log.d("Load: ", "CardID " + i + " is " + String.valueOf(array[i]));
         }
-        //Log.d("Loading Deck", "Complete");
+        PerformanceTracking.TrackEvent("Loading Deck Complete");
         return array;
     }
 

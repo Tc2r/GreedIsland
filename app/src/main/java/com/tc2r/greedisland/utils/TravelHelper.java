@@ -32,7 +32,7 @@ public class TravelHelper {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         long currentTime = new GregorianCalendar().getTimeInMillis();
         long travelTime = settings.getLong("TravelTime", currentTime);
-        //Log.d("Travel TIME ", String.valueOf(travelTime) + "   " + String.valueOf(currentTime));
+        PerformanceTracking.TrackEvent("Reset Travel Alarm: " + String.valueOf(travelTime) + "  " +String.valueOf(currentTime));
         Intent intentAlarm = new Intent(context, TravelServiceReceiver.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, travelTime, PendingIntent.getBroadcast(context, 2, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
@@ -57,7 +57,7 @@ public class TravelHelper {
         Context context = cnxt;
 
         // Alarm Time = Current time + Delay in Millis
-        // Current time 24000000 + 170000 hmmm
+        // Current time 24000000 + 170000 hmm
         // event min should be 2400000 + a fraction of delay
         Long time = new GregorianCalendar().getTimeInMillis() + delay;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -78,10 +78,6 @@ public class TravelHelper {
 
         long eventTime = eventMin + (long) (Math.random() * (eventMax - eventMin));
 
-        // Hardcoded 2 minutes past travel button being pressed
-        //long eventTime =  currentTime + delay/3;
-
-        //Log.wtf("Time:", String.valueOf(time) +" vs "+String.valueOf(eventTime));
         Intent eventAlarm = new Intent(context, EventServiceReceiver.class);
         AlarmManager alarmManager1 = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager1.set(AlarmManager.RTC_WAKEUP, eventTime, PendingIntent.getBroadcast(context, 3, eventAlarm, PendingIntent.FLAG_UPDATE_CURRENT));

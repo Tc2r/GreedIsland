@@ -17,7 +17,6 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +37,7 @@ import com.tc2r.greedisland.utils.AppRater;
 import com.tc2r.greedisland.utils.CustomTypefaceSpan;
 import com.tc2r.greedisland.utils.EventsManager;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.PlayerInfo;
 
 import java.util.ArrayList;
@@ -258,8 +258,6 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             }
         });
 
-        Log.wtf("TutorialPreference = ", String.valueOf(PlayerInfo.getInstance().GetTutRan(this)));
-
         // Check to see if we should display tutorial to player, if PlayerInfo.GetFirstRun is false, skip tutorial
         // if it is true or if the menu setting is enabled, show tutorial.
         if (PlayerInfo.getInstance().GetFirstRun(this, true)) {
@@ -306,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             boolean init = b.getBoolean("init", false);
 
             if (init) {
-                Log.wtf("Start", "Run Once");
+                PerformanceTracking.TrackEvent("GREED ISLAND LAUNCHED");
                 // Once Per Launch Events
                 AppRater.app_launched(this);
                 InitiateUser();
@@ -382,15 +380,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     private void InitiateUser() {
         int huntID = PlayerInfo.getInstance().GetHunterID(this);
         RequestQueue requestQueue;
-        String url = "https://tchost.000webhostapp.com/UserRegister.php";
+        String url = "http://tchost.000webhostapp.com/UserRegister.php";
+
         if (huntID == 0) {
             if (!Globals.isNetworkAvailable(this)) {
                 Toast.makeText(this, R.string.internet_down_message, Toast.LENGTH_LONG).show();
             } else {
+                PerformanceTracking.TransactionBegin("REGISTER USER: " + url);
                 // First Run, Initiate Things.
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        PerformanceTracking.TransactionEnd("REGISTER USER");
                         Toast.makeText(getApplicationContext(), R.string.successful_Registration, Toast.LENGTH_SHORT).show();
 
                         // Artificially Inflating IDs by 2k to imply fullness of app.
@@ -414,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
-                        Log.e("Volley Error", error.toString() + " " + error.getMessage());
+                        PerformanceTracking.TransactionFail("REGISTER USER: " + error.getLocalizedMessage());
                     }
                 }) {
                     @Override
@@ -468,14 +469,15 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 huntID = PlayerInfo.getInstance().GetHunterID(this);
                 String currentHome = PlayerInfo.getInstance().GetCurrentHome(this);
 
-                url = "https://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
-                Log.i("Link: ", url);
+                url = "http://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
 
+                PerformanceTracking.TransactionBegin("Get Tokens: " + url);
                 // First Run, Initiate Things.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                final StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
+                        PerformanceTracking.TransactionEnd("Get Tokens: " + response);
                         // Response is A_I ID Counter
                         int actionToken;
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
@@ -496,7 +498,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), R.string.server_down_message, Toast.LENGTH_LONG).show();
-                        Log.e("Volley Error", error.toString() + " " + error.getMessage());
+                        PerformanceTracking.TransactionFail("Get Tokens: " + error.getLocalizedMessage());
                     }
                 });
                 requestQueue = Volley.newRequestQueue(this);

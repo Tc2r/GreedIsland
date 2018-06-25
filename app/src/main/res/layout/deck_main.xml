@@ -33,7 +33,6 @@
             android:background="#00fefefe"
             app:layout_anchor="@+id/appbar"
             app:layout_anchorGravity="bottom"
-            app:layout_scrollFlags="enterAlwaysCollapsed|scroll|exitUntilCollapsed|snap"
             app:tabGravity="fill"
             app:tabMode="fixed"/>
 
@@ -53,7 +52,7 @@
                 app:expandedTitleGravity="center"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
-                app:layout_scrollFlags="enterAlwaysCollapsed|scroll|exitUntilCollapsed|snap">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <ImageView
                     android:id="@+id/headerImage"
@@ -63,8 +62,7 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/header_gon"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="enterAlwaysCollapsed|scroll|exitUntilCollapsed|snap"/>
+                    app:layout_collapseMode="pin"/>
 
 
                 <include
@@ -73,8 +71,7 @@
                     layout="@layout/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="enterAlwaysCollapsed|scroll|exitUntilCollapsed|snap">
+                    app:layout_collapseMode="pin">
                 </include>
 
             </android.support.design.widget.CollapsingToolbarLayout>

@@ -65,8 +65,10 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         toolbar = (Toolbar) findViewById(R.id.toolbar_deck);
         appBar = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         SetupViewPager(viewPager);
@@ -74,11 +76,14 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
         tabs.setupWithViewPager(viewPager);
         collapsingToolbarLayout.setTitle("BOOK!");
-        tabs.setOnTouchListener(new View.OnTouchListener() {
+        tabs.setOnTouchListener(new TabLayout.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                v.performClick();
+                DeckActivity.super.onTouchEvent(event);
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+
                     boolean fullyExpanded = (appBar.getHeight() - appBar.getBottom()) == 0;
 
                     if (!fullyExpanded) {
@@ -227,7 +232,6 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
                 startActivity(intent);
                 return true;
         }
-        intent = null;
         return super.onOptionsItemSelected(item);
     }
 
@@ -237,13 +241,11 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         private final List<String> mFragmentTitleList = new ArrayList<>();
         private Map<Integer, String> mFragmentTags;
         private FragmentManager mFragmentManager;
-        private Context mContext;
 
         Adapter(FragmentManager fm, Context context) {
             super(fm);
             mFragmentManager = fm;
             mFragmentTags = new HashMap<Integer, String>();
-            mContext = context;
         }
 
         // Create a method to return tag of a previously created fragment.
@@ -264,7 +266,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
             return mFragmentList.get(position);
         }
 
-        // Override InstantiateItem to save the tag of the fragment into a hashmap
+        // Override InstantiateItem to save the tag of the fragment into a Hash map
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Object obj = super.instantiateItem(container, position);

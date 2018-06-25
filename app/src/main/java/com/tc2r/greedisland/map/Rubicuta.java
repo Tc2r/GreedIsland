@@ -55,8 +55,8 @@ public class Rubicuta extends Fragment implements View.OnClickListener {
 
 
     // Server Request Stuff
-    public static final String url = "https://tchost.000webhostapp.com/settravel.php";
-    public static final String deleteUrl = "https://tchost.000webhostapp.com/deletelocation.php";
+    public static final String url = "http://tchost.000webhostapp.com/settravel.php";
+    public static final String deleteUrl = "http://tchost.000webhostapp.com/deletelocation.php";
     TextView tvTravel, tvHomeSet;
     StringRequest stringRequest;
     SharedPreferences userMap;
@@ -399,7 +399,7 @@ public class Rubicuta extends Fragment implements View.OnClickListener {
             @Override
             protected Void doInBackground(Integer... integers) {
                 OkHttpClient client = new OkHttpClient();
-                okhttp3.Request request = new okhttp3.Request.Builder().url("https://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
+                okhttp3.Request request = new okhttp3.Request.Builder().url("http://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
 
                 try {
                     okhttp3.Response response = client.newCall(request).execute();

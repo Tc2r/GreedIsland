@@ -178,7 +178,7 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
     private void AddToken(View v) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(v.getContext());
         final String location = settings.getString(v.getContext().getString(R.string.pref_current_location_key), v.getContext().getString(R.string.pref_town_default));
-        String url = "https://tchost.000webhostapp.com/StealCard.php?currentLocation=" + location;
+        String url = "http://tchost.000webhostapp.com/StealCard.php?currentLocation=" + location;
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

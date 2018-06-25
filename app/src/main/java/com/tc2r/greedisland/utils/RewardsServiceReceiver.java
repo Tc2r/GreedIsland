@@ -45,6 +45,7 @@ public class RewardsServiceReceiver extends BroadcastReceiver {
         // Testing!
         //Toast.makeText(context, String.valueOf(context.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
         ////Log.d("Alarm Worked", String.valueOf(settings.getAll()));
+        PerformanceTracking.TrackEvent("Reward Alarm Recieved");
 
         // Create notification and send it!
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
