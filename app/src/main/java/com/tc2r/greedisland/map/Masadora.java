@@ -292,7 +292,7 @@ public class Masadora extends Fragment implements View.OnClickListener {
         //editor.putString(getString(R.string.pref_last location_key), lastBase);
         editor.apply();
         //Log.d("MAP:", String.valueOf(userMap.getAll()));
-        TravelHelper.SetAlarm(getContext());
+        TravelHelper.setAlarm(getView());
         TravelHelper.EnableBroadcast(getContext());
         tvHomeSet.setVisibility(View.VISIBLE);
         tvTravel.setVisibility(View.GONE);

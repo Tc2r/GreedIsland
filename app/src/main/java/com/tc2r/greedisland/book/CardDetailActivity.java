@@ -67,7 +67,7 @@ public class CardDetailActivity extends AppCompatActivity implements SharedPrefe
         limit = (TextView) findViewById(R.id.desc_limit);
         title = (TextView) findViewById(R.id.desc_title);
         image = (ImageView) findViewById(R.id.desc_image);
-        activityCardDetail = (LinearLayout) findViewById(R.id.activity_card_detail);
+        activityCardDetail = (LinearLayout) findViewById(R.id.layout_main);
         carddesc_image = (LinearLayout) findViewById(R.id.carddesc_image);
         ViewTreeObserver vto = activityCardDetail.getViewTreeObserver();
 

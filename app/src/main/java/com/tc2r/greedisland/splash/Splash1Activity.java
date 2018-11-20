@@ -5,21 +5,17 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.FormatStrategy;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.PerformanceTracking;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Displays a splash screen when app is opened, as well as playing a sound clip.
@@ -83,7 +79,7 @@ public class Splash1Activity extends AppCompatActivity {
             handler.removeCallbacksAndMessages(null);
             handler = null;
         }
-        View root = findViewById(R.id.activity_splash1);
+        View root = findViewById(R.id.layout_main);
         setContentView(new View(this));
         if (root != null) {
             unbindDrawables(root);

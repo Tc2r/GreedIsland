@@ -84,7 +84,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void scheduleAlarm() {
-        RewardsHelper.setAlarm(this);
+        RewardsHelper.setAlarm(getCurrentFocus());
 
     }
 }

@@ -42,7 +42,7 @@ public class Test extends Fragment implements View.OnClickListener {
         spell = (EditText) view.findViewById(R.id.spellId);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.secret);
 
-        userSpells = SpellsHelper.LoadUserSpells(view.getContext());
+        userSpells = SpellsHelper.loadUserSpells(view.getContext());
 
         db = new SpellsHelper(view.getContext());
         addSpell.setOnClickListener(this);
@@ -62,14 +62,14 @@ public class Test extends Fragment implements View.OnClickListener {
                 id = Integer.parseInt(String.valueOf(spell.getText()));
                 reward = db.CreateSpell(id);
                 userSpells.add(reward);
-                SpellsHelper.SaveUserSpells(v.getContext(), userSpells);
+                SpellsHelper.saveUserSpells(v.getContext(), userSpells);
                 break;
             case R.id.removeButton:
                 id = Integer.parseInt(String.valueOf(spell.getText()));
-                SpellsHelper.DeleteSpell(v.getContext(), id);
+                SpellsHelper.deleteSpell(v.getContext(), id);
                 break;
             case R.id.removerndButton:
-                SpellsHelper.CreateRandomSpell(Test.this.getContext(), 3);
+                SpellsHelper.createRandomSpell(getView(), 3);
                 break;
         }
 

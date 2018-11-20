@@ -34,7 +34,7 @@ import com.tc2r.greedisland.utils.AnimationCardReceived;
 import java.util.List;
 import java.util.Random;
 
-import static com.tc2r.greedisland.utils.EventsManager.ManipulateDeck;
+import static com.tc2r.greedisland.utils.EventsManager.manipulateDeck;
 
 /**
  * Created by Tc2r on 2/26/2017.
@@ -99,7 +99,7 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.Spel
     }
 
     private void useCard(final View v, final int position, final SpellCardObject spellCard) {
-        //Toast.makeText(v.getContext(), String.valueOf(spellCard.getId()), Toast.LENGTH_LONG).show();
+
         AlertDialog.Builder builder;
         switch (spellCard.getId()) {
             case 7:
@@ -113,13 +113,13 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.Spel
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         // Add A card to player hand
-                        ManipulateDeck(v.getContext(), 1, true);
+                        manipulateDeck(v, 1, true);
 
                         // Send out action token for steal
                         addToken(v);
 
                         // Remove Spell Card
-                        SpellsHelper.DeleteSpell(mContext, spellCard.getId());
+                        SpellsHelper.deleteSpell(mContext, spellCard.getId());
 
                         //TODO: Play sound like "Gain!"
 
@@ -149,10 +149,10 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.Spel
                         // Add 1-3 cars to player hand
                         Random rng = new Random();
 
-                        ManipulateDeck(v.getContext(), rng.nextInt(3) + 1, true);
+                        manipulateDeck(v, rng.nextInt(3) + 1, true);
 
                         // Send out action token for steal
-                        SpellsHelper.DeleteSpell(mContext, spellCard.getId());
+                        SpellsHelper.deleteSpell(mContext, spellCard.getId());
 
                         //TODO: Play sound like "Gain!"
                         MediaPlayer mp = MediaPlayer.create(mContext, R.raw.greed);
@@ -257,7 +257,7 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.Spel
 
         SpellViewHolder(View itemView) {
             super(itemView);
-            root = (CardView) itemView.findViewById(R.id.layout_root);
+            root = (CardView) itemView.findViewById(R.id.layout_main);
             cardNumber = (TextView) itemView.findViewById(R.id.card_designation);
             cardTitle = (TextView) itemView.findViewById(R.id.card_title);
             cardDescription = (TextView) itemView.findViewById(R.id.card_description);

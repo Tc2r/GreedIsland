@@ -296,7 +296,7 @@ public class Aiai extends Fragment implements View.OnClickListener {
         editor.putString(getString(R.string.pref_current_location_key), thisTown);
         editor.apply();
         //Log.d("MAP:", String.valueOf(userMap.getAll()));
-        TravelHelper.SetAlarm(getContext());
+        TravelHelper.setAlarm(getView());
         TravelHelper.EnableBroadcast(getContext());
         tvHomeSet.setVisibility(View.VISIBLE);
         tvTravel.setVisibility(View.GONE);

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -23,7 +24,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.tc2r.greedisland.AboutActivity;
 import com.tc2r.greedisland.R;
@@ -31,6 +31,7 @@ import com.tc2r.greedisland.SettingsActivity;
 import com.tc2r.greedisland.restrict.RestrictedFragment;
 import com.tc2r.greedisland.spells.SpellsFragment;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.GreedSnackbars;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +137,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+
         if (key.equals(getString(R.string.pref_hunter_name_key))) {
             //Log.d("Change", "Name!");
             hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));
@@ -220,12 +221,12 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
                 startActivity(intent);
                 return true;
             case R.id.action_share:
-                Toast.makeText(context, getString(R.string.menu_Share_Title), Toast.LENGTH_SHORT).show();
+                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_Share_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(Intent.ACTION_SEND);
                 startActivity(intent);
                 return true;
             case R.id.action_about:
-                Toast.makeText(context, getString(R.string.menu_About_Title), Toast.LENGTH_SHORT).show();
+                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_About_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(context, AboutActivity.class);
                 startActivity(intent);
                 return true;

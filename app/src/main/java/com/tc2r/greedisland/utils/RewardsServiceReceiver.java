@@ -41,10 +41,6 @@ public class RewardsServiceReceiver extends BroadcastReceiver {
         editor.apply();
         // Play Sound Effect
         mp.start();
-
-        // Testing!
-        //Toast.makeText(context, String.valueOf(context.getClass().getSimpleName()), Toast.LENGTH_LONG).show();
-        ////Log.d("Alarm Worked", String.valueOf(settings.getAll()));
         PerformanceTracking.TrackEvent("Reward Alarm Recieved");
 
         // Create notification and send it!

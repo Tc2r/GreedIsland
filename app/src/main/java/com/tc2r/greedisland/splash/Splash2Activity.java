@@ -77,7 +77,7 @@ public class Splash2Activity extends AppCompatActivity implements SharedPreferen
             handler.removeCallbacksAndMessages(null);
             handler = null;
         }
-        View root = findViewById(R.id.activity_splash2);
+        View root = findViewById(R.id.layout_main);
         setContentView(new View(this));
         unbindDrawables(root);
         System.gc();
@@ -108,7 +108,7 @@ public class Splash2Activity extends AppCompatActivity implements SharedPreferen
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+
         if (key.equals(PlayerInfo.Get_Pref_Theme_Key(this))) {
             Globals.ChangeTheme(this);
         }

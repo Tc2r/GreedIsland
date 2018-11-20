@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.map.MapActivity;
@@ -53,8 +54,8 @@ public class TravelHelper {
     }
 
     // Set Alarm When Cards are all gone
-    public static void SetAlarm(Context cnxt) {
-        Context context = cnxt;
+    public static void setAlarm(View view) {
+        Context context = view.getContext();
 
         // Alarm Time = Current time + Delay in Millis
         // Current time 24000000 + 170000 hmm
@@ -68,7 +69,7 @@ public class TravelHelper {
         Intent travelAlarm = new Intent(context, TravelServiceReceiver.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, travelAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        Toast.makeText(context, R.string.Daily_Travel_Text, Toast.LENGTH_LONG).show();
+        GreedSnackbars.createSnackBar(view, R.string.Daily_Travel_Text, Snackbar.LENGTH_LONG).show();
 
         // Latest time event happen is 90% of travel alarm
         long eventMax = time - delay * (100 / 90);

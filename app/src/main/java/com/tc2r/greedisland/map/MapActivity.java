@@ -323,7 +323,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+
         if (key.equals(getString(R.string.pref_hunter_name_key))) {
             //Log.d("Change", "Name!");
             //hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));

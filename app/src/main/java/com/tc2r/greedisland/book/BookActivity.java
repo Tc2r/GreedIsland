@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -20,13 +21,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tc2r.greedisland.AboutActivity;
 import com.tc2r.greedisland.MainActivity;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.SettingsActivity;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.GreedSnackbars;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,12 +204,12 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
                 this.startActivity(intent);
                 return true;
             case R.id.action_share:
-                Toast.makeText(context, getString(R.string.menu_Share_Title), Toast.LENGTH_SHORT).show();
+                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_About_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(Intent.ACTION_SEND);
                 this.startActivity(intent);
                 return true;
             case R.id.action_about:
-                Toast.makeText(context, getString(R.string.menu_About_Title), Toast.LENGTH_SHORT).show();
+                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_About_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(BookActivity.this, AboutActivity.class);
                 this.startActivity(intent);
                 return true;

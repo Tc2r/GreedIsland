@@ -32,7 +32,7 @@ public class OnBootRewardReceiver extends BroadcastReceiver {
                     ComponentName compName = new ComponentName(context.getApplicationContext(), OnBootRewardReceiver.class);
                     pm.setComponentEnabledSetting(compName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
                 }
-                RewardsHelper.BootAlarm(context);
+                RewardsHelper.bootAlarm(context);
                 PerformanceTracking.TrackEvent("OnBootReward Rewards Alarm!");
             }
             if (checkTravel) {

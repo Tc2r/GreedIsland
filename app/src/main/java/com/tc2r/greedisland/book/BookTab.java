@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -36,6 +36,7 @@ import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.restrict.RestrictCardObject;
 import com.tc2r.greedisland.spells.SpellsHelper;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.GreedSnackbars;
 import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.RewardsHelper;
 
@@ -201,7 +202,7 @@ public class BookTab extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case (R.id.lay_book):
                 if (!Globals.isNetworkAvailable(context)) {
-                    Toast.makeText(context, R.string.internet_down_message, Toast.LENGTH_LONG).show();
+                    GreedSnackbars.createSnackBar(getView(), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putBooleanArray("data", cardCheck);
@@ -216,13 +217,13 @@ public class BookTab extends Fragment implements View.OnClickListener {
 
                 // Check Connectivity, if no net, do nothing
                 if (!Globals.isNetworkAvailable(getActivity())) {
-                    Toast.makeText(getActivity(), "Must Have Internet Connection for this Action!", Toast.LENGTH_LONG).show();
+                    GreedSnackbars.createSnackBar(getView(), "Must Have Internet Connection for this Action!", Snackbar.LENGTH_LONG).show();
                     break;
                 }
                 Random rnd = new Random();
 
                 if (rnd.nextInt(10) < 3) {
-                    SpellsHelper.CreateRandomSpell(context, 1);
+                    SpellsHelper.createRandomSpell(getView(), 1);
                 }
 
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(v.getContext());
@@ -237,7 +238,7 @@ public class BookTab extends Fragment implements View.OnClickListener {
                 if (settings.getInt("Rewards", 0) >= 3) {
                     //Log.d("ACTIVATE", "RECEIVER");
                     RewardsHelper.EnableBroadcast(context);
-                    RewardsHelper.setAlarm(context);
+                    RewardsHelper.setAlarm(getView());
                 }
                 mp.start();
 
