@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,7 @@ import static android.widget.Toast.makeText;
 public class EventsManager {
 
     private static boolean[] cardCheck = new boolean[100];
-    private static Context context;
+    private Context context;
     private TextView botTitle, botText;
 
     public EventsManager(Context context) {
@@ -69,7 +68,7 @@ public class EventsManager {
         for (int i = 0; i < cardCheck.length; i++) {
             editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
         }
-        editor.commit();
+        editor.apply();
     }
 
     public static void ManipulateDeck(Context context, int cardAmount, boolean givetake) {
@@ -288,7 +287,7 @@ public class EventsManager {
                             botTitle.setText("You took the 30 minute food challenge...");
                             botText.setText("and failed!");
 
-                            // Increase wait time due to bloatness
+                            // Increase wait time due to feeling bloated.
 
                             break;
                     }

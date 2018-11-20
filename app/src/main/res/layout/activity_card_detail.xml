@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/splash5"
     android:orientation="vertical"
-    tools:context="com.tc2r.greedisland.book.CardDetail">
+    tools:context="com.tc2r.greedisland.book.CardDetailActivity">
 
     <LinearLayout
         android:id="@+id/carddesc_desc"

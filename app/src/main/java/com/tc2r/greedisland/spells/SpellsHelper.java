@@ -49,13 +49,13 @@ public class SpellsHelper extends SQLiteAssetHelper {
     public static void CreateRandomSpell(Context context, int count) {
 
 
-        ArrayList<SpellCard> userSpells = LoadUserSpells(context);
+        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
         SpellsHelper db = new SpellsHelper(context);
         Random rand = new Random();
 
         for (int i = 0; i < count; i++) {
             int randNum = rand.nextInt(40) + 1;
-            SpellCard newCard = db.CreateSpell(randNum);
+            SpellCardObject newCard = db.CreateSpell(randNum);
             Toast.makeText(context, newCard.getName() + " Found!", Toast.LENGTH_LONG).show();
             ShowCard(context, null, newCard);
             userSpells.add(newCard);
@@ -67,7 +67,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
 
     public static void DeleteSpell(Context context, int id) {
         // Get User List From Saved Preferences!
-        ArrayList<SpellCard> userSpells = LoadUserSpells(context);
+        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
 
         for (int i = 0; i < userSpells.size(); i++) {
             if (userSpells.get(i).getId() == id) {
@@ -81,7 +81,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
     public static void DeleteRandomSpell(Context context) {
         // Get User List From Saved Preferences!
 
-        ArrayList<SpellCard> userSpells = LoadUserSpells(context);
+        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
 
         // Delete Random Card
         Random rand = new Random();
@@ -93,40 +93,40 @@ public class SpellsHelper extends SQLiteAssetHelper {
         SaveUserSpells(context, userSpells);
     }
 
-    public static ArrayList<SpellCard> LoadUserSpells(Context context) {
+    public static ArrayList<SpellCardObject> LoadUserSpells(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("UserSpellList", null);
         //Log.wtf("json = ", json);
-        ArrayList<SpellCard> userSpells;
+        ArrayList<SpellCardObject> userSpells;
         if (json == null) {
             // Create New List, Add Analysis to list
-            userSpells = new ArrayList<SpellCard>();
+            userSpells = new ArrayList<SpellCardObject>();
             SpellsHelper db = new SpellsHelper(context);
-            SpellCard first = db.CreateSpell(31);
+            SpellCardObject first = db.CreateSpell(31);
             db.close();
             userSpells.add(first);
             // Save User Spells
             SaveUserSpells(context, userSpells);
         } else {
             //Log.wtf("Fetch = ", "Fetch Spells");
-            Type type = new TypeToken<ArrayList<SpellCard>>() {
+            Type type = new TypeToken<ArrayList<SpellCardObject>>() {
             }.getType();
             userSpells = gson.fromJson(json, type);
         }
         return userSpells;
     }
 
-    public static void SaveUserSpells(Context context, List<SpellCard> userSpells) {
+    public static void SaveUserSpells(Context context, List<SpellCardObject> userSpells) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(userSpells);
         editor.putString("UserSpellList", json);
-        editor.commit();
+        editor.apply();
     }
 
-    public static void ShowCard(final Context context, final View card, SpellCard spellCard) {
+    public static void ShowCard(final Context context, final View card, SpellCardObject spellCard) {
         Activity activity = (Activity) context;
         View child = activity.getLayoutInflater().inflate(R.layout.new_card_layout, null);
         final RelativeLayout reward = (RelativeLayout) activity.findViewById(R.id.rewardLayout);
@@ -151,6 +151,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
                 AnimationCardReceived.ReceiveCard(reward, card);
             }
         });
+        images.recycle();
     }
 
     @Override
@@ -169,9 +170,9 @@ public class SpellsHelper extends SQLiteAssetHelper {
 
     }
 
-    public List<SpellCard> getSpellCardList() {
+    public List<SpellCardObject> getSpellCardList() {
 
-        List<SpellCard> scList = new ArrayList<SpellCard>();
+        List<SpellCardObject> scList = new ArrayList<SpellCardObject>();
         String query = "SELECT * FROM " + TABLE_NAME;
 
 
@@ -179,7 +180,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             do {
-                SpellCard spellCard = new SpellCard();
+                SpellCardObject spellCard = new SpellCardObject();
                 spellCard.setId(cursor.getInt(0));
                 spellCard.setCardNumber(cursor.getInt(1));
                 spellCard.setName(cursor.getString(2));
@@ -193,14 +194,14 @@ public class SpellsHelper extends SQLiteAssetHelper {
         return scList;
     }
 
-    public SpellCard CreateSpell(int id) {
+    public SpellCardObject CreateSpell(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME, new String[]{"Id", "Number", "Name", "Rank", "cLimit", "Image", "Description"}, "Id" + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        SpellCard newCard = null;
+        SpellCardObject newCard = null;
         if (cursor != null) {
             cursor.moveToFirst();
-            newCard = new SpellCard(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6));
+            newCard = new SpellCardObject(cursor.getInt(0), cursor.getInt(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getString(5), cursor.getString(6));
             cursor.close();
         }
 

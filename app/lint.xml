@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Ignore everything in the test source set -->
+    <issue id="all">
+        <ignore path="*/test/*" />
+    </issue>
+
+    <!-- Disable this given check in this project -->
+    <issue id="HardcodedText" severity="ignore" />
+    <issue id="TypographyDashes" severity="ignore" />
+    <issue id="GoogleAppIndexingWarning" severity="ignore" />
+    <issue id="MissingRegistered" severity="warning" />
+    <issue id="PermissionImpliesUnsupportedChromeOsHardware" severity="warning"/>
+    <issue id="Registered" severity="warning" />
+    <issue id="TrustAllX509TrustManager" severity="informational" />
+    <issue id="NestedWeights" severity="ignore" />
+    <issue id="UnusedResources" severity="informational" />
+    <issue id="IconDuplicates" severity="informational" />
+    <issue id="IconLocation" severity="informational" />
+    <issue id="UselessParent" severity="informational" />
+    <issue id="IconMissingDensityFolder" severity="informational" />
+    <issue id="SetTextI18n" severity="informational" />
+    <issue id="UnusedResources" severity="ignore" />
+    <issue id="CommitPrefEdits" severity="ignore"/>
+
+
+    <!--&lt;!&ndash; Ignore the ObsoleteLayoutParam issue in the given files &ndash;&gt;-->
+    <!--<issue id="ObsoleteLayoutParam">-->
+        <!--<ignore path="res/layout/activation.xml" />-->
+        <!--<ignore path="res/layout-xlarge/activation.xml" />-->
+        <!--<ignore regexp="(foo|bar).java" />-->
+    <!--</issue>-->
+
+    <!--&lt;!&ndash; Ignore the UselessLeaf issue in the given file &ndash;&gt;-->
+    <!--<issue id="UselessLeaf">-->
+        <!--<ignore path="res/layout/main.xml" />-->
+    <!--</issue>-->
+
+    <!--&lt;!&ndash; Change the severity of hardcoded strings to "error" &ndash;&gt;-->
+    <!--<issue id="HardcodedText" severity="error" />-->
+</lint>

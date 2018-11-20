@@ -10,7 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tc2r.greedisland.book.BookActivity;
@@ -23,8 +26,14 @@ import com.tc2r.greedisland.utils.TravelHelper;
 public class FrontFragment extends Fragment implements View.OnClickListener {
 
     // Declare Layout Variables
-    TextView tvSettings, tvBook, tvGreed;
-    TextView statusHunter, statusLang, statusID, statusBase, statusLocation;
+    TextView tvSettings;
+    TextView tvBook;
+    TextView tvGreed;
+    TextView statusHunter;
+    TextView statusLang;
+    TextView statusID;
+    TextView statusBase;
+    TextView statusLocation;
     Intent intent;
 
 
@@ -43,6 +52,9 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
         ImageView imageSettings = (ImageView) view.findViewById(R.id.image_settings);
         ImageView imageBook = (ImageView) view.findViewById(R.id.image_book);
         ImageView imageGreed = (ImageView) view.findViewById(R.id.image_map);
+        RelativeLayout buttonGreed = view.findViewById(R.id.button_map);
+        RelativeLayout buttonBook = view.findViewById(R.id.button_book);
+        RelativeLayout buttonSettings = view.findViewById(R.id.button_settings);
 
         statusBase = (TextView) view.findViewById(R.id.statusBaseTown);
         statusHunter = (TextView) view.findViewById(R.id.statusHuntName);
@@ -58,6 +70,9 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
         imageBook.setOnClickListener(this);
         imageGreed.setOnClickListener(this);
         imageSettings.setOnClickListener(this);
+        buttonBook.setOnClickListener(this);
+        buttonGreed.setOnClickListener(this);
+        buttonSettings.setOnClickListener(this);
 
 
         // get saved variables.
@@ -82,6 +97,11 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
         statusBase.setText(huntHome);
         statusLocation.setText(huntCurrent);
 
+        //Animate GI Icons
+        Animation rotationAnim = AnimationUtils.loadAnimation(getContext(), R.anim.infinite_spinning);
+        imageBook.startAnimation(rotationAnim);
+        imageGreed.startAnimation(rotationAnim);
+        imageSettings.startAnimation(rotationAnim);
         return view;
     }
 
@@ -90,16 +110,19 @@ public class FrontFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case (R.id.tv_settings):
             case (R.id.image_settings):
+            case (R.id.button_settings):
                 intent = new Intent(getContext(), SettingsActivity.class);
                 startActivity(intent);
                 break;
             case (R.id.tv_book):
             case (R.id.image_book):
+            case (R.id.button_book):
                 intent = new Intent(getContext(), BookActivity.class);
                 startActivity(intent);
                 break;
             case (R.id.tv_map):
             case (R.id.image_map):
+            case (R.id.button_map):
                 TravelHelper.ViewTown(getContext(), 1);
                 break;
             default:

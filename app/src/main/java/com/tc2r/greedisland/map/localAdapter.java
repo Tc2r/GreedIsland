@@ -20,9 +20,9 @@ import java.util.List;
 public class localAdapter extends RecyclerView.Adapter<localAdapter.ViewHolder> {
 
     private Context context;
-    private List<localHunter> hunters;
+    private List<localHunterObject> hunters;
 
-    localAdapter(Context context, List<localHunter> hunters) {
+    localAdapter(Context context, List<localHunterObject> hunters) {
         super();
         this.context = context;
         this.hunters = hunters;
@@ -36,7 +36,7 @@ public class localAdapter extends RecyclerView.Adapter<localAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        localHunter localHunter = hunters.get(position);
+        localHunterObject localHunter = hunters.get(position);
         holder.textViewHunterName.setText(localHunter.getHunterName());
 
     }

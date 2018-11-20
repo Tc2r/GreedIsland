@@ -24,7 +24,7 @@ import java.util.Random;
 /**
  * Displays a splash screen when app is opened, as well as playing a sound clip.
  */
-public class Splash1 extends AppCompatActivity {
+public class Splash1Activity extends AppCompatActivity {
     // Declare final variables.
     private static final int SPLASH_DISPLAY_LENGTH = 1800;
 
@@ -48,7 +48,7 @@ public class Splash1 extends AppCompatActivity {
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
         PerformanceTracking.TrackEvent("Greed Island Initialized");
         mp = MediaPlayer.create(this, R.raw.tc_splash_intro);
-        mp.setVolume(50, 50);
+        mp.setVolume(10, 10);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -133,7 +133,7 @@ public class Splash1 extends AppCompatActivity {
 
             if (mActivity.get() != null) {
                 Activity activity = mActivity.get();
-                Intent intent = new Intent(activity, Splash2.class);
+                Intent intent = new Intent(activity, Splash2Activity.class);
                 activity.startActivity(intent);
                 intent = null;
                 activity.finish();

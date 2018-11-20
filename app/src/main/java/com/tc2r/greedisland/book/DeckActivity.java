@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -32,9 +33,7 @@ import com.tc2r.greedisland.spells.SpellsFragment;
 import com.tc2r.greedisland.utils.Globals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class DeckActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -110,11 +109,9 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        //Log.wtf("This", "STARTING TOWN!");
                         collapsingToolbarLayout.setTitle("Book!");
                         break;
                     case 1:
-                        //Log.wtf("This", "STARTING TOWN!");
                         collapsingToolbarLayout.setTitle("Spells!");
                         break;
                 }
@@ -184,6 +181,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         setting.registerOnSharedPreferenceChangeListener(this);
         onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
         super.onResume();
+        appBar.setExpanded(false, true);
     }
 
     @Override
@@ -239,13 +237,13 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
     private static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
-        private Map<Integer, String> mFragmentTags;
+        private SparseArray<String> mFragmentTags;
         private FragmentManager mFragmentManager;
 
         Adapter(FragmentManager fm, Context context) {
             super(fm);
             mFragmentManager = fm;
-            mFragmentTags = new HashMap<Integer, String>();
+            mFragmentTags = new SparseArray<String>();
         }
 
         // Create a method to return tag of a previously created fragment.

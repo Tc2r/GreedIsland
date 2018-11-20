@@ -2,6 +2,7 @@ package com.tc2r.greedisland;
 
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,9 @@ public class CreditsFragment extends Fragment {
             editor.putInt("Rewards", 0);
             editor.apply();
             RewardsHelper.BootAlarm(getContext());
+            MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.tc_splash_intro);
+            mp.setVolume(10, 10);
+            mp.start();
         }
     }
 }

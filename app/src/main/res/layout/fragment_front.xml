@@ -27,8 +27,7 @@
             android:layout_marginTop="130dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
-            app:contentPadding="6dp"
-            >
+            app:contentPadding="6dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -124,8 +123,7 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                android:padding="2dp"
-                >
+                android:padding="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,30 +145,42 @@
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="2dp"
-                            app:cardElevation="2dp"
+                            app:cardElevation="2dp">
 
-                            >
+                            <RelativeLayout
 
-                            <TextView
-                                android:id="@+id/tv_map"
+                                android:id="@+id/button_map"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:alpha=".8"
-                                android:background="@drawable/logo_red_long"
-                                android:gravity="start|top"
-                                android:text="@string/Main_Greedisland_Title"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@android:color/white"/>
+                                android:background="@drawable/logo_red_long">
+
+                                <TextView
+                                    android:id="@+id/tv_map"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:alpha=".8"
+                                    android:drawableStart="@drawable/ic_action_compass_white"
+                                    android:drawablePadding="10dp"
+                                    android:gravity="start|top"
+                                    android:text="@string/Main_Greedisland_Title"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:textColor="@android:color/white"/>
+                            </RelativeLayout>
                         </android.support.v7.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/image_map"
+                        <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="#80741507"
-                            android:contentDescription="@string/default_Content_Description"
-                            android:src="@drawable/logo_red"/>
+                            android:background="#80741507">
+
+                            <ImageView
+                                android:id="@+id/image_map"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/logo_red"/>
+                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -178,8 +188,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
-                        >
+                        android:layout_weight="1">
 
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
@@ -189,31 +198,43 @@
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="2dp"
-                            app:cardElevation="2dp"
+                            app:cardElevation="2dp">
 
-                            >
+                            <RelativeLayout
 
-                            <TextView
-                                android:id="@+id/tv_book"
+                                android:id="@+id/button_book"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:alpha=".8"
-                                android:background="@drawable/logo_blue_long"
-                                android:gravity="start|top"
-                                android:text="@string/Main_Book_Title"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@android:color/white"/>
+                                android:background="@drawable/logo_blue_long">
+
+                                <TextView
+                                    android:id="@+id/tv_book"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:alpha=".8"
+                                    android:drawableStart="@drawable/ic_action_book"
+                                    android:drawablePadding="10dp"
+                                    android:gravity="start|top"
+                                    android:text="@string/Main_Book_Title"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:textColor="@android:color/white"/>
+                            </RelativeLayout>
+
                         </android.support.v7.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/image_book"
+                        <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="#80113884"
-                            android:contentDescription="@string/default_Content_Description"
-                            android:src="@drawable/logo_blue"/>
+                            android:background="#80113884">
 
+                            <ImageView
+                                android:id="@+id/image_book"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/logo_blue"/>
+                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -228,40 +249,50 @@
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-
                             android:layout_marginEnd="2dp"
                             android:layout_weight="2"
                             app:cardBackgroundColor="@android:color/transparent"
                             app:cardCornerRadius="1dp"
-                            app:cardElevation="1dp"
-                            >
+                            app:cardElevation="1dp">
 
-                            <TextView
-                                android:id="@+id/tv_settings"
+                            <RelativeLayout
+                                android:id="@+id/button_settings"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:alpha=".8"
-                                android:background="@drawable/logo_green_long"
-                                android:gravity="start|top"
-                                android:text="@string/Main_Settings_Title"
-                                android:textAppearance="?android:attr/textAppearanceLarge"
-                                android:textColor="@android:color/white"/>
+                                android:background="@drawable/logo_green_long">
+
+                                <TextView
+                                    android:id="@+id/tv_settings"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:alpha=".8"
+                                    android:drawableStart="@drawable/ic_settings_white_24dp"
+                                    android:drawablePadding="10dp"
+                                    android:gravity="start|top"
+                                    android:text="@string/Main_Settings_Title"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:textColor="@android:color/white"/>
+                            </RelativeLayout>
+
                         </android.support.v7.widget.CardView>
 
-                        <ImageView
-                            android:id="@+id/image_settings"
+                        <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="#8006450e"
-                            android:contentDescription="@string/default_Content_Description"
-                            android:src="@drawable/logo_green"/>
+                            android:background="#8006450e">
 
+                            <ImageView
+                                android:id="@+id/image_settings"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/default_Content_Description"
+                                android:src="@drawable/logo_green"/>
+
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
         </android.support.v7.widget.CardView>
     </RelativeLayout>
-
-
 </android.support.v4.widget.NestedScrollView>

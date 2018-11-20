@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,9 +38,7 @@ import com.tc2r.greedisland.book.BookActivity;
 import com.tc2r.greedisland.utils.Globals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class MapActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -336,14 +335,14 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
     private static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
-        private final Map<Integer, String> mFragmentTags;
+        private final SparseArray<String> mFragmentTags;
         private final FragmentManager mFragmentManager;
         // --Commented out by Inspection (6/24/18, 11:05 AM):private final Context mContext;
 
         Adapter(FragmentManager fm, Context context) {
             super(fm);
             mFragmentManager = fm;
-            mFragmentTags = new HashMap<Integer, String>();
+            mFragmentTags = new SparseArray<String>();
         }
 
         //Create a method to return tag of a previously created fragment.

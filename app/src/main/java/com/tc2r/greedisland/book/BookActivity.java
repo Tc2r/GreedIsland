@@ -140,7 +140,7 @@ public class BookActivity extends AppCompatActivity implements SharedPreferences
             tutorial.setEnabled(true);
             SharedPreferences.Editor firstTimeEditor = sharedPreferences.edit();
             firstTimeEditor.putBoolean(getString(R.string.pref_initiate_key), false);
-            firstTimeEditor.commit();
+            firstTimeEditor.apply();
         } else if (tutorialPreference && bookTut) {
             tutorial.setVisibility(View.VISIBLE);
             tutorial.bringToFront();

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.tc2r.greedisland.R;
 
 import java.util.List;
@@ -20,11 +21,11 @@ import java.util.List;
  */
 
 public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> {
-    private List<Rule> mRules;
+    private List<RuleObject> mRuleObjects;
     private Context mContext;
 
-    public RulesAdapter(List<Rule> mRules, Context mContext) {
-        this.mRules = mRules;
+    public RulesAdapter(List<RuleObject> mRuleObjects, Context mContext) {
+        this.mRuleObjects = mRuleObjects;
         this.mContext = mContext;
     }
 
@@ -42,16 +43,16 @@ public class RulesAdapter extends RecyclerView.Adapter<RulesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder h, int position) {
         // Get the data model based on position
-        Rule rule = mRules.get(position);
-        h.ruleTitleText.setText(rule.getRuleTitle());
-        h.ruleDescText.setText(rule.getRuleDescription());
+        RuleObject ruleObject = mRuleObjects.get(position);
+        h.ruleTitleText.setText(ruleObject.getRuleTitle());
+        h.ruleDescText.setText(ruleObject.getRuleDescription());
 
-        Glide.with(mContext).load(rule.getRuleImage()).centerCrop().into(h.ruleImage);
+        Glide.with(mContext).load(ruleObject.getRuleImage()).transition(new DrawableTransitionOptions().crossFade()).into(h.ruleImage);
     }
 
     @Override
     public int getItemCount() {
-        return mRules.size();
+        return mRuleObjects.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

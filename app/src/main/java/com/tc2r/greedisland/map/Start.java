@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.TravelHelper;
 
 import org.json.JSONArray;
@@ -41,7 +41,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,12 +77,12 @@ public class Start extends Fragment implements View.OnClickListener {
     private int hunterID;
     private int actionToken;
     // saves class name (town) to a variable
-    private String thisTown = this.getClass().getSimpleName();
+    private static final String thisTown = String.valueOf(new Object(){}.getClass().getEnclosingClass().getSimpleName());
     private Map<String, String> params;
 
     //Recycler View Local Hunters List
     private RecyclerView recyclerView;
-    private List<localHunter> listLocalHunters;
+    private List<localHunterObject> listLocalHunters;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ProgressBar progressBar;
@@ -237,7 +239,9 @@ public class Start extends Fragment implements View.OnClickListener {
         if (userMap.getBoolean(getString(R.string.pref_can_travel_key), true)) {
             // Clear Notifications
             NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(002);
+            if (notificationManager != null) {
+                notificationManager.cancel(002);
+            }
 
         }
 
@@ -288,7 +292,7 @@ public class Start extends Fragment implements View.OnClickListener {
         editor.putBoolean(getString(R.string.pref_can_travel_key), false);
         editor.putBoolean("AlarmTravelSet", true);
         editor.putString(getString(R.string.pref_current_location_key), thisTown);
-        //editor.putString(getString(R.string.pref_lastlocation_key), lastBase);
+        //editor.putString(getString(R.string.pref_last location_key), lastBase);
         editor.apply();
         //Log.d("MAP:", String.valueOf(userMap.getAll()));
         TravelHelper.SetAlarm(getContext());
@@ -307,7 +311,6 @@ public class Start extends Fragment implements View.OnClickListener {
         userMap = PreferenceManager.getDefaultSharedPreferences(getActivity());
         SharedPreferences.Editor editor = userMap.edit();
         actionToken = userMap.getInt("ActionToken", 0);
-        editor = userMap.edit();
         editor.putString(getString(R.string.pref_current_home_key), thisTown);
         editor.putString(getString(R.string.pref_lastlocation_key), lastBase);
         editor.apply();
@@ -320,28 +323,20 @@ public class Start extends Fragment implements View.OnClickListener {
     }
 
     private void RegisterBase() {
-
-
         // DELETES OLD BASE
 
-        ////Log.d("Old Town =", lastBase);
+        PerformanceTracking.TransactionBegin("Delete User from last base "+ deleteUrl);
         stringRequest = new StringRequest(Request.Method.POST, deleteUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                if (response != null && isAdded()) {
-                }
-
-
+                PerformanceTracking.TransactionEnd("Delete User from last base ");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                PerformanceTracking.TransactionFail("Delete User from last base: "+ error.getLocalizedMessage());
                 Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
-
             }
-
         }) {
             @Override
             protected Map<String, String> getParams() {
@@ -360,6 +355,7 @@ public class Start extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(String response) {
                 if (response != null && isAdded()) {
+                    PerformanceTracking.TransactionEnd("Register User: " + response);
                     //Log.d("Maps:", " Response: " + response);
                 }
 
@@ -369,8 +365,7 @@ public class Start extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
-                //Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
-
+                PerformanceTracking.TransactionFail("Register User To New Base: " + Arrays.toString(error.networkResponse.data));
             }
 
         }) {
@@ -385,8 +380,9 @@ public class Start extends Fragment implements View.OnClickListener {
                 return params;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        PerformanceTracking.TransactionBegin("Register User To New Base: " + url);
         requestQueue.add(stringRequest);
     }
 
@@ -395,37 +391,57 @@ public class Start extends Fragment implements View.OnClickListener {
         // Displaying Progressbar
         progressBar.setVisibility(View.VISIBLE);
         getActivity().setProgressBarIndeterminate(true);
-        AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
-            @Override
-            protected Void doInBackground(Integer... integers) {
-                OkHttpClient client = new OkHttpClient();
-                okhttp3.Request request = new okhttp3.Request.Builder().url("http://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
+        // start the AsyncTask, passing the Activity context
+        // in to a custom constructor
+        new GetHomeUsersTask(this).execute();
+    }
 
-                try {
-                    okhttp3.Response response = client.newCall(request).execute();
-                    JSONArray array = new JSONArray(response.body().string());
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject object = array.getJSONObject(i);
-                        localHunter temp = new localHunter(object.getString("huntername"));
-                        listLocalHunters.add(temp);
-                        //////Log.d("Adding Hunter:", temp.getHunterName());
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+    private static class GetHomeUsersTask extends AsyncTask<Integer, Void, Void> {
+
+        private final WeakReference<Start> activityReference;
+        private final List<localHunterObject> newLocalHunters;
+
+        // only retain a weak reference to the activity
+        GetHomeUsersTask(Start context) {
+            activityReference = new WeakReference<>(context);
+            newLocalHunters = new ArrayList<>();
+        }
+
+        @Override
+        protected Void doInBackground(Integer... integers) {
+            OkHttpClient client = new OkHttpClient();
+            okhttp3.Request request = new okhttp3.Request.Builder().url("http://tchost.000webhostapp.com/getHomeUsers.php?currentlocation=" + (thisTown)).build();
+
+            try {
+                PerformanceTracking.TransactionBegin("Get Home Users: " + request.url());
+                okhttp3.Response response = client.newCall(request).execute();
+                PerformanceTracking.TransactionEnd("Get Home Users: Response" + String.valueOf(response.code()));
+
+                JSONArray array = new JSONArray(response.body().string());
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    localHunterObject temp = new localHunterObject(object.getString("huntername"));
+                    newLocalHunters.add(temp);
                 }
-                return null;
+            } catch (IOException | JSONException e) {
+                PerformanceTracking.TransactionFail("Get Home Users: " + e.toString());
+                e.printStackTrace();
             }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                adapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-                super.onPostExecute(aVoid);
-            }
-        };
-        task.execute();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // get a reference to the activity if it is still there
+            Start activity = activityReference.get();
+            if (activity == null || activity.isRemoving()) return;
+
+            activity.listLocalHunters.addAll(newLocalHunters);
+            activity.adapter.notifyDataSetChanged();
+            activity.progressBar.setVisibility(View.GONE);
+            super.onPostExecute(aVoid);
+        }
     }
 
     private void requestNewInterstitial() {

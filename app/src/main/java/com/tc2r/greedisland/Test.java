@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tc2r.greedisland.spells.SpellCard;
+import com.tc2r.greedisland.spells.SpellCardObject;
 import com.tc2r.greedisland.spells.SpellsHelper;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class Test extends Fragment implements View.OnClickListener {
     TextView creditTitle, creditText;
     SpellsHelper db;
     EditText spell;
-    List<SpellCard> userSpells;
+    List<SpellCardObject> userSpells;
 
     public Test() {
         // Required empty public constructor
@@ -56,7 +56,7 @@ public class Test extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         int id;
-        SpellCard reward;
+        SpellCardObject reward;
         switch (v.getId()) {
             case R.id.createButton:
                 id = Integer.parseInt(String.valueOf(spell.getText()));

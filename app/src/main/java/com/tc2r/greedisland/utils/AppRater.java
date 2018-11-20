@@ -46,7 +46,7 @@ public class AppRater {
                 showRateDialog(mContext, editor);
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
@@ -89,7 +89,7 @@ public class AppRater {
             public void onClick(View v) {
                 if (editor != null) {
                     editor.putBoolean("dontshowagain", true);
-                    editor.commit();
+                    editor.apply();
                 }
                 dialog.dismiss();
             }

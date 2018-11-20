@@ -43,6 +43,7 @@ import com.tc2r.greedisland.utils.PlayerInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Check for Shared Preferences.
-        PlayerInfo.getInstance().init(this);
+        PlayerInfo.init(this);
         getSavedSettings();
 
         // Set the Content View
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         // When settings change, update name and them in layout.
         if (key.equals(getString(R.string.pref_hunter_name_key))) {
             //Log.d("Change", "Name!");
-            hunterName = PlayerInfo.getInstance().GetHunterName(getApplicationContext());
+            hunterName = PlayerInfo.GetHunterName(getApplicationContext());
         }
         if (key.equals(getString(R.string.pref_theme_selection_key))) {
             Globals.ChangeTheme(this);
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         Typeface creditFont = Typeface.createFromAsset(getAssets(), CREDIT_FONT_NAME);
 
         // Format TextView and Strings
-        hunterName = hunterName.toUpperCase();
+        hunterName = hunterName.toUpperCase(Locale.getDefault());
         SpannableStringBuilder iD = new SpannableStringBuilder(hunterName + "\n" + hunterName);
         int spanFinal = iD.length();
         iD.setSpan(new CustomTypefaceSpan("", creditFont), 0, SpanDist, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -260,18 +261,18 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         // Check to see if we should display tutorial to player, if PlayerInfo.GetFirstRun is false, skip tutorial
         // if it is true or if the menu setting is enabled, show tutorial.
-        if (PlayerInfo.getInstance().GetFirstRun(this, true)) {
+        if (PlayerInfo.GetFirstRun(this, true)) {
 
             tutorial.setVisibility(View.VISIBLE);
             tutorial.bringToFront();
             tutorial.setEnabled(true);
-            PlayerInfo.getInstance().SetFirstRun(this, false);
+            PlayerInfo.SetFirstRun(this, false);
         } else if (tutorialPreference && mainTut) {
 
             tutorial.setVisibility(View.VISIBLE);
             tutorial.bringToFront();
             tutorial.setEnabled(true);
-            tutorialPreference = PlayerInfo.getInstance().GetTutRan(this);
+            tutorialPreference = PlayerInfo.GetTutRan(this);
         } else {
             tutorial.setVisibility(View.GONE);
             tutorial.setEnabled(false);
@@ -289,13 +290,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         //Check for changed listener in case layout needs updating.
         onSharedPreferenceChanged(setting, getString(R.string.pref_hunter_name_key));
         onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
-        tutorialPreference = PlayerInfo.getInstance().GetTutRan(this);
+        tutorialPreference = PlayerInfo.GetTutRan(this);
 
         setting.registerOnSharedPreferenceChangeListener(this);
 
         // If first run, create random name and assign it to Hunter Name temporary.
-        PlayerInfo.getInstance().SetRandomName(this);
-        hunterName = PlayerInfo.getInstance().GetHunterName(this);
+        PlayerInfo.SetRandomName(this);
+        hunterName = PlayerInfo.GetHunterName(this);
         mainTut = setting.getBoolean("MainTut", true);
 
         // Check bundle for first launch Initiator.
@@ -378,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
      * database to add a new user, or get the user's name.
      */
     private void InitiateUser() {
-        int huntID = PlayerInfo.getInstance().GetHunterID(this);
+        int huntID = PlayerInfo.GetHunterID(this);
         RequestQueue requestQueue;
         String url = "http://tchost.000webhostapp.com/UserRegister.php";
 
@@ -409,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         // Initialize Reward Cards!
                         editor.putInt("Rewards", 0);
                         editor.putBoolean("DailyCards", true);
-                        editor.commit();
+                        editor.apply();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -448,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                         params = new HashMap<>();
                         params.put("oldlocation", getString(R.string.pref_town_default));
                         params.put("travelto", getString(R.string.pref_town_default));
-                        params.put("hunterid", String.valueOf(PlayerInfo.getInstance().GetHunterID(getApplicationContext())));
+                        params.put("hunterid", String.valueOf(PlayerInfo.GetHunterID(getApplicationContext())));
                         params.put("huntername", hunterName);
                         params.put("actiontoken", String.valueOf(3));
                         return params;
@@ -466,8 +467,8 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
             } else {
                 // Get ID and Home Base Location
-                huntID = PlayerInfo.getInstance().GetHunterID(this);
-                String currentHome = PlayerInfo.getInstance().GetCurrentHome(this);
+                huntID = PlayerInfo.GetHunterID(this);
+                String currentHome = PlayerInfo.GetCurrentHome(this);
 
                 url = "http://tchost.000webhostapp.com/gettokens.php?currentlocation=" + currentHome + "&hunterid=" + huntID;
 

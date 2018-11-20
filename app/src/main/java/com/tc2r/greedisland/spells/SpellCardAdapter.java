@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,28 +41,28 @@ import static com.tc2r.greedisland.utils.EventsManager.ManipulateDeck;
  * <p>
  * Description:
  */
-public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.ViewHolder> {
-    private List<SpellCard> spellCardList;
+public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.SpellViewHolder> {
+    private List<SpellCardObject> spellCardList;
     private Context mContext;
     private RelativeLayout reward;
-    private RecyclerView mRecyclerView;
     private DeckActivity deckActivity;
 
-    public SpellCardAdapter(List<SpellCard> spellCardList, Context mContext) {
+    SpellCardAdapter(List<SpellCardObject> spellCardList, Context mContext) {
         this.spellCardList = spellCardList;
         this.mContext = mContext;
         deckActivity = (DeckActivity) mContext;
     }
 
+    @NonNull
     @Override
-    public SpellCardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SpellViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.spell_card_layout, parent, false));
+        return new SpellViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.spell_card_layout, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(SpellCardAdapter.ViewHolder holder, final int position) {
-        final SpellCard spellCard = spellCardList.get(holder.getAdapterPosition());
+    public void onBindViewHolder(@NonNull final SpellViewHolder holder, final int position) {
+        final SpellCardObject spellCard = spellCardList.get(holder.getAdapterPosition());
         holder.cardNumber.setText(String.valueOf(spellCard.getCardNumber()));
         holder.cardTitle.setText(spellCard.getName());
         holder.cardDescription.setText(spellCard.getDescription());
@@ -73,16 +74,16 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
         //holder.cardImage.setImageResource(R.drawable.placeholder);
         holder.cardBorder.setBackgroundResource(R.drawable.text_border_spell);
         holder.root.setOnClickListener(new View.OnClickListener() {
+            int cardPosition = holder.getAdapterPosition();
             @Override
             public void onClick(View v) {
 
                 v.setVisibility(View.INVISIBLE);
-                ShowCard(deckActivity, v, spellCard, position);
+                showCard(deckActivity, v, spellCard, cardPosition);
 
             }
         });
         images.recycle();
-        drawable = null;
 
     }
 
@@ -92,12 +93,12 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        mRecyclerView = recyclerView;
+        RecyclerView mRecyclerView = recyclerView;
     }
 
-    private void UseCard(final View v, final int position, final SpellCard spellCard) {
+    private void useCard(final View v, final int position, final SpellCardObject spellCard) {
         //Toast.makeText(v.getContext(), String.valueOf(spellCard.getId()), Toast.LENGTH_LONG).show();
         AlertDialog.Builder builder;
         switch (spellCard.getId()) {
@@ -115,7 +116,7 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
                         ManipulateDeck(v.getContext(), 1, true);
 
                         // Send out action token for steal
-                        AddToken(v);
+                        addToken(v);
 
                         // Remove Spell Card
                         SpellsHelper.DeleteSpell(mContext, spellCard.getId());
@@ -154,7 +155,6 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
                         SpellsHelper.DeleteSpell(mContext, spellCard.getId());
 
                         //TODO: Play sound like "Gain!"
-
                         MediaPlayer mp = MediaPlayer.create(mContext, R.raw.greed);
                         mp.start();
 
@@ -175,7 +175,7 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
         }
     }
 
-    private void AddToken(View v) {
+    private void addToken(View v) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(v.getContext());
         final String location = settings.getString(v.getContext().getString(R.string.pref_current_location_key), v.getContext().getString(R.string.pref_town_default));
         String url = "http://tchost.000webhostapp.com/StealCard.php?currentLocation=" + location;
@@ -196,17 +196,15 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
         requestQueue.add(stringRequest);
     }
 
-    public void ShowCard(Context cxt, View v, SpellCard sCard, int pos) {
-        final Context context = cxt;
+    private void showCard(Context cxt, View v, SpellCardObject sCard, int pos) {
+
         final View card = v;
-        final SpellCard spellCard = sCard;
+        final SpellCardObject spellCardObject = sCard;
         final int position = pos;
-
-
-        Activity activity = (Activity) context;
+        Activity activity = (Activity) cxt;
         View child = activity.getLayoutInflater().inflate(R.layout.new_card_layout, null);
         child.setVisibility(View.VISIBLE);
-        final RelativeLayout reward = (RelativeLayout) activity.findViewById(R.id.rewardLayout);
+        reward = (RelativeLayout) activity.findViewById(R.id.rewardLayout);
         reward.addView(child);
         TextView title = (TextView) child.findViewById(R.id.new_card_title);
         TextView designation = (TextView) child.findViewById(R.id.new_card_designation);
@@ -216,24 +214,24 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
         ImageView image = (ImageView) child.findViewById(R.id.new_card_image);
 
 
-        title.setText(spellCard.getName());
-        designation.setText(String.valueOf(spellCard.getCardNumber()));
-        ranklimit.setText(spellCard.getRank() + "-" + String.valueOf(spellCard.getLimit()));
-        description.setText(spellCard.getDescription());
+        title.setText(spellCardObject.getName());
+        designation.setText(String.valueOf(spellCardObject.getCardNumber()));
+        ranklimit.setText(spellCardObject.getRank() + "-" + String.valueOf(spellCardObject.getLimit()));
+        description.setText(spellCardObject.getDescription());
         TypedArray images = mContext.getResources().obtainTypedArray(R.array.spell_cards);
-        Drawable drawable = images.getDrawable(spellCard.getId() - 1);
+        Drawable drawable = images.getDrawable(spellCardObject.getId() - 1);
         image.setImageDrawable(drawable);
         reward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                switch (spellCard.getCardNumber()) {
+                switch (spellCardObject.getCardNumber()) {
                     case 1007:// Thief
                     case 1006:// Pick Pocket
                     case 1018:// Levy
                     case 1021:// Rob
 
-                        UseCard(v, position, spellCard);
+                        useCard(v, position, spellCardObject);
                         AnimationCardReceived.ReceiveCard(reward, card);
                         break;
 
@@ -245,17 +243,19 @@ public class SpellCardAdapter extends RecyclerView.Adapter<SpellCardAdapter.View
             }
         });
         images.recycle();
-        drawable = null;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class SpellViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout cardBorder;
         CardView root;
-        private TextView cardNumber, cardTitle, cardRankLimit, cardDescription;
+        private TextView cardNumber;
+        private TextView cardTitle;
+        private TextView cardRankLimit;
+        private TextView cardDescription;
         private ImageView cardImage;
 
-        public ViewHolder(View itemView) {
+        SpellViewHolder(View itemView) {
             super(itemView);
             root = (CardView) itemView.findViewById(R.id.layout_root);
             cardNumber = (TextView) itemView.findViewById(R.id.card_designation);

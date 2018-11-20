@@ -6,15 +6,16 @@ package com.tc2r.greedisland.spells;
  * Description:
  */
 
-public class SpellCard {
+public class SpellCardObject
+{
 
     private int id, cardNumber, limit;
     private String name, description, rank, image;
 
-    public SpellCard() {
+    public SpellCardObject() {
     }
 
-    public SpellCard(int id, int cardNumber, String name, String rank, int limit, String image, String description) {
+    public SpellCardObject(int id, int cardNumber, String name, String rank, int limit, String image, String description) {
         this.id = id;
         this.cardNumber = cardNumber;
         this.limit = limit;

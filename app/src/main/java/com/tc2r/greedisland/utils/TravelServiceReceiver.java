@@ -54,7 +54,7 @@ public class TravelServiceReceiver extends BroadcastReceiver {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.ic_notification);
+        builder.setSmallIcon(R.drawable.ic_stat_note);
 
         // Set up actions for Notification
         Intent resultIntent = new Intent(context, MapActivity.class);
