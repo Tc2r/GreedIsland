@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +28,7 @@ import static android.widget.Toast.makeText;
 public class EventsManager {
 
     private static boolean[] cardCheck = new boolean[100];
-    private static Context context;
+    private Context context;
     private TextView botTitle, botText;
 
     public EventsManager(Context context) {
@@ -50,16 +49,13 @@ public class EventsManager {
         boolean array[];
         if (size == 0) {
             array = new boolean[preSize];
-            //Log.d("Check", "SIZE IS ZERO");
         } else {
             array = new boolean[size];
-            //Log.d("SIZE", String.valueOf(array.length));
         }
         for (int i = 0; i < size; i++) {
             array[i] = prefs_book.getBoolean("bookPreferenceArray" + "_" + i, false);
-            Log.d("Load: ", "CardID " + i + " is " + String.valueOf(array[i]));
         }
-        //Log.d("Loading Deck", "Complete");
+        PerformanceTracking.TrackEvent("Loading Deck Complete");
         return array;
     }
 
@@ -69,13 +65,10 @@ public class EventsManager {
         SharedPreferences.Editor editor = prefs_book.edit();
 
         editor.putInt("bookPreferenceArray" + "_size", cardCheck.length);
-        ////Log.d("CardCheck", String.valueOf(cardCheck.length));
         for (int i = 0; i < cardCheck.length; i++) {
-
             editor.putBoolean("bookPreferenceArray" + "_" + i, cardCheck[i]);
-
         }
-        editor.commit();
+        editor.apply();
     }
 
     public static void ManipulateDeck(Context context, int cardAmount, boolean givetake) {
@@ -100,7 +93,7 @@ public class EventsManager {
                 if (notFlipped.size() == 0) {
                     // Zero Cards Left
 
-                    //Log.d("NO CARDS LEFT ", "oh really?");
+
                     /// WHEN ALL CARDS ARE FLIPPED!
 
                 } else if (notFlipped.size() == 1) { // ONLY 1 CARD LEFT!
@@ -112,7 +105,7 @@ public class EventsManager {
                     toast.show();
                     notFlipped.remove(newNum);
 
-                } else { // All Cards Unflipped, flip some!
+                } else { // All Cards not flipped, flip some!
                     int newNum = random.nextInt(notFlipped.size() - 1);
                     cardCheck[notFlipped.get(newNum)] = true;
 
@@ -144,8 +137,6 @@ public class EventsManager {
 
                 if (flipped.size() == 0) { // User Has No Cards
 
-                    //Log.d("NO CARDS LEFT ", "oh really?");
-
                 } else if (flipped.size() == 1) { // User Only Has 1 Card, take it
                     int newNum = random.nextInt(flipped.size());
                     cardCheck[flipped.get(newNum)] = false;
@@ -155,7 +146,7 @@ public class EventsManager {
                     toast.show();
                     flipped.remove(newNum);
 
-                } else { // All Cards Unflipped, flip some!
+                } else { // All Cards not flipped, flip some!
                     int newNum = random.nextInt(flipped.size() - 1);
                     cardCheck[flipped.get(newNum)] = false;
                     cardCheck[99] = true;
@@ -296,7 +287,7 @@ public class EventsManager {
                             botTitle.setText("You took the 30 minute food challenge...");
                             botText.setText("and failed!");
 
-                            // Increase wait time due to bloatness
+                            // Increase wait time due to feeling bloated.
 
                             break;
                     }

@@ -124,7 +124,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
-        android:layout_weight="0"
         app:adSize="BANNER"
         app:adUnitId="@string/main_banner_ad_unit_id"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">

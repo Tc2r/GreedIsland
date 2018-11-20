@@ -11,7 +11,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.tc2r.greedisland.R;
+import com.tc2r.greedisland.utils.PerformanceTracking;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
@@ -19,7 +24,7 @@ import java.util.Random;
 /**
  * Displays a splash screen when app is opened, as well as playing a sound clip.
  */
-public class Splash1 extends AppCompatActivity {
+public class Splash1Activity extends AppCompatActivity {
     // Declare final variables.
     private static final int SPLASH_DISPLAY_LENGTH = 1800;
 
@@ -33,8 +38,17 @@ public class Splash1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash1);
 
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(true)  // (Optional) Whether to show thread info or not. Default true
+                .methodCount(2)         // (Optional) How many method line to show. Default 2
+                //.methodOffset(5)        // (Optional) Hides internal method calls up to offset. Default 5
+               // .logStrategy(customLog) // (Optional) Changes the log strategy to print out. Default LogCat
+                .tag("Greed Island")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        PerformanceTracking.TrackEvent("Greed Island Initialized");
         mp = MediaPlayer.create(this, R.raw.tc_splash_intro);
-        mp.setVolume(50, 50);
+        mp.setVolume(10, 10);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -119,7 +133,7 @@ public class Splash1 extends AppCompatActivity {
 
             if (mActivity.get() != null) {
                 Activity activity = mActivity.get();
-                Intent intent = new Intent(activity, Splash2.class);
+                Intent intent = new Intent(activity, Splash2Activity.class);
                 activity.startActivity(intent);
                 intent = null;
                 activity.finish();

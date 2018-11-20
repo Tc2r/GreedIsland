@@ -78,63 +78,48 @@ public class Globals {
                 context.setTheme(R.style.AppTheme_RoyalF);
                 break;
             case "Birds n Berries":
-                ////Log.d("Test", "Birds n Berries");
                 context.setTheme(R.style.AppTheme_BirdBerries);
                 break;
             case "Blue Berry":
-                ////Log.d("Test", "Blue Berry!");
                 context.setTheme(R.style.AppTheme_BlueBerry);
                 break;
             case "Cinnamon":
-                ////Log.d("Test", "Cinnamon!");
                 context.setTheme(R.style.AppTheme_Cinnamon);
                 break;
             case "Day n Night":
-                ////Log.d("Test", "Day n Night");
                 context.setTheme(R.style.AppTheme_Night);
                 break;
             case "Earthly":
-                ////Log.d("Test", "Earthly!");
                 context.setTheme(R.style.AppTheme_Earth);
                 break;
             case "Forest":
-                ////Log.d("Test", "Forest!");
                 context.setTheme(R.style.AppTheme_Forest);
                 break;
             case "Fresh Greens":
-                ////Log.d("Test", "GREENS!");
                 context.setTheme(R.style.AppTheme_Greens);
                 break;
             case "Fresh n Energetic":
-                ////Log.d("Test", "Fresh n Energetic");
                 context.setTheme(R.style.AppTheme_Fresh);
                 break;
             case "Icy Blue":
-                ////Log.d("Test", "Icy!");
                 context.setTheme(R.style.AppTheme_Icy);
                 break;
             case "Ocean":
-                ////Log.d("Test", "Ocean");
                 context.setTheme(R.style.AppTheme_Ocean);
                 break;
             case "Play Green/blues":
-                ////Log.d("Test", "Play Green/blues");
                 context.setTheme(R.style.AppTheme_GrnBlu);
                 break;
             case "Primary":
-                ////Log.d("Test", "Primary");
                 context.setTheme(R.style.AppTheme_Prime);
                 break;
             case "Rain":
-                ////Log.d("Test", "Rain!");
                 context.setTheme(R.style.AppTheme_Rain);
                 break;
             case "Tropical":
-                ////Log.d("Test", "Tropical");
                 context.setTheme(R.style.AppTheme_Tropical);
                 break;
             default:
-                ////Log.d("Test", "Default");
                 context.setTheme(R.style.AppTheme_Greens);
                 break;
         }

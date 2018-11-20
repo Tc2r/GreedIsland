@@ -1,5 +1,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="Basics">
+    <EditTextPreference
+        android:title="@string/pref_hunter_title"
+        android:defaultValue="@string/pref_hunter_default_name"
+        android:summary="@string/pref_hunter_name_summary"
+        android:key="@string/pref_hunter_name_key"
+        android:capitalize="words"
+        android:inputType="textCapWords"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        />
     <SwitchPreference
         android:title="@string/pref_first_tutorial_title"
         android:defaultValue="@bool/pref_show_first_tut_default"
@@ -15,15 +27,13 @@
         android:entryValues="@array/pref_theme_choice_entry_values"
         android:defaultValue="1"
         />
+    </PreferenceCategory>
+    <Preference
+        android:summary="Click to start an activity"
+        android:title="Preference">
+        <intent
+            android:targetClass="com.tc2r.greedisland.MainActivity"
+            android:targetPackage="com.tc2r.greedisland" />
+    </Preference>
 
-    <EditTextPreference
-        android:title="@string/pref_hunter_title"
-        android:defaultValue="@string/pref_hunter_default_name"
-        android:key="@string/pref_hunter_name_key"
-        android:capitalize="words"
-        android:inputType="textCapWords"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        />
 </PreferenceScreen>

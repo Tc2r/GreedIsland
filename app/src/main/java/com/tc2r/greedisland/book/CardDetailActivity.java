@@ -7,9 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -19,14 +20,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.Globals;
 
+import java.security.MessageDigest;
+
 import jp.wasabeef.glide.transformations.gpu.SketchFilterTransformation;
 
-public class CardDetail extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+public class CardDetailActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     LinearLayout activityCardDetail;
     LinearLayout carddesc_image;
@@ -89,21 +94,34 @@ public class CardDetail extends AppCompatActivity implements SharedPreferences.O
                 imageWidth = carddesc_image.getWidth();
                 imageHeight = carddesc_image.getHeight();
 
-                Glide.with(getApplicationContext()).load(sImage).centerCrop().placeholder(R.drawable.placeholder).bitmapTransform(new SketchFilterTransformation(getApplicationContext())).into(image);
+                Glide.with(getApplicationContext())
+                        .load(sImage)
+                        .apply(new RequestOptions()
+                                .bitmapTransform(new SketchFilterTransformation(getApplicationContext()))
+                                .centerCrop()
+                                .placeholder(R.drawable.placeholder))
+                        .into(image);
+
             }
         });
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Glide.with(getApplicationContext()).load(sImage).asBitmap().transform(new RotateTransformation(getApplicationContext(), 90f)).into(new SimpleTarget<Bitmap>(activityCardDetail.getWidth(), activityCardDetail.getHeight()) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        Drawable drawable = new BitmapDrawable(getApplicationContext().getResources(), resource);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            activityCardDetail.setBackground(drawable);
-                        }
-                    }
-                });
+
+                Glide.with(getApplicationContext())
+                        .asBitmap()
+                        .load(sImage)
+                        .apply(new RequestOptions()
+                                .transform(new RotateTransformation(getApplicationContext(), .90f)))
+
+                        .into(new SimpleTarget<Bitmap>(activityCardDetail.getWidth(), activityCardDetail.getHeight()) {
+
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                Drawable drawable = new BitmapDrawable(getApplicationContext().getResources(), resource);
+                                activityCardDetail.setBackground(drawable);
+                            }
+                        });
                 activityCardDetail.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
             }
@@ -120,29 +138,28 @@ public class CardDetail extends AppCompatActivity implements SharedPreferences.O
         super.onResume();
     }
 
-    private class RotateTransformation extends BitmapTransformation {
+    public class RotateTransformation extends BitmapTransformation {
 
-        private float rotateAngle = 0f;
+        private float rotateRotationAngle = 0f;
 
-        public RotateTransformation(Context context, float rotateAngle) {
-            super(getApplicationContext());
+        public RotateTransformation(Context context, float rotateRotationAngle) {
+            super();
 
-            this.rotateAngle = rotateAngle;
+            this.rotateRotationAngle = rotateRotationAngle;
         }
-
 
         @Override
         protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
             Matrix matrix = new Matrix();
 
-            matrix.postRotate(rotateAngle);
+            matrix.postRotate(rotateRotationAngle);
 
             return Bitmap.createBitmap(toTransform, 0, 0, toTransform.getWidth(), toTransform.getHeight(), matrix, true);
         }
 
         @Override
-        public String getId() {
-            return "rotate" + rotateAngle;
+        public void updateDiskCacheKey(MessageDigest messageDigest) {
+            messageDigest.update(("rotate" + rotateRotationAngle).getBytes());
         }
     }
 }

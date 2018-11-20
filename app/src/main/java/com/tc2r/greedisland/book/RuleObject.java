@@ -6,10 +6,11 @@ package com.tc2r.greedisland.book;
  * Description:
  */
 
-public class Rule {
+public class RuleObject
+{
     String ruleTitle, ruleDescription;
 
-    public Rule(String ruleTitle, String ruleDescription, int ruleImage) {
+    public RuleObject(String ruleTitle, String ruleDescription, int ruleImage) {
         this.ruleTitle = ruleTitle;
         this.ruleDescription = ruleDescription;
         this.ruleImage = ruleImage;

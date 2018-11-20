@@ -30,8 +30,8 @@ import java.util.List;
  */
 public class SpellsFragment extends Fragment implements View.OnClickListener {
 
-    private static SpellCardAdapter spellCardAdapter;
-    private static List<SpellCard> userSpells;
+    private SpellCardAdapter spellCardAdapter;
+    private static List<SpellCardObject> userSpells;
     SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private GridLayoutManager layoutManager, layoutManager2;
@@ -57,9 +57,9 @@ public class SpellsFragment extends Fragment implements View.OnClickListener {
         db = new SpellsHelper(context);
         // Initiate Database, Call User Spells Array;
         userSpells = SpellsHelper.LoadUserSpells(context);
-        Collections.sort(userSpells, new Comparator<SpellCard>() {
+        Collections.sort(userSpells, new Comparator<SpellCardObject>() {
             @Override
-            public int compare(SpellCard o1, SpellCard o2) {
+            public int compare(SpellCardObject o1, SpellCardObject o2) {
                 return o1.getCardNumber() + o2.getCardNumber();
             }
         });
@@ -114,9 +114,9 @@ public class SpellsFragment extends Fragment implements View.OnClickListener {
 
                 if (sharedPreferences.getBoolean("Sort", true)) {
                     Log.wtf("Testing", "equals true");
-                    Collections.sort(userSpells, new Comparator<SpellCard>() {
+                    Collections.sort(userSpells, new Comparator<SpellCardObject>() {
                         @Override
-                        public int compare(SpellCard c1, SpellCard c2) {
+                        public int compare(SpellCardObject c1, SpellCardObject c2) {
                             if (v.getId() == R.id.btn_sort_num)
                                 return c1.getCardNumber() - c2.getCardNumber();
                             if (v.getId() == R.id.btn_sort_name)
@@ -131,12 +131,12 @@ public class SpellsFragment extends Fragment implements View.OnClickListener {
 
                     });
                     editor.putBoolean("Sort", false);
-                    editor.commit();
+                    editor.apply();
                 } else {
                     Log.wtf("Testing", "equals false");
-                    Collections.sort(userSpells, new Comparator<SpellCard>() {
+                    Collections.sort(userSpells, new Comparator<SpellCardObject>() {
                         @Override
-                        public int compare(SpellCard c1, SpellCard c2) {
+                        public int compare(SpellCardObject c1, SpellCardObject c2) {
                             if (v.getId() == R.id.btn_sort_num)
                                 return c2.getCardNumber() - c1.getCardNumber();
                             if (v.getId() == R.id.btn_sort_name)
@@ -150,7 +150,7 @@ public class SpellsFragment extends Fragment implements View.OnClickListener {
                         }
                     });
                     editor.putBoolean("Sort", true);
-                    editor.commit();
+                    editor.apply();
                 }
                 spellCardAdapter = new SpellCardAdapter(userSpells, context);
 

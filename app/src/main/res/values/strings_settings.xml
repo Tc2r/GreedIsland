@@ -26,17 +26,18 @@
     <string name="pref_header_general">General</string>
 
 
-    <string name="pref_first_tutorial_title">First Time Tutorial</string>
-    <string name="pref_first_tutorial_summary">First Time Tutorial</string>
+    <string name="pref_first_tutorial_title">Tutorial</string>
+    <string name="pref_first_tutorial_summary">Turn Tutorial Mode On?</string>
 
 
     <string name="pref_hunter_default_name">Chrollo Lucilfer</string>
     <string name="pref_hunter_title">Hunter Name?</string>
+    <string name="pref_hunter_name_summary">Change your username here?</string>
 
 
 
     <string name="pref_theme_title">Theme Color</string>
-    <string name="pref_theme_summary">Change Theme Of App</string>
+    <string name="pref_theme_summary">Change Colors Of App?</string>
     <string name="pref_theme_default_selection">Fresh Greens</string>
     <string-array name="pref_theme_choice_entries">
         <item>Red Wedding</item>

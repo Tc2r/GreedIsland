@@ -1,22 +1,20 @@
 package com.tc2r.greedisland.restrict;
 
-
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,15 +40,13 @@ import okhttp3.Response;
 public class RestrictedFragment extends Fragment {
 
     private RestrictCardAdapter adapter;
-    private RestrictCard card;
-    private List<RestrictCard> deck;
+    private List<RestrictCardObject> deck;
     private RecyclerView recyclerView;
-    private GridLayoutManager layoutManager, layoutManager2;
+    private HorizontalScrollView horizontalScrollView;
+    private GridLayoutManager layoutManager;
+    private GridLayoutManager layoutManager2;
     private RecyclerView.LayoutManager mCurrentLayoutManager;
-    private ScaleGestureDetector mScaleGestureDetector;
-    private Bundle bundle;
     private boolean[] cardCheck;
-    private boolean local = false;
     private ProgressBar progressBar;
     private TextView progressText;
     private int progressStatus = 0;
@@ -61,86 +57,113 @@ public class RestrictedFragment extends Fragment {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_restricted, container, false);
 
         deck = new ArrayList<>();
 
-
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
-        layoutManager = new GridLayoutManager(view.getContext(), 3);
-        layoutManager2 = new GridLayoutManager(view.getContext(), 1);
-        mCurrentLayoutManager = layoutManager;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, dpToPx(10), true));
+        initView(view);
+        horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+        // Setup RecyclerView to display cards in user book.
         recyclerView.setLayoutManager(layoutManager);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        progressText = (TextView) view.findViewById(R.id.progresstext);
-        progressBar.setVisibility(View.VISIBLE);
-
+        mCurrentLayoutManager = layoutManager;
         prepareCards(1);
         progressText.setVisibility(View.VISIBLE);
 
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                mScaleGestureDetector.onTouchEvent(event);
-                return false;
-            }
-        });
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+                // Due to an error in the library, Recycler's state changes aren't being
+                // called at the proper time, there is lag. To prevent this and add
+                // smoother scrolling of the book, the code block below is needed.
+                // https://stackoverflow.com/questions/48204549/recyclerview-scroll-state-idle-is-being-called-late
+                if (newState == RecyclerView.SCROLL_STATE_SETTLING)
+                {
+                    recyclerView.stopScroll();
+                }
+            }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
+
+                // We handle loading from the api in batches of 30 cards, once the recyclerview has
+                // the last complete position, we load more into the recyclerview.
 
                 if (layoutManager.findLastCompletelyVisibleItemPosition() == (deck.size() - 1)) {
                     progressBar.setVisibility(View.VISIBLE);
                     progressText.setVisibility(View.VISIBLE);
                     prepareCards((deck.get(deck.size() - 1).getId()) + 1);
                 }
-
             }
         });
 
+
         /// MANAGING THE VISIBLE DECK!
-        bundle = this.getArguments();
+        Bundle bundle = this.getArguments();
         if (bundle != null) {
 
             cardCheck = bundle.getBooleanArray("data");
         }
-        ////Log.d("huh", Arrays.toString(bundle.getBooleanArray("data")));
 
-
-        adapter = new RestrictCardAdapter(view.getContext(), deck, local, cardCheck);
+        adapter = new RestrictCardAdapter(view.getContext(), deck, false, cardCheck);
         recyclerView.setAdapter(adapter);
-        //set scale gesture detector
-        mScaleGestureDetector = new ScaleGestureDetector(view.getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-            @Override
-            public boolean onScale(ScaleGestureDetector detector) {
-                if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200) {
-                    if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1) {
-                        Log.wtf("Pinch", "Working");
-                        if (mCurrentLayoutManager == layoutManager) {
-                            mCurrentLayoutManager = layoutManager2;
-                            recyclerView.setLayoutManager(layoutManager2);
-                            return true;
-                        }
-                    } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1) {
-                        Log.wtf("Pinch", "LIES");
-                        if (mCurrentLayoutManager == layoutManager2) {
-                            mCurrentLayoutManager = layoutManager;
-                            recyclerView.setLayoutManager(layoutManager);
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-        });
+//        //set scale gesture detector
+//        ScaleGestureDetector mScaleGestureDetector = new ScaleGestureDetector(view.getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener()
+//        {
+//            @Override
+//            public boolean onScale(ScaleGestureDetector detector)
+//            {
+//                if (detector.getCurrentSpan() > 200 && detector.getTimeDelta() > 200)
+//                {
+//                    if (detector.getCurrentSpan() - detector.getPreviousSpan() < -1)
+//                    {
+//                        Log.wtf("Pinch", "Working");
+//                        if (mCurrentLayoutManager == layoutManager)
+//                        {
+//                            mCurrentLayoutManager = layoutManager2;
+//                            recyclerView.setLayoutManager(layoutManager2);
+//                            return true;
+//                        }
+//                    } else if (detector.getCurrentSpan() - detector.getPreviousSpan() > 1)
+//                    {
+//                        Log.wtf("Pinch", "LIES");
+//                        if (mCurrentLayoutManager == layoutManager2)
+//                        {
+//                            mCurrentLayoutManager = layoutManager;
+//                            recyclerView.setLayoutManager(layoutManager);
+//                            return true;
+//                        }
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+
+
         return view;
+    }
+
+    private void initView(View view)
+    {
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycleview);
+        horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.hor_scrollview);
+        layoutManager = new GridLayoutManager(view.getContext(), 3);
+        layoutManager2 = new GridLayoutManager(view.getContext(), 1);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, dpToPx(10), true));
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressText = (TextView) view.findViewById(R.id.progresstext);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void prepareCards(final int id) {
@@ -151,7 +174,7 @@ public class RestrictedFragment extends Fragment {
 
 
                 OkHttpClient client = new OkHttpClient.Builder().protocols(Arrays.asList(Protocol.HTTP_1_1)).build();
-                Request request = new Request.Builder().url("https://tchost.000webhostapp.com/greedget.php?id=" + (id)).build();
+                Request request = new Request.Builder().url("http://tchost.000webhostapp.com/greedget.php?id=" + (id)).build();
 
                 try {
                     Response response = client.newCall(request).execute();
@@ -161,7 +184,7 @@ public class RestrictedFragment extends Fragment {
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject object = array.getJSONObject(i);
-                        RestrictCard temp = new RestrictCard((object.getInt("id") - 1), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
+                        RestrictCardObject temp = new RestrictCardObject((object.getInt("id") - 1), object.getString("name"), object.getString("rank"), object.getInt("limit"), object.getString("description"), object.getString("image"), object.getInt("type"));
                         deck.add(temp);
                         progressStatus = i + 1;
                         handler.post(new Runnable() {

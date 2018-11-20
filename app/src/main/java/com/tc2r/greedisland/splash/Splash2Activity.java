@@ -22,7 +22,7 @@ import java.lang.ref.WeakReference;
 import java.util.Random;
 
 
-public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class Splash2Activity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     // Declare final variables
     private static final int SPLASH_DISPLAY_LENGTH = 1500;
@@ -37,9 +37,9 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setting = PreferenceManager.getDefaultSharedPreferences(Splash2.this);
+        setting = PreferenceManager.getDefaultSharedPreferences(Splash2Activity.this);
         setting.registerOnSharedPreferenceChangeListener(this);
-        onSharedPreferenceChanged(setting, PlayerInfo.getInstance().Get_Pref_Theme_Key(this));
+        onSharedPreferenceChanged(setting, PlayerInfo.Get_Pref_Theme_Key(this));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash2);
@@ -109,7 +109,7 @@ public class Splash2 extends AppCompatActivity implements SharedPreferences.OnSh
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
-        if (key.equals(PlayerInfo.getInstance().Get_Pref_Theme_Key(this))) {
+        if (key.equals(PlayerInfo.Get_Pref_Theme_Key(this))) {
             Globals.ChangeTheme(this);
         }
     }

@@ -17,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -32,9 +33,7 @@ import com.tc2r.greedisland.spells.SpellsFragment;
 import com.tc2r.greedisland.utils.Globals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class DeckActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -65,8 +64,10 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         toolbar = (Toolbar) findViewById(R.id.toolbar_deck);
         appBar = (AppBarLayout) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         SetupViewPager(viewPager);
@@ -74,11 +75,14 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingtoolbar);
         tabs.setupWithViewPager(viewPager);
         collapsingToolbarLayout.setTitle("BOOK!");
-        tabs.setOnTouchListener(new View.OnTouchListener() {
+        tabs.setOnTouchListener(new TabLayout.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                v.performClick();
+                DeckActivity.super.onTouchEvent(event);
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+
                     boolean fullyExpanded = (appBar.getHeight() - appBar.getBottom()) == 0;
 
                     if (!fullyExpanded) {
@@ -105,11 +109,9 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        //Log.wtf("This", "STARTING TOWN!");
                         collapsingToolbarLayout.setTitle("Book!");
                         break;
                     case 1:
-                        //Log.wtf("This", "STARTING TOWN!");
                         collapsingToolbarLayout.setTitle("Spells!");
                         break;
                 }
@@ -179,6 +181,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
         setting.registerOnSharedPreferenceChangeListener(this);
         onSharedPreferenceChanged(setting, getString(R.string.pref_theme_selection_key));
         super.onResume();
+        appBar.setExpanded(false, true);
     }
 
     @Override
@@ -227,7 +230,6 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
                 startActivity(intent);
                 return true;
         }
-        intent = null;
         return super.onOptionsItemSelected(item);
     }
 
@@ -235,15 +237,13 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
     private static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
-        private Map<Integer, String> mFragmentTags;
+        private SparseArray<String> mFragmentTags;
         private FragmentManager mFragmentManager;
-        private Context mContext;
 
         Adapter(FragmentManager fm, Context context) {
             super(fm);
             mFragmentManager = fm;
-            mFragmentTags = new HashMap<Integer, String>();
-            mContext = context;
+            mFragmentTags = new SparseArray<String>();
         }
 
         // Create a method to return tag of a previously created fragment.
@@ -264,7 +264,7 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
             return mFragmentList.get(position);
         }
 
-        // Override InstantiateItem to save the tag of the fragment into a hashmap
+        // Override InstantiateItem to save the tag of the fragment into a Hash map
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Object obj = super.instantiateItem(container, position);

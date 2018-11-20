@@ -28,9 +28,9 @@ public class RewardsHelper {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         long currentTime = new GregorianCalendar().getTimeInMillis();
         long rewardTime = settings.getLong("RewardTime", currentTime);
-        //Log.d("REWARD TIME ", String.valueOf(rewardTime) + "   " + String.valueOf(currentTime));
+        PerformanceTracking.TrackEvent("Reset Alarms: " + String.valueOf(rewardTime) + "  " +String.valueOf(currentTime));
         if (rewardTime < currentTime) {
-            //Log.d("Alarm NOW", "Setting");
+            PerformanceTracking.TrackEvent("Sound Alarm Now!");
             rewardTime = currentTime + 3000;
         }
         Intent intentAlarm = new Intent(context, RewardsServiceReceiver.class);

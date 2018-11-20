@@ -109,7 +109,6 @@ public class eventtest extends AppCompatActivity implements SharedPreferences.On
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
         if (key.equals(getString(R.string.pref_theme_selection_key))) {
             String customTheme = setting.getString(getString(R.string.pref_theme_selection_key), "Fresh Greens");
             switch (customTheme) {
@@ -118,74 +117,56 @@ public class eventtest extends AppCompatActivity implements SharedPreferences.On
                     break;
                 case "Bouquets":
                     setTheme(R.style.AppTheme_Bouquets);
-
                     break;
                 case "Red Wedding":
-
                     setTheme(R.style.AppTheme_RedWedding);
-
                     break;
                 case "Royal Flush":
                     setTheme(R.style.AppTheme_RoyalF);
                     break;
                 case "Birds n Berries":
-                    ////Log.d("Test", "Birds n Berries");
                     setTheme(R.style.AppTheme_BirdBerries);
                     break;
                 case "Blue Berry":
-                    ////Log.d("Test", "Blue Berry!");
                     setTheme(R.style.AppTheme_BlueBerry);
                     break;
                 case "Cinnamon":
-                    ////Log.d("Test", "Cinnamon!");
                     setTheme(R.style.AppTheme_Cinnamon);
                     break;
                 case "Day n Night":
-                    ////Log.d("Test", "Day n Night");
                     setTheme(R.style.AppTheme_Night);
                     break;
                 case "Earthly":
-                    ////Log.d("Test", "Earthly!");
                     setTheme(R.style.AppTheme_Earth);
                     break;
                 case "Forest":
-                    ////Log.d("Test", "Forest!");
                     setTheme(R.style.AppTheme_Forest);
                     break;
                 case "Fresh Greens":
-                    ////Log.d("Test", "GREENS!");
                     setTheme(R.style.AppTheme_Greens);
                     break;
                 case "Fresh n Energetic":
-                    ////Log.d("Test", "Fresh n Energetic");
                     setTheme(R.style.AppTheme_Fresh);
                     break;
                 case "Icy Blue":
-                    ////Log.d("Test", "Icy!");
                     setTheme(R.style.AppTheme_Icy);
                     break;
                 case "Ocean":
-                    ////Log.d("Test", "Ocean");
                     setTheme(R.style.AppTheme_Ocean);
                     break;
                 case "Play Green/blues":
-                    ////Log.d("Test", "Play Green/blues");
                     setTheme(R.style.AppTheme_GrnBlu);
                     break;
                 case "Primary":
-                    ////Log.d("Test", "Primary");
                     setTheme(R.style.AppTheme_Prime);
                     break;
                 case "Rain":
-                    ////Log.d("Test", "Rain!");
                     setTheme(R.style.AppTheme_Rain);
                     break;
                 case "Tropical":
-                    ////Log.d("Test", "Tropical");
                     setTheme(R.style.AppTheme_Tropical);
                     break;
                 default:
-                    ////Log.d("Test", "Default");
                     setTheme(R.style.AppTheme_Greens);
                     break;
             }

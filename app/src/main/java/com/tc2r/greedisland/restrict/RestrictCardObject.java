@@ -1,12 +1,15 @@
 package com.tc2r.greedisland.restrict;
 
+import java.util.Locale;
+
 /**
  * Created by Tc2r on 1/22/2017.
  * <p>
  * Description:
  */
 
-public class RestrictCard {
+public class RestrictCardObject
+{
     private int imageItem;
     private String thumbnail;
     private String title;
@@ -16,14 +19,14 @@ public class RestrictCard {
     private int id, limit, type;
     private String rank;
 
-    public RestrictCard(String title, String description, int imageItem) {
+    public RestrictCardObject(String title, String description, int imageItem) {
         this.title = title;
         this.description = description;
         this.imageItem = imageItem;
     }
 
     // for servers
-    public RestrictCard(int id, String title, String rank, int limit, String description, String imageurl, int type) {
+    public RestrictCardObject(int id, String title, String rank, int limit, String description, String imageurl, int type) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageurl;
@@ -38,7 +41,7 @@ public class RestrictCard {
     }
 
     public void setRank(String rank) {
-        this.rank = rank.toUpperCase().trim();
+        this.rank = rank.toUpperCase(Locale.getDefault()).trim();
     }
 
     public String getImageUrl() {

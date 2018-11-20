@@ -6,12 +6,13 @@ package com.tc2r.greedisland.map;
  * Description:
  */
 
-public class localHunter {
+public class localHunterObject
+{
 
     // Data Variables
     private String hunterName;
 
-    public localHunter(String hunterName) {
+    public localHunterObject(String hunterName) {
         this.hunterName = hunterName;
     }
 
