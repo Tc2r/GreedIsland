@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.tc2r.greedisland.R;
 
@@ -22,9 +23,8 @@ import java.util.GregorianCalendar;
 
 public class RewardsHelper {
 
-
     // Reset Alarm When Phone Is Rebooted
-    public static void BootAlarm(Context context) {
+    public static void bootAlarm(Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         long currentTime = new GregorianCalendar().getTimeInMillis();
         long rewardTime = settings.getLong("RewardTime", currentTime);
@@ -39,7 +39,9 @@ public class RewardsHelper {
     }
 
     // Set Alarm When Cards are all gone
-    public static void setAlarm(Context context) {
+    public static void setAlarm(View view) {
+
+        Context context = view.getContext();
         Long time = new GregorianCalendar().getTimeInMillis() + 24 * 60 * 60 * 1000;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
@@ -49,7 +51,7 @@ public class RewardsHelper {
         Intent intentAlarm = new Intent(context, RewardsServiceReceiver.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        Toast.makeText(context, R.string.daily_cards_alert, Toast.LENGTH_LONG).show();
+        GreedSnackbar.createSnackBar(view, R.string.daily_cards_alert, Snackbar.LENGTH_LONG).show();
     }
 
     public static void EnableBroadcast(Context context) {

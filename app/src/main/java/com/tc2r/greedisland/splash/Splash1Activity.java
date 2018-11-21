@@ -24,7 +24,8 @@ import java.util.Random;
 /**
  * Displays a splash screen when app is opened, as well as playing a sound clip.
  */
-public class Splash1Activity extends AppCompatActivity {
+public class Splash1Activity extends AppCompatActivity
+{
     // Declare final variables.
     private static final int SPLASH_DISPLAY_LENGTH = 1800;
 
@@ -83,7 +84,7 @@ public class Splash1Activity extends AppCompatActivity {
             handler.removeCallbacksAndMessages(null);
             handler = null;
         }
-        View root = findViewById(R.id.activity_splash1);
+        View root = findViewById(R.id.layout_main);
         setContentView(new View(this));
         if (root != null) {
             unbindDrawables(root);

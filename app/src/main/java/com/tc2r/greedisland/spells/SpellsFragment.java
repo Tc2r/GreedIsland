@@ -56,7 +56,7 @@ public class SpellsFragment extends Fragment implements View.OnClickListener {
 
         db = new SpellsHelper(context);
         // Initiate Database, Call User Spells Array;
-        userSpells = SpellsHelper.LoadUserSpells(context);
+        userSpells = SpellsHelper.loadUserSpells(context);
         Collections.sort(userSpells, new Comparator<SpellCardObject>() {
             @Override
             public int compare(SpellCardObject o1, SpellCardObject o2) {

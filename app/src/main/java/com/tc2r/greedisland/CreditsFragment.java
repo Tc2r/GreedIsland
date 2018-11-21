@@ -52,7 +52,7 @@ public class CreditsFragment extends Fragment {
             editor.putBoolean(getString(R.string.pref_can_travel_key), true);
             editor.putInt("Rewards", 0);
             editor.apply();
-            RewardsHelper.BootAlarm(getContext());
+            RewardsHelper.bootAlarm(getContext());
             MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.tc_splash_intro);
             mp.setVolume(10, 10);
             mp.start();

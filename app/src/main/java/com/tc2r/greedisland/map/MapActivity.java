@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,6 +36,7 @@ import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.SettingsActivity;
 import com.tc2r.greedisland.book.BookActivity;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -282,7 +283,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
                 this.startActivity(intent);
                 return true;
             case R.id.action_share:
-                Toast.makeText(MapActivity.this, R.string.menu_Share_Title, Toast.LENGTH_SHORT).show();
+                GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.menu_Share_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(Intent.ACTION_SEND);
                 this.startActivity(intent);
                 return true;
@@ -291,7 +292,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
                 this.startActivity(intent);
                 return true;
             case R.id.action_book:
-                Toast.makeText(MapActivity.this, R.string.menu_Book_Title, Toast.LENGTH_SHORT).show();
+                GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.menu_Book_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(MapActivity.this, BookActivity.class);
                 this.startActivity(intent);
                 return true;
@@ -323,7 +324,7 @@ public class MapActivity extends AppCompatActivity implements SharedPreferences.
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Toast.makeText(this, "CHANGE", Toast.LENGTH_SHORT).show();
+
         if (key.equals(getString(R.string.pref_hunter_name_key))) {
             //Log.d("Change", "Name!");
             //hunterName = setting.getString(getString(R.string.pref_hunter_name_key), getString(R.string.default_Hunter_ID));

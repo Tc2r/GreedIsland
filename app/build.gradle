@@ -13,11 +13,10 @@ android {
         }
     }
     compileSdkVersion 27
-    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.tc2r.greedisland"
         minSdkVersion 17
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode 1
         versionName "0.0.1"
         multiDexEnabled true
@@ -39,39 +38,43 @@ android {
         textOutput 'stdout'
         htmlOutput file("${project.rootDir}/reports/lint/lint-report.html")
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 //TODO UPDATE DEPENDENCIES LIBS
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:recyclerview-v7:27.1.1'
-    compile 'com.android.support:design:27.1.1'
-    compile 'com.android.support:support-v4:27.1.1'
-    compile 'com.android.support:support-vector-drawable:27.1.1'
-    compile 'com.android.support:customtabs:27.1.1'
-    compile 'com.android.support:cardview-v7:27.1.1'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    implementation 'com.android.support:customtabs:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
 
-    compile 'com.github.bumptech.glide:glide:4.7.1'
-    compile 'jp.wasabeef:glide-transformations:2.0.1'
-    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
 
-    compile 'com.android.volley:volley:1.0.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 
-    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
-    compile 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+    implementation 'com.google.code.gson:gson:2.8.1'
 
     //noinspection GradleDependency
-    compile 'com.google.android.gms:play-services-ads:11.0.4'
+    implementation 'com.google.android.gms:play-services-ads:11.0.4'
     //noinspection GradleDependency
-    compile 'com.google.firebase:firebase-iid:11.0.4'
+    implementation 'com.google.firebase:firebase-iid:11.0.4'
     //noinspection GradleDependency
-    compile 'com.google.firebase:firebase-core:11.0.4'
+    implementation 'com.google.firebase:firebase-core:11.0.4'
     //noinspection GradleDependency
-    compile 'com.google.firebase:firebase-ads:11.0.4'
+    implementation 'com.google.firebase:firebase-ads:11.0.4'
 
-    compile 'com.orhanobut:logger:2.2.0'
+    implementation 'com.orhanobut:logger:2.2.0'
 
 }
 

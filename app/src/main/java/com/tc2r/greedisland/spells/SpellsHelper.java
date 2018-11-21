@@ -9,17 +9,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.AnimationCardReceived;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -46,54 +47,55 @@ public class SpellsHelper extends SQLiteAssetHelper {
         SQLiteDatabase db = this.getWritableDatabase();
     }
 
-    public static void CreateRandomSpell(Context context, int count) {
+    public static void createRandomSpell(View view, int count) {
 
-
-        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
+        Context context = view.getContext();
+        ArrayList<SpellCardObject> userSpells = loadUserSpells(context);
         SpellsHelper db = new SpellsHelper(context);
         Random rand = new Random();
 
         for (int i = 0; i < count; i++) {
             int randNum = rand.nextInt(40) + 1;
             SpellCardObject newCard = db.CreateSpell(randNum);
-            Toast.makeText(context, newCard.getName() + " Found!", Toast.LENGTH_LONG).show();
-            ShowCard(context, null, newCard);
+            GreedSnackbar.createSnackBar(view, newCard.getName() + " Found!", Snackbar.LENGTH_LONG).show();
+            showCard(context, null, newCard);
             userSpells.add(newCard);
         }
         // Save User Spells
-        SaveUserSpells(context, userSpells);
+        saveUserSpells(context, userSpells);
 
     }
 
-    public static void DeleteSpell(Context context, int id) {
+    public static void deleteSpell(Context context, int id) {
         // Get User List From Saved Preferences!
-        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
+        ArrayList<SpellCardObject> userSpells = loadUserSpells(context);
 
         for (int i = 0; i < userSpells.size(); i++) {
             if (userSpells.get(i).getId() == id) {
                 userSpells.remove(i);
-                SaveUserSpells(context, userSpells);
+                saveUserSpells(context, userSpells);
                 break;
             }
         }
     }
 
-    public static void DeleteRandomSpell(Context context) {
+    public static void deleteRandomSpell(View view) {
         // Get User List From Saved Preferences!
 
-        ArrayList<SpellCardObject> userSpells = LoadUserSpells(context);
+        Context context = view.getContext();
+        ArrayList<SpellCardObject> userSpells = loadUserSpells(context);
 
         // Delete Random Card
         Random rand = new Random();
         int randNum = rand.nextInt(userSpells.size());
-        Toast.makeText(context, userSpells.get(randNum).getName() + " Deleted", Toast.LENGTH_LONG).show();
+        GreedSnackbar.createSnackBar(view, userSpells.get(randNum).getName() + " Deleted", Snackbar.LENGTH_LONG).show();
         userSpells.remove(randNum);
 
         // Save User Spells
-        SaveUserSpells(context, userSpells);
+        saveUserSpells(context, userSpells);
     }
 
-    public static ArrayList<SpellCardObject> LoadUserSpells(Context context) {
+    public static ArrayList<SpellCardObject> loadUserSpells(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("UserSpellList", null);
@@ -107,7 +109,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
             db.close();
             userSpells.add(first);
             // Save User Spells
-            SaveUserSpells(context, userSpells);
+            saveUserSpells(context, userSpells);
         } else {
             //Log.wtf("Fetch = ", "Fetch Spells");
             Type type = new TypeToken<ArrayList<SpellCardObject>>() {
@@ -117,7 +119,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
         return userSpells;
     }
 
-    public static void SaveUserSpells(Context context, List<SpellCardObject> userSpells) {
+    public static void saveUserSpells(Context context, List<SpellCardObject> userSpells) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -126,7 +128,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
         editor.apply();
     }
 
-    public static void ShowCard(final Context context, final View card, SpellCardObject spellCard) {
+    public static void showCard(final Context context, final View card, SpellCardObject spellCard) {
         Activity activity = (Activity) context;
         View child = activity.getLayoutInflater().inflate(R.layout.new_card_layout, null);
         final RelativeLayout reward = (RelativeLayout) activity.findViewById(R.id.rewardLayout);
