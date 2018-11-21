@@ -20,7 +20,7 @@ import com.google.gson.reflect.TypeToken;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.AnimationCardReceived;
-import com.tc2r.greedisland.utils.GreedSnackbars;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
         for (int i = 0; i < count; i++) {
             int randNum = rand.nextInt(40) + 1;
             SpellCardObject newCard = db.CreateSpell(randNum);
-            GreedSnackbars.createSnackBar(view, newCard.getName() + " Found!", Snackbar.LENGTH_LONG).show();
+            GreedSnackbar.createSnackBar(view, newCard.getName() + " Found!", Snackbar.LENGTH_LONG).show();
             showCard(context, null, newCard);
             userSpells.add(newCard);
         }
@@ -88,7 +88,7 @@ public class SpellsHelper extends SQLiteAssetHelper {
         // Delete Random Card
         Random rand = new Random();
         int randNum = rand.nextInt(userSpells.size());
-        GreedSnackbars.createSnackBar(view, userSpells.get(randNum).getName() + " Deleted", Snackbar.LENGTH_LONG).show();
+        GreedSnackbar.createSnackBar(view, userSpells.get(randNum).getName() + " Deleted", Snackbar.LENGTH_LONG).show();
         userSpells.remove(randNum);
 
         // Save User Spells

@@ -3,7 +3,8 @@ package com.tc2r.greedisland.utils;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-public interface GreedSnackbars {
+public interface GreedSnackbar
+{
 
     static Snackbar createSnackBar(View view, int message, int duration) {
         return Snackbar.make(view, message, duration);

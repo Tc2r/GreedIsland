@@ -51,7 +51,7 @@ public class RewardsHelper {
         Intent intentAlarm = new Intent(context, RewardsServiceReceiver.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        GreedSnackbars.createSnackBar(view, R.string.daily_cards_alert, Snackbar.LENGTH_LONG).show();
+        GreedSnackbar.createSnackBar(view, R.string.daily_cards_alert, Snackbar.LENGTH_LONG).show();
     }
 
     public static void EnableBroadcast(Context context) {

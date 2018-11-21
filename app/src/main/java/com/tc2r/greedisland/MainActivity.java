@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +37,7 @@ import com.tc2r.greedisland.utils.AppRater;
 import com.tc2r.greedisland.utils.CustomTypefaceSpan;
 import com.tc2r.greedisland.utils.EventsManager;
 import com.tc2r.greedisland.utils.Globals;
-import com.tc2r.greedisland.utils.GreedSnackbars;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.PlayerInfo;
 
@@ -388,7 +387,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
         if (huntID == 0) {
             if (!Globals.isNetworkAvailable(this)) {
 
-                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
             } else {
                 PerformanceTracking.TransactionBegin("REGISTER USER: " + url);
                 // First Run, Initiate Things.
@@ -396,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                     @Override
                     public void onResponse(String response) {
                         PerformanceTracking.TransactionEnd("REGISTER USER");
-                        GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.successful_Registration, Snackbar.LENGTH_LONG).show();
+                        GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.successful_Registration, Snackbar.LENGTH_LONG).show();
 
                         // Artificially Inflating IDs by 2k to imply fullness of app.
                         int temp = Integer.parseInt(response) + 20000;
@@ -418,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.server_down_message, Snackbar.LENGTH_LONG).show();
+                        GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.server_down_message, Snackbar.LENGTH_LONG).show();
                         PerformanceTracking.TransactionFail("REGISTER USER: " + error.getLocalizedMessage());
                     }
                 }) {
@@ -443,7 +442,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), error.toString(), Snackbar.LENGTH_LONG).show();
+                        GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), error.toString(), Snackbar.LENGTH_LONG).show();
                         //Log.d("Maps:", " Error: " + new String(error.networkResponse.data));
                     }
                 }) {
@@ -466,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             // If user is found, get location (town) of user from database.
 
             if (!Globals.isNetworkAvailable(this)) {
-                Toast.makeText(this, R.string.internet_down_message, Toast.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(getCurrentFocus(), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
 
             } else {
                 // Get ID and Home Base Location
@@ -501,7 +500,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.server_down_message, Snackbar.LENGTH_LONG).show();
+                        GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.server_down_message, Snackbar.LENGTH_LONG).show();
                         PerformanceTracking.TransactionFail("Get Tokens: " + error.getLocalizedMessage());
                     }
                 });

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +33,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.utils.Globals;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.TravelHelper;
 
@@ -305,7 +306,7 @@ public class Dorias extends Fragment implements View.OnClickListener {
 
     private void OnSetBaseClicked() {
         if (!Globals.isNetworkAvailable(getActivity())) {
-            Toast.makeText(getActivity(), "Must Have Internet Connection for this Action!", Toast.LENGTH_LONG).show();
+            GreedSnackbar.createSnackBar(getView(), "Must Have Internet Connection for this Action!", Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -336,7 +337,7 @@ public class Dorias extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 PerformanceTracking.TransactionFail("Delete User from last base: "+ error.getLocalizedMessage());
-                Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(getView(), error.toString(), Snackbar.LENGTH_LONG).show();
             }
         }) {
             @Override
@@ -365,7 +366,7 @@ public class Dorias extends Fragment implements View.OnClickListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(getView(), error.toString(), Snackbar.LENGTH_LONG).show();
                 PerformanceTracking.TransactionFail("Register User To New Base: " + Arrays.toString(error.networkResponse.data));
             }
 

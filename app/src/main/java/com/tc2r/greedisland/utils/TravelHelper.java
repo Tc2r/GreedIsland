@@ -69,7 +69,7 @@ public class TravelHelper {
         Intent travelAlarm = new Intent(context, TravelServiceReceiver.class);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, PendingIntent.getBroadcast(context, 1, travelAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
-        GreedSnackbars.createSnackBar(view, R.string.Daily_Travel_Text, Snackbar.LENGTH_LONG).show();
+        GreedSnackbar.createSnackBar(view, R.string.Daily_Travel_Text, Snackbar.LENGTH_LONG).show();
 
         // Latest time event happen is 90% of travel alarm
         long eventMax = time - delay * (100 / 90);

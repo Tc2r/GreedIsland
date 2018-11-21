@@ -36,7 +36,7 @@ import com.tc2r.greedisland.R;
 import com.tc2r.greedisland.restrict.RestrictCardObject;
 import com.tc2r.greedisland.spells.SpellsHelper;
 import com.tc2r.greedisland.utils.Globals;
-import com.tc2r.greedisland.utils.GreedSnackbars;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 import com.tc2r.greedisland.utils.PerformanceTracking;
 import com.tc2r.greedisland.utils.RewardsHelper;
 
@@ -202,7 +202,7 @@ public class BookTab extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case (R.id.lay_book):
                 if (!Globals.isNetworkAvailable(context)) {
-                    GreedSnackbars.createSnackBar(getView(), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
+                    GreedSnackbar.createSnackBar(getView(), R.string.internet_down_message, Snackbar.LENGTH_LONG).show();
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putBooleanArray("data", cardCheck);
@@ -217,7 +217,7 @@ public class BookTab extends Fragment implements View.OnClickListener {
 
                 // Check Connectivity, if no net, do nothing
                 if (!Globals.isNetworkAvailable(getActivity())) {
-                    GreedSnackbars.createSnackBar(getView(), "Must Have Internet Connection for this Action!", Snackbar.LENGTH_LONG).show();
+                    GreedSnackbar.createSnackBar(getView(), "Must Have Internet Connection for this Action!", Snackbar.LENGTH_LONG).show();
                     break;
                 }
                 Random rnd = new Random();

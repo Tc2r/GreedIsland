@@ -31,7 +31,7 @@ import com.tc2r.greedisland.SettingsActivity;
 import com.tc2r.greedisland.restrict.RestrictedFragment;
 import com.tc2r.greedisland.spells.SpellsFragment;
 import com.tc2r.greedisland.utils.Globals;
-import com.tc2r.greedisland.utils.GreedSnackbars;
+import com.tc2r.greedisland.utils.GreedSnackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -221,12 +221,12 @@ public class DeckActivity extends AppCompatActivity implements SharedPreferences
                 startActivity(intent);
                 return true;
             case R.id.action_share:
-                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_Share_Title, Snackbar.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.menu_Share_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(Intent.ACTION_SEND);
                 startActivity(intent);
                 return true;
             case R.id.action_about:
-                GreedSnackbars.createSnackBar(findViewById(R.id.layout_main), R.string.menu_About_Title, Snackbar.LENGTH_LONG).show();
+                GreedSnackbar.createSnackBar(findViewById(R.id.layout_main), R.string.menu_About_Title, Snackbar.LENGTH_LONG).show();
                 intent = new Intent(context, AboutActivity.class);
                 startActivity(intent);
                 return true;
